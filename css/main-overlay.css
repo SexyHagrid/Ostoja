@@ -1,0 +1,126 @@
+.upper-row {
+  width: 100vw;
+  height: 12vh;
+  margin: 0;
+  padding: 0;
+}
+
+.upper-bar {
+  width: 100vw;
+  height: 12vh;
+  position: fixed;
+}
+
+.container {
+  min-width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.col-2, .col-7, .brand-logo {
+  margin: 0;
+  padding: 0;
+  float: left;
+  height: inherit;
+  background-color: black;
+}
+
+.upper-buttons {
+  height: 100%;
+}
+
+.brand-logo img {
+  position: relative;
+  max-width: 100%;
+  max-height: 15vh;
+}
+
+.col-7 p {
+  color: orange;
+  font-size: 7vh;
+  position: relative;
+  margin-left: 70%;
+  margin-top: 1%;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: 3px;
+  text-decoration-color: orange;
+}
+
+.col-2 p:hover {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: 3px;
+  text-decoration-color: white;
+}
+
+.col-2 p {
+  color: white;
+  font-size: 3vh;
+  position: relative;
+  margin-top: 0%;
+}
+
+.justify-content-center {
+  width: 100vw;
+  min-height: 80vh;
+  margin: 1vh 0 0 0;
+  padding: 0;
+}
+
+.footer {
+  min-height: 7vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+#footer-left {
+  width: 60%;
+  height: 7vh;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  bottom: -1px;
+  left: 0;
+  border-left: 0px solid transparent;
+  border-right: 100px solid transparent;
+  border-top: 7vh solid black;
+  z-index: 10;
+  text-align: center;
+}
+
+#footer-left p {
+  position: absolute;
+  top: -80%;
+  left: 10%;
+  z-index: 15;
+  margin: 1%;
+  padding: 0;
+}
+
+#footer-right {
+  width: 50%;
+  height: 6vh;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgb(7, 7, 7);
+  z-index: 5;
+  text-align: center;
+  color: white;
+  font-size: small;
+}
+
+#footer-right a {
+  position: absolute;
+  right: 40%;
+  z-index: 6;
+  margin: 1%;
+  padding: 0;
+}

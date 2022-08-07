@@ -1,0 +1,82 @@
+.login-box {
+  width: 280px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #191970;
+}
+
+.login-box h1 {
+  float: left;
+  font-size: 40px;
+  border-bottom: 4px solid #191970;
+  margin-bottom: 50px;
+  padding: 13px;
+}
+
+.textbox {
+  width: 100%;
+  overflow: hidden;
+  font-size: 20px;
+  padding: 8px 0;
+  margin: 8px 0;
+  border-bottom: 1px solid #191970;
+}
+
+.textbox input {
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 18px;
+  float: left;
+  margin: 0 10px;
+}
+
+.button {
+  width: 100%;
+  padding: 8px;
+  color: #ffffff;
+  background: none #191970;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 12px 0;
+}
+
+.red-text {
+  color: red;
+  font-size: small;
+}
+
+#alertpopup {
+  background-color: rgb(223, 85, 85);
+  opacity: 0.9;
+  min-width: 250px;
+  max-width: 750px;
+  width: fit-content;
+  min-height: 100px;
+  max-width: 1000px;
+  height: fit-content;
+  position: absolute;
+  margin: 10% auto;
+  left: 0;
+  right: 0;
+  border: 1px solid black;
+}
+
+#alertpopup-text {
+  width: 100%;
+  min-height: 95px;
+  height: fit-content;
+  padding: 3%;
+  text-align: center;
+  margin-top: 5%;
+}
+
+#alertpopup-progress-bar {
+  width: 100%;
+  height: 5px;
+  background-color: rgb(201, 37, 37);
+}
