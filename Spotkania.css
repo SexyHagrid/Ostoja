@@ -1,0 +1,61 @@
+.row {
+    min-height: 13vh;
+    height: 13vh;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.row h1 {
+    margin: auto;
+}
+
+.row-spotk {
+    margin: 3% auto;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.row-spotk h2, h3 {
+    margin-top: 3%;
+}
+
+.row-last {
+    min-height: 10vh;
+    width: 50vw;
+    background-color: rgb(194, 189, 189);
+}
+
+.row-closest {
+    min-height: 13vh;
+    width: 60vw;
+    background-color: white;
+}
+
+.row-incoming {
+    min-height: 10vh;
+    width: 50vw;
+    background-color: rgb(217, 221, 220);
+}
+
+.justify-content-start {
+    min-width: 100vw;
+    min-height: 75vh;
+    margin: 0;
+    padding: 0%;
+    background-color: white;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.row-akt {
+    border: 1px solid black;
+    box-shadow: 1px 1px grey;
+    margin: 1% auto;
+    overflow-y: hidden;
+    min-width: 40%;
+    max-width: 40%;
+}
+
+.row-akt p {
+    margin: auto;
+}

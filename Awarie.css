@@ -1,0 +1,37 @@
+.col-8 p {
+    margin-left: 55%;
+}
+
+.row {
+    min-height: 13vh;
+    height: 13vh;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.col-awa {
+    height: 96%;
+    width: 55%;
+    margin: 1% 22.5%;
+    background-color: rgb(248, 248, 248);
+    border: 1px solid black;
+}
+
+
+.justify-content-start {
+    min-width: 100%;
+    min-height: 75vh;
+    margin: 0;
+    padding: 0%;
+    background-color: white;
+    overflow-x: hidden;
+}
+
+#title, #description, #submit_bttn, h3 {
+    margin: 1% 0 0 5%;
+}
+
+#description {
+    width: 80%;
+    height: 45vh;
+}

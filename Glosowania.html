@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="Zad2.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="Kontakt.css" media="screen" />
+  </head>
+  <body onload="onStart()">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+
+    <script>
+      var data = {};
+
+      function onStart() {
+        // Pobieramy z bazy danych id i rolę użytkownika
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var result = this.responseText.split('|');
+            data.userID = parseInt(result[0]);
+            data.userRole = parseInt(result[1]);
+
+            getCompletedSurveys();
+          }
+        }
+        xhttp.open('GET', 'uzytkownik.php?sessionID=' + getSessionID(), true);
+        xhttp.send(); 
+      }
+
+      // pobieramy listę ankiet (listę ID), które zostały wypełnione przez zalogowanego użytkownika
+      function getCompletedSurveys() {
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            data.completedSurveys = [...new Set(this.responseText.split('|'))];
+
+            getAllSurveys();
+          }
+        }
+        xhttp.open('GET', 'glosowanie.php?action=2&userID=' + data.userID, true);
+        xhttp.send(); 
+      }
+
+      // Pobieramy z bazy danych wszystkie dostępne ankiety
+      function getAllSurveys() {
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+
+            var tbody = document.getElementById("surveysContent");
+
+            var surveys = this.responseText.split('||');
+
+            // Tworzymy w pętli ankiety
+            for (var i = 0; i < surveys.length; i++) {
+              var survey = surveys[i].split('|');
+              var surveyID = survey[0];
+              var surveyTitle = survey[1];
+
+              // Sprawdzamy, czy nie dostaliśmy pustej ankiety
+              if (surveyID == '') {
+                break;
+              }
+
+              var div = document.createElement('div');
+              div.setAttribute('class', 'row-akt');
+              div.setAttribute('data-id', surveyID);
+
+              // Sprawdzamy, czy użytkownik jest zalogowany, a jeżeli tak, to czy wypełnił już daną ankietę.
+              // Jeżeli tak, to pozwalamy, żeby ankieta była klikalna -> po kliknięciu przechodzimy do wypełniania.
+              // Jeżeli nie, to wyświetlamy ankietę, ale nie pozwalamy jej wypełnić
+              if (!isNaN(data.userID) && !data.completedSurveys.includes(surveyID)) {
+                div.onclick = function (event) {
+                  var id = event.target.getAttribute('data-id');
+                  if (id == null) {
+                    id = event.target.parentElement.getAttribute('data-id');
+                  }
+                  onSurveyClick(id);
+                }
+              }
+
+              // Ładujemy dane ankiety
+              var labelNumber = createNumberLabel(i + 1);
+              var labelTitle = createTitleLabel(surveyTitle);
+
+              div.appendChild(labelNumber);
+              div.appendChild(createNewLine());
+              div.appendChild(labelTitle);
+
+              // Sprawdzamy, czy użytkownik wypełnił daną ankietę
+              // Jeżeli tak, to dodajemy napis - WYPEŁNIONA
+              if (data.completedSurveys.includes(surveyID)) {
+                var completedLabel = createCompletedSurveyLabel();
+                div.appendChild(completedLabel);
+              }
+
+              // Sprawdzamy, czy użytkownik jest adminem
+              // Jeżeli tak, to wyświetlamy przycisk do przejścia do podsumowania
+              if (isAdmin()) {
+                div.appendChild(createSummaryButton(surveyID));
+              }
+
+              tbody.appendChild(div);
+            }
+          }
+        }
+
+        xhttp.open('GET', 'glosowanie.php?action=0', true);
+        xhttp.send(); 
+      }
+
+      function showSurveySummary(surveyID) {
+        document.location.href = 'Glosowania_podsumowanie.html?id=' + surveyID;
+      }
+
+      function onSurveyClick(id) {
+        document.location.href = 'Glosowania_glosuj.html?id=' + id;
+      }
+
+      function createNumberLabel(number) {
+        var label = document.createElement('label');
+        label.innerHTML = "Ankieta nr. " + (number);
+        return label;
+      }
+
+      function createTitleLabel(text) {
+        var label = document.createElement('label');
+        label.innerHTML = text;
+        label.setAttribute('style', 'font-weight: bold;');
+        return label;
+      }
+
+      function createCompletedSurveyLabel() {
+        var label = document.createElement('label');
+        label.innerHTML = "   --- WYPEŁNIONA ---";
+        label.setAttribute('style', 'color: red;');
+        return label;
+      }
+
+      function createNewLine() {
+        return document.createElement('br');
+      }
+
+      function createSummaryButton(id) {
+        var button = document.createElement('button');
+        button.innerHTML = "Podsumowanie";
+        button.setAttribute('data-id', id);
+        button.onclick = function(event) {
+          showSurveySummary(event.target.getAttribute('data-id'));
+        }
+        return button;
+      }
+
+      function isAdmin() {
+        return data.userRole == 1;
+      }
+
+      function getSessionID() {
+        return localStorage.getItem('sessionID');
+      }
+    </script>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-3">
+            <a href="Zad2.html"><img src="logo.png" alt="Logo"></a>
+          </div>
+          <div class="col-8">
+            <p>Głosowania</p>
+          </div>
+          <div class="col-1">
+            <a href="logout.php"><p>Wyloguj</p></a>
+          </div>
+          <div class="row justify-content-start">
+            <div class="col">
+                <div class="row row-upper">
+                    <h1>Dostępne głosowania</h1>
+                </div>
+                <div id="surveysContent">
+
+                </div>
+            </div>
+          </div>
+          <div class="w-100"></div>
+          <div class="col-6">
+            <a href="Faq.html"><p>FAQ</p></a>
+          </div>
+          <div class="col-6">
+            <a href="Kontakt.html"><p>Kontakt</p></a>
+          </div>
+        </div>
+      </div>  
+</body>
+</html>

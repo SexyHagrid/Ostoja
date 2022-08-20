@@ -1,0 +1,35 @@
+.col {
+    display:flex
+}
+
+.col-awa {
+    flex: 0 0 55%;
+    margin-right: 0;
+}
+
+.col-awa-zgl {
+    width: 10vw;
+    height: 20vh;
+    flex: 0 0 15%;
+    margin: 1% 0 0 5%;
+    background-color: rgb(247, 247, 247);
+    border: 1px solid black;
+}
+
+.col-awa-zgl p {
+    margin: auto;
+    border: 1px solid black;
+}
+
+.description-text {
+    margin: 1% 5% 0 5%;
+}
+
+.comments {
+    margin-top: 15vh;
+}
+
+#description {
+    width: 80%;
+    height: 15vh;
+}
