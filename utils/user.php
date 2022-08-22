@@ -1,25 +1,26 @@
 <?php
 
-  require 'role.php';
-  require 'permissions.php';
+  require_once dirname(__FILE__).'/../config/db_connect.php';
 
   class User {
-    // private $email;
-    // private $userId;
-    // private $role;
-    // private $permissions;
 
-    // public function __construct($email, $userId) {
-    //   $this->email = $email;
-    //   $this->userId = $userId;
-    //   //$this->role = new Role($this->email);
-    //   $this->permissions = new Permissions();
-    //   $this->permissions->setPermissionsByUserId($this->userId);
-    // }
+    public static function getUsersEmails() {
+      $dbConn = new DBConnector();
+      $stmt = $dbConn->dbRequest("SELECT email FROM users");
+      $stmt->execute();
+      $emails = $stmt->fetchAll();
 
-    // public function hasPermission($permission) {
-    //   return $this->permissions->hasPermission($permission);
-    // }
+      return $emails;
+    }
+
+    public static function getUserDetails($email) {
+      $dbConn = new DBConnector();
+      $stmt = $dbConn->dbRequest("SELECT * FROM users where email = '$email'");
+      $stmt->execute();
+      $details = $stmt->fetchAll();
+
+      return $details;
+    }
   }
 
 ?>

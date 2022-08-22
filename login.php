@@ -2,14 +2,16 @@
   session_start();
   if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     header('Location: index.php');
+  } else {
+    echo "<script> localStorage.removeItem('sessionID'); </script>";
   }
 
   include_once 'config/db_connect.php';
   include 'utils/user.php';
+  include 'utils/string.php';
 
   $email = $password = '';
   $errors = ['email' => '', 'password' => ''];
-  $error_prompt_message = '';
 
   if (isset($_POST['submit'])) {
     $email = htmlspecialchars($_POST['email']);
@@ -24,7 +26,7 @@
 
     if (!array_filter($errors)) {
       $dbConn = new DBConnector();
-      $stmt = $dbConn->fetch("SELECT email, password, userId FROM users where email like '$email'");
+      $stmt = $dbConn->dbRequest("SELECT email, password, userId FROM users where email like '$email'");
       $stmt->execute();
       $users = $stmt->fetchAll();
       $conn = null;
@@ -38,6 +40,17 @@
         $_SESSION["userId"] = $users[0]["userId"];
         $_SESSION["email"] = $users[0]["email"];
 
+        $sessionID = 'dsfsdfsdf'; // getRandomString();  // TODO: ????
+
+        // $dbonn = new DBConnector();
+        // $stmt = $dbConn->dbRequest("INSERT INTO sesja (uzytkownik, numer_sesji) VALUES ('".$users[0]["id"]."', '".$sessionID."')");  // TODO: insert nie fetch
+        // $stmt->execute();
+        // $conn = null;
+
+        // echo "<script>
+        //   localStorage.setItem('sessionID', '".$sessionID."');  // TODO: ????
+        // </script>";
+
         header('Location: index.php');
       }
     }
@@ -50,15 +63,15 @@
     <link rel="stylesheet" href="css/login.css" />
     <?php include('templates/body.php'); ?>
 
-        <div class="col-7">
+        <div class="col-7 page-name">
           <p>Autoryzacja</p>
         </div>
-        <div class="col-2">
+        <div class="col-2 upper-right-buttons">
         </div>
       </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row main-content-row">
       <div class="login-body">
         <form id="login-form" action="login.php" method="post">
           <div class="login-box">
@@ -82,4 +95,5 @@
     </div>
 
     <?php include('templates/footer.php'); ?>
+  </body>
 </html>

@@ -1,49 +1,25 @@
 <?php
 
+  require_once dirname(__FILE__).'/../config/db_connect.php';
 
   class Role {
-    // private $roleId;
-    // private $roleName;
-    // private $permissions;
-    // private $conn;
+    public static function getRolesNames() {
+      $dbConn = new DBConnector();
+      $stmt = $dbConn->dbRequest("SELECT roleName FROM roles");
+      $stmt->execute();
+      $names = $stmt->fetchAll();
 
-    // public function __construct($email) {
-    //   $error_prompt_message = '';  // TODO: refactor to external error module
-    //   $servername = "localhost";
-    //   $dbname = "test_base";
-    //   $username = "root";
+      return $names;
+    }
 
-    //   try {
-    //     $conn = new PDO(
-    //       "mysql:host=$servername; dbname=$dbname",
-    //       $username, ""
-    //     );
-    //     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //   } catch(PDOException $e) {
-    //     $error_prompt_message = "Błąd połączenia: " . $e->getMessage() . "<br>Prosimy o kontakt ze wsparciem technicznym";
-    //   }
+    public static function getRoleIdByName($roleName) {
+      $dbConn = new DBConnector();
+      $stmt = $dbConn->dbRequest("SELECT roleId FROM roles where roleName = '$roleName'");
+      $stmt->execute();
+      $roleId = $stmt->fetchAll();
 
-
-    //   $this->fetchRoleByEmail($email);
-    //   // $this->fetchPermissions();
-    // }
-
-    // public function fetchRoleByEmail($email) {
-    //   $stmt = $this->conn->prepare("SELECT r.roleId, r.roleName FROM roles r inner join users u on r.roleId=u.roleId where u.email like '$email'");
-    //   $stmt->execute();
-    //   $role = $stmt->fetchAll();
-    //   $conn = null;
-
-    //   $this->roleId = $role[0]['roleId'];
-    //   $this->roleName = $role[0]['roleName'];
-    // }
-
-    // public function fetchPermissions() {
-    //   $stmt = $conn->prepare("SELECT permissions FROM permissions inner join roles r on p.roleId=u.roleId where u.email like '$email'");
-    //   $stmt->execute();
-    //   $role = $stmt->fetchAll();
-    //   $conn = null;
-    // }
+      return $roleId[0];
+    }
   }
 
 ?>
