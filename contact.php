@@ -1,7 +1,10 @@
 <?php
 
+  session_start();
+
   include_once 'config/messages.php';
   include_once 'utils/permissions.php';
+  include_once 'utils/breadcrumbs.php';
 
 ?>
 
@@ -11,10 +14,19 @@
   <link rel="stylesheet" type="text/css" href="contact.css" media="screen" />
   <?php include('templates/body.php'); ?>
 
-          <div class="col-7 page-name">
-            <p>Kontakt</p>
+        <div class="col-7 page-name">
+          <div id="breadcrumbs-div">
+            <nav class="navbar-expand-lg">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'Kontakt', 'address' => 'contact.php']); ?>
+                </ol>
+              </nav>
+            </nav>
           </div>
-          <div class="col-2 upper-right-buttons">
+          <p>Kontakt</p>
+        </div>
+        <div class="col-2 upper-right-buttons">
           <?php if (Permissions::hasPermission("Panel administracyjny")): ?>
             <a href="admin_panel.php"><p id="admin-panel">Panel administracyjny</p></a>
             <hr>
@@ -38,7 +50,7 @@
               <td class="komorka">
                 <p>Wiktor</p>
               </td>
-              <td class="komorka" rowspan="3" style="background-image: url(wiktor.png); background-size: contain; background-repeat: no-repeat;">
+              <td class="komorka" rowspan="3" style="background-image: url(assets/wiktor.png); background-size: contain; background-repeat: no-repeat;">
 
               </td>
             </tr>
@@ -63,7 +75,7 @@
               <td>
                 <p>Pawel</p>
               </td>
-              <td class="komorka" rowspan="3" style="background-image: url(P.Patyk.jpg); background-size: contain; background-repeat: no-repeat;">
+              <td class="komorka" rowspan="3" style="background-image: url(assets/P.Patyk.jpg); background-size: contain; background-repeat: no-repeat;">
 
               </td>
             </tr>

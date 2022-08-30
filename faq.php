@@ -1,7 +1,10 @@
 <?php
 
+  session_start();
+
   include_once 'config/messages.php';
   include_once 'utils/permissions.php';
+  include_once 'utils/breadcrumbs.php';
 
 ?>
 
@@ -11,7 +14,16 @@
   <link rel="stylesheet" type="text/css" href="css/faq.css" media="screen" />
   <?php include('templates/body.php'); ?>
 
-  <div class="col-7 page-name">
+        <div class="col-7 page-name">
+          <div id="breadcrumbs-div">
+            <nav class="navbar-expand-lg">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'FAQ', 'address' => 'faq.php']); ?>
+                </ol>
+              </nav>
+            </nav>
+          </div>
           <p>FAQ</p>
         </div>
         <div class="col-2 upper-right-buttons">

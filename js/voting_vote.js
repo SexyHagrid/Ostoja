@@ -4,95 +4,56 @@ $(document).ready(function () {
   onStart();
 
   function onStart() {
-    // Pobieramy z bazy danych id i rolę użytkownika
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var result = this.responseText.split('|');
-        data.userID = parseInt(result[0]);
-        data.userRole = parseInt(result[1]);
-
-        // Jeżeli żaden użytkownik nie jest zalogowany -> przechodzimy do listy ankiet
-        if (isNaN(data.userID)) {
-          document.location.href = "Glosowania.html";
-        }
-
-        getCompletedSurveys();
-      }
-    }
-
-    xhttp.open('GET', 'user.php?sessionID=' + getSessionID(), true);
-    xhttp.send();
+    getCompletedSurveys();
   }
 
   function getCompletedSurveys() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        data.completedSurveys = [...new Set(this.responseText.split('|'))];
+    data.completedSurveys = [...new Set(completedSurveysArray)];
 
-        var urlParams = new URLSearchParams(window.location.search);
-        data.surveyID = urlParams.get('id');
+    var urlParams = new URLSearchParams(window.location.search);
+    data.surveyID = urlParams.get('id');
 
-        if (data.completedSurveys.includes(data.surveyID)) {
-          var title = document.getElementById('surveyTitle');
-          title.innerHTML = "Już odpowiedziałeś na tą ankietę";
-        } else {
-          getSurvey();
-        }
-      }
+    if (data.completedSurveys.includes(data.surveyID)) {
+      var title = document.getElementById('surveyTitle');
+      title.innerHTML = "Już odpowiedziałeś na tą ankietę";
+    } else {
+      getSurvey();
     }
-    xhttp.open('GET', 'voting.php?action=2&userID=' + data.userID, true);
-    xhttp.send();
   }
 
   function getSurvey() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var questions = this.responseText.split('||');
-        var surveyTitle = questions[0].split('|')[1];
+    var surveyTitle = questionsArray[0].name;
 
-        var tbody = document.getElementById("surveysContent");
-        var title = document.getElementById('surveyTitle');
-        title.innerHTML = surveyTitle;
+    var tbody = document.getElementById("surveysContent");
+    var title = document.getElementById('surveyTitle');
+    title.innerHTML = surveyTitle;
 
-        // Ładujemy pytania
-        for (var i = 0; i < questions.length; i++) {
-          var questionData = questions[i].split('|');
+    for (var i = 0; i < questionsArray.length; i++) {
+      var questionID = questionsArray[i].questionId;
+      var questionText = questionsArray[i].questionText;
+      var questionType = questionsArray[i].questionType;
 
-          for (var j = 2; j < questionData.length; j+=3) {
-            var questionID = questionData[j];
-            var questionText = questionData[j+1];
-            var questionType = questionData[j+2];
-
-            tbody.append(createQuestionLabel(questionText));
-            tbody.append(createNewLine());
-            tbody.append(createAnswerInput(questionID, questionType));
-            tbody.append(createNewLine());
-          }
-        }
-
-        tbody.appendChild(createSubmitButton());
-      }
+      tbody.append(createQuestionLabel(questionText));
+      tbody.append(createNewLine());
+      tbody.append(createAnswerInput(questionID, questionType));
+      tbody.append(createNewLine());
     }
-    xhttp.open('GET', 'voting.php?action=1&id=' + data.surveyID, true);
-    xhttp.send();
+
+    tbody.appendChild(createSubmitButton());
   }
 
   function sendSurvey() {
-    var tbody = document.getElementById("glosowaniaContent");
     var answers = document.getElementsByTagName('input');
 
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-      if (this.responseText == "SUCCESS") {
+      if (this.responseText.includes("SUCCESS")) {
         alert('Ankieta została wysłana');
-        document.location.href = "Glosowania.html";
+        document.location.href = "voting.php";
       }
     }
 
-    var request = 'voting.php?action=3&userID=' + data.userID;
+    var request = 'voting_vote.php?action=3&userID=' + userId;
     for (var i = 0; i < answers.length; i++) {
       var type = answers[i].getAttribute('data-type');
       if (type == 0) {
@@ -106,10 +67,6 @@ $(document).ready(function () {
 
     xhttp.open('GET', request, true);
     xhttp.send();
-  }
-
-  function getSessionID() {
-    return localStorage.getItem('sessionID');
   }
 
   function createQuestionLabel(text) {
@@ -146,6 +103,7 @@ $(document).ready(function () {
     button.onclick = function(event) {
       sendSurvey();
     }
+    button.style.cursor = "pointer";
     return button;
   }
 });

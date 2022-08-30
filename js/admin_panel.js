@@ -1,11 +1,37 @@
 $(document).ready(function () {
-  var forms = $('.forms');
-  var actionListBttn = $('.action-list-button-inner');
-  var usersEmails;
+  $('.forms').each(function() {
+    if($(this).css('display') != 'none') {
+      switch($(this).prop('id')) {
+        case 'edit-user-form':
+          if ($('#user-emails-list-input').val().length == 0) {
+            $('.edit-input-data').prop('disabled', true);
+          }
+          getUsersEmails()
 
-  actionListBttn.on('click', function () {
+          break;
+
+        case 'edit-role-form':
+          if ($('#roles-names-list-input').val().length == 0) {
+            $('.edit-role-input-data').prop('disabled', true);
+          }
+          getRolesNames()
+
+          break;
+
+        case 'edit-permission-form':
+          if ($('#permissions-desc-list-input').val().length == 0) {
+            $('.edit-permission-input-data').prop('disabled', true);
+          }
+          getPermissionRoles(this.value);
+
+          break;
+      }
+    }
+  })
+
+  $('.action-list-button-inner').on('click', function () {
     let thisId = $(this).attr('id');
-    forms.css('display', 'none');
+    $('.forms').css('display', 'none');
     $('#' + thisId + '-form').css('display', 'block');
   });
 
@@ -29,7 +55,6 @@ $(document).ready(function () {
   function appendPermissionsEdit(permissions) {
     let permissionsContainer = $('.permissions-data-edit-inner')
     permissionsContainer.empty();
-    console.log(permissions)
     permissions.forEach(permission => {
       permissionsContainer.append(
         `<div class="permission-edit-div">
@@ -49,9 +74,10 @@ $(document).ready(function () {
     let roleId = $(this).val();
 
     $.ajax({
-      type: "POST",
-      url: "utils/getRolePermissions.php",
+      type: "GET",
+      url: "utils/getDetails.php",
       data: {
+        method: 'getRolePermissions',
         roleId
       },
       dataType: 'json',
@@ -63,10 +89,10 @@ $(document).ready(function () {
   $('.role-radio-edit').on('change', function () {
     let roleId = $(this).val()
     let email = $('#edit-user-email').val()
-    console.log(email)
+
     $.ajax({
       type: "POST",
-      url: "utils/getUsersDetails.php",
+      url: "utils/getDetails.php",
       data: {
         method: 'getUserDetails',
         email
@@ -75,8 +101,9 @@ $(document).ready(function () {
     }).done(function (userDetails) {
       $.ajax({
         type: "GET",
-        url: "utils/getRolePermissions.php",
+        url: "utils/getDetails.php",
         data: {
+          method: 'getRolePermissions',
           roleId
         },
         dataType: 'json',
@@ -90,7 +117,7 @@ $(document).ready(function () {
   function getUsersEmails() {
     $.ajax({
       type: 'GET',
-      url: 'utils/getUsersDetails.php',
+      url: 'utils/getDetails.php',
       data: { method: 'getUsersEmails' },
       dataType: 'json',
     }).done(function (emails) {
@@ -106,7 +133,7 @@ $(document).ready(function () {
   function setUserPermissions(userId) {
     $.ajax({
       type: 'GET',
-      url: 'utils/getUsersDetails.php',
+      url: 'utils/getDetails.php',
       data: { method: 'getUserPermissions', userId },
       dataType: 'json',
     }).done(function (permissions) {
@@ -119,7 +146,7 @@ $(document).ready(function () {
   function getRolePermissions(roleId, userId) {
     $.ajax({
       type: 'GET',
-      url: 'utils/getUsersDetails.php',
+      url: 'utils/getDetails.php',
       data: { method: 'getRolePermissions', roleId },
       dataType: 'json',
     }).done(function (permissions) {
@@ -144,7 +171,7 @@ $(document).ready(function () {
   function getUserDetails(email) {
     $.ajax({
       type: 'POST',
-      url: 'utils/getUsersDetails.php',
+      url: 'utils/getDetails.php',
       data: { method: 'getUserDetails', email },
       dataType: 'json',
     }).done(function (details) {
@@ -188,16 +215,30 @@ $(document).ready(function () {
     });
   }
 
+  function setRolePermissions(roleName) {
+    $.ajax({
+      type: 'GET',
+      url: 'utils/getDetails.php',
+      data: { method: 'getRolePermissionsByName', roleName },
+      dataType: 'json',
+    }).done(function (permissions) {
+      permissions.forEach(permission => {
+        $(`input[name='re_permission[]'][value='${permission[0]}']`).prop('checked', true)
+      });
+    });
+  }
+
   function setRoleNameAndPermissions() {
     let roleName = $('#roles-names-list-input').val()
     $('#edit-role-name').val(roleName)
 
     $.ajax({
       type: 'GET',
-      url: 'utils/getUsersDetails.php',
-      data: { method: 'getRolePermissionsByName', roleName },
+      url: 'utils/getDetails.php',
+      data: { method: 'getPermissions' },
       dataType: 'json',
     }).done(function (permissions) {
+      $(".permissions-data-role-edit-inner").empty()
       permissions.forEach(permission => {
         $(".permissions-data-role-edit-inner").append(
           `<div class="permission-role-edit-div">
@@ -212,7 +253,7 @@ $(document).ready(function () {
         );
       })
 
-      // setRolePermissions(roleName);
+      setRolePermissions(roleName);
     });
   }
 
@@ -226,6 +267,77 @@ $(document).ready(function () {
   $('#roles-names-list-input').on('change', function () {
     $('.edit-role-input-data').prop('disabled', false);
     setRoleNameAndPermissions()
+  })
+
+
+  // Permissions
+  function getPermissions() {
+    $.ajax({
+      type: 'GET',
+      url: 'utils/getDetails.php',
+      data: { method: 'getPermissions' },
+      dataType: 'json',
+    }).done(function (permissions) {
+      $('#permissions-desc-list').empty();
+      permissions.forEach(permission => {
+        let permissionOption = document.createElement('option');
+        permissionOption.innerHTML = permission[1];
+        $('#permissions-desc-list').append(permissionOption);
+      })
+    });
+  }
+
+  function setPermissionRoles(permissionDesc) {
+    $.ajax({
+      type: 'GET',
+      url: 'utils/getDetails.php',
+      data: { method: 'getRolesByPermissionDesc', permissionDesc },
+      dataType: 'json',
+    }).done(function (roles) {
+      roles.forEach(role => {
+        $(`input[name='pe_role[]'][value='${role[0]}']`).prop('checked', true)
+      });
+    });
+  }
+
+  function getPermissionRoles(permissionDesc) {
+    $('#edit-permission-desc').val(permissionDesc);
+
+    $.ajax({
+      type: 'GET',
+      url: 'utils/getDetails.php',
+      data: { method: 'getRoles' },
+      dataType: 'json',
+    }).done(function (roles) {
+      $(".roles-data-permission-edit-inner").empty()
+      roles.forEach(role => {
+        $(".roles-data-permission-edit-inner").append(
+          `<div class="role-permission-edit-div">
+            <label class="switch">
+              <input class="edit-permission-input-data" type="checkbox" name="pe_role[]" value="${role[0]}">
+              <span class="slider"></span>
+            </label>
+            <div class="role-name">
+              <p>${role[1]}</p>
+            </div>
+          </div>`
+        );
+      })
+
+      setPermissionRoles(permissionDesc);
+    });
+  }
+
+  $('#edit-permission').on('click', function () {
+    if ($('#permissions-desc-list-input').val().length == 0) {
+      $('.edit-permission-input-data').prop('disabled', true);
+    }
+    getPermissions()
+  });
+
+  $('#permissions-desc-list-input').on('change', function () {
+    $('.edit-permission-input-data').prop('disabled', false);
+    getPermissionRoles(this.value);
   })
 
   $(document).on("keydown", "form", function (event) {

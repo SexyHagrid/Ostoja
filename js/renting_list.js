@@ -4,51 +4,26 @@ $(document).ready(function () {
   onStart();
 
   function onStart() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var result = this.responseText.split('|');
-        data.userID = parseInt(result[0]);
-        data.userRole = parseInt(result[1]);
-
-        getRentalOffers();
-      }
-    }
-    xhttp.open('GET', 'user.php?sessionID=' + getSessionID(), true);
-    xhttp.send();
-  }
-
-  function getRentalOffers() {
     data.rentalType = new URLSearchParams(window.location.search).get('id');
 
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        reorganizeData(this.responseText);
-        displayData();
-      }
-    }
-    xhttp.open('GET', 'Wynajem_lista.php?id=' + data.rentalType, true);
-    xhttp.send();
+    reorganizeData();
+    displayData();
   }
 
-  function reorganizeData(responseData) {
-    var rentalList = responseData.split('||');
-
+  function reorganizeData() {
     data.idList = [];
     data.addressList = [];
     data.imagesList = [];
 
-    for (var i = 0; i < rentalList.length; i++) {
-      var rentalData = rentalList[i].split('|');
+    for (var i = 0; i < resultArray.length; i++) {
 
-      var id = rentalData[0];
+      var id = resultArray[i].id;
       if (isNaN(id) || id == "") {
         break;
       }
 
-      var address = rentalData[1];
-      var image = rentalData[2];
+      var address = resultArray[i].address;
+      var image = resultArray[i].image;
 
       if (!data.idList.includes(id)) {
         data.idList.push(id);
@@ -87,10 +62,11 @@ $(document).ready(function () {
     div.classList.add('main-col');
     div.setAttribute('data-id', id);
 
-    var directory = 'zdjeciaWynajem/' + data.rentalType + 'pokojowe/';
+    var directory = 'assets/zdjeciaWynajem/' + data.rentalType + 'pokojowe/';
     div.style.backgroundImage = 'url(' + directory + backgroundImage + ')';
     div.style.backgroundSize = 'cover';
     div.style.backgroundRepeat = 'no-repeat';
+    div.style.cursor = "pointer";
     return div;
   }
 
@@ -100,18 +76,11 @@ $(document).ready(function () {
     label.style.color = 'black';
     label.style.backgroundColor = 'white';
     label.style.width = '100%';
+    label.style.cursor = "pointer";
     return label;
   }
 
-  function createNewLineElement() {
-    return document.createElement('br');
-  }
-
   function onItemClick(id) {
-    document.location.href = 'Wynajem_detale.html?id=' + id;
-  }
-
-  function getSessionID() {
-    return localStorage.getItem('sessionID');
+    document.location.href = 'renting_details.php?id=' + id;
   }
 });

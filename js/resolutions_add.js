@@ -1,26 +1,31 @@
 $(document).ready(function () {
   var data = {};
+  var createResolutionButton = $('#createButton');
+
+  createResolutionButton.on('click', function() {
+    createResolution();
+  });
+
 
   function createResolution() {
     xhttp = new XMLHttpRequest();
     var resolutionID = document.getElementById('resolutionID').value;
     var resolutionText = document.getElementById('resolutionText').value;
     var resolutionImage = document.getElementById('resolutionImage').value;
-    var resolutionAuthor = data.userID;
-
-    var request = 'baza_uchwal_dodaj.php?id=' + resolutionID + '&text=' + resolutionText + '&image=' + resolutionImage + '&author=' + resolutionAuthor;
-
+  
+    var request = 'resolutions_add.php?id=' + resolutionID + '&text=' + resolutionText + '&image=' + resolutionImage;
+  
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4) {
-        if (this.responseText == "SUCCESS") {
+        if (this.responseText.includes("SUCCESS")) {
           alert('Uchwała została dodana');
-          document.location.href = "Baza_uchwal.html";
+          document.location.href = "resolutions.php";
         } else {
           alert('Błąd podczas dodawania uchwały');
         }
       }
     }
-
+  
     xhttp.open('GET', request, true);
     xhttp.send();
   }
@@ -35,7 +40,7 @@ $(document).ready(function () {
 
         // Przekieruj do bazy uchwał jeżeli typ użytkownika różny od admina i redaktora
         if (!isAdminOrEditor()) {
-          document.location.href = "Baza_uchwal.html";
+          document.location.href = "resolutions.php";
         }
       }
     }

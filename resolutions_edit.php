@@ -1,7 +1,9 @@
 <?php
+    session_start();
 
     include_once 'config/messages.php';
     include_once 'utils/permissions.php';
+    include_once 'utils/breadcrumbs.php';
 
     $id = intval($_GET['id']);
     $text = $_GET['text'];
@@ -27,7 +29,12 @@
         $query = "SELECT * FROM uchwaly WHERE ID_uchwaly='".$id."';";
         $result=$conn->query($query);
         $row=$result->fetch_assoc();
-        echo $row['ID_uchwaly'] . '|' . $row['tresc_uchwaly'] . '|' . $row['link'] . '|' . $row['autor'];
+
+        $resolution = new stdClass;
+        $resolution->id = $row['ID_uchwaly'];
+        $resolution->text = $row['tresc_uchwaly'];
+        $resolution->image = $row['link'];
+        $resolution->author = $row['autor'];
     }
 
     $conn->close();
@@ -39,15 +46,24 @@
     <link rel="stylesheet" type="text/css" href="css/news.css" media="screen" />
     <?php include('templates/body.php'); ?>
 
-                <div class="col-7 page-name">
-                    <p>Edytuj</p>
+            <div class="col-7 page-name">
+                <div id="breadcrumbs-div">
+                    <nav class="navbar-expand-lg">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                        <?php Breadcrumbs::showBreadcrumbs(['page' => 'Uchwały - edytuj', 'address' => 'resolutions_edit.php']); ?>
+                        </ol>
+                    </nav>
+                    </nav>
+                </div>
+                <p>Uchwały</p>
                 </div>
                 <div class="col-2 upper-right-buttons">
-                    <?php if (Permissions::hasPermission("Panel administracyjny")): ?>
-                        <a href="admin_panel.php"><p id="admin-panel">Panel administracyjny</p></a>
-                        <hr>
-                    <?php endif; ?>
-                    <a href="logout.php"><p>Wyloguj</p></a>
+                <?php if (Permissions::hasPermission("Panel administracyjny")): ?>
+                    <a href="admin_panel.php"><p id="admin-panel">Panel administracyjny</p></a>
+                    <hr>
+                <?php endif; ?>
+                <a href="logout.php"><p>Wyloguj</p></a>
                 </div>
             </div>
         </div>
@@ -64,12 +80,15 @@
                 <input type="text" id="resolutionText"/> <br>
                 <label>Link do zdjęcia (opcjonalne)</label> <br>
                 <input type="text" id="resolutionImage"/> <br>
-                <input id="updateButton" type="button" value="Edytuj" onclick="editResolution();"/>
+                <input id="updateButton" type="button" value="Edytuj"/>
                 </form>
             </div>
         </div>
 
         <?php include('templates/footer.php'); ?>
+        <script>
+            var resolution = <?= json_encode($resolution) ?>; 
+        </script>
         <script src="js/resolutions_edit.js"></script>
     </body>
 </html>

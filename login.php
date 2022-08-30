@@ -1,4 +1,5 @@
 <?php
+
   session_start();
   if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     header('Location: index.php');
@@ -8,7 +9,8 @@
 
   include_once 'config/db_connect.php';
   include 'utils/user.php';
-  include 'utils/string.php';
+  include_once 'config/messages.php';
+  include_once 'utils/permissions.php';
 
   $email = $password = '';
   $errors = ['email' => '', 'password' => ''];
@@ -29,7 +31,6 @@
       $stmt = $dbConn->dbRequest("SELECT email, password, userId FROM users where email like '$email'");
       $stmt->execute();
       $users = $stmt->fetchAll();
-      $conn = null;
 
       if (count($users) == 0) {
         $error_prompt_message = 'Nieprawidłowe dane uwierzytelniające';

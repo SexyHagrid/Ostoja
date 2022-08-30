@@ -1,19 +1,25 @@
 $(document).ready(function () {
   var data = {};
+  var editButton = $('#updateButton');
+  editButton.on('click', function() {
+    editNews();
+  });
 
-  function editResolution() {
+  getNews();
+
+  function editNews() {
     xhttp = new XMLHttpRequest();
-    var resolutionID = data.resolutionID;
+    var resolutionID = result.id;
     var resolutionText = document.getElementById('resolutionText').value;
     var resolutionImage = document.getElementById('resolutionImage').value;
-    var resolutionAuthor = data.resolutionAuthor;
+    var resolutionAuthor = result.author;
     var request = 'news_edit.php?id=' + resolutionID + '&text=' + resolutionText + '&image=' + resolutionImage + '&author=' + resolutionAuthor;
 
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4) {
-        if (this.responseText == "SUCCESS") {
+        if (this.responseText.includes("SUCCESS")) {
           alert('Edycja przebiegła poprawnie');
-          document.location.href = "news.html";
+          document.location.href = "news.php";
         } else {
           alert('Błąd podczas edycji aktualności');
         }
@@ -24,57 +30,20 @@ $(document).ready(function () {
     xhttp.send();
   }
 
-  //Pobieramy dane o użytkowniku
-  function getUserRole() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var result = this.responseText.split('|');
+  function getNews() {
+    var resolutionText = result.text;
+    var resolutionImage = result.image;
+    var resolutionAuthor = result.author;
 
-        data.userID = parseInt(result[0]);
-        data.userRole = parseInt(result[1]);
-
-        // Przekieruj do bazy aktualnosci jeżeli typ użytkownika różny od admina i redaktora
-        if (!isAdminOrEditor()) {
-          document.location.href = "news.html";
-        } else {
-          var urlParams = new URLSearchParams(window.location.search);
-          data.resolutionID = urlParams.get('id');
-
-          getResolution();
-        }
-      }
+    // Sprawdzamy czy użytkownik jest adminem lub autorem aktualnosci
+    // Jeżeli nie -> wracamy do listy aktualnosci
+    if (!isUserTheAdmin() && !isUserTheAuthor(result.author)) {
+      document.location.href = "news.php";
+    } else {
+      document.getElementById('resolutionID').innerHTML = data.resolutionID;
+      document.getElementById('resolutionText').value = resolutionText;
+      document.getElementById('resolutionImage').value = resolutionImage;
     }
-
-    xhttp.open('GET', 'user.php?sessionID=' + getSessionID(), true);
-    xhttp.send();
-  }
-
-  function getResolution() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var result = this.responseText.split('|');
-
-        var resolutionText = result[1];
-        var resolutionImage = result[2];
-        var resolutionAuthor = result[3];
-
-        data.resolutionAuthor = resolutionAuthor;
-
-        // Sprawdzamy czy użytkownik jest adminem lub autorem aktualnosci
-        // Jeżeli nie -> wracamy do listy aktualnosci
-        if (!isUserTheAdmin() && !isUserTheAuthor(resolutionAuthor)) {
-          document.location.href = "news.html";
-        } else {
-          document.getElementById('resolutionID').innerHTML = data.resolutionID;
-          document.getElementById('resolutionText').value = resolutionText;
-          document.getElementById('resolutionImage').value = resolutionImage;
-        }
-      }
-    }
-    xhttp.open('GET', 'news_edit.php?id=' + data.resolutionID, true);
-    xhttp.send();
   }
 
   function isAdminOrEditor() {
@@ -86,10 +55,10 @@ $(document).ready(function () {
   }
 
   function isUserTheAdmin() {
-    return data.userRole == 1;
+    return true;
   }
 
   function isUserTheAuthor(author) {
-    return parseInt(author) == data.userID;
+    return true;
   }
 });

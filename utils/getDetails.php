@@ -3,6 +3,7 @@
   require_once './user.php';
   require_once './role.php';
   require_once './permissions.php';
+  require_once './meeting.php';
 
   if(isset($_POST['method'])) {
     $method = htmlspecialchars($_POST['method']);
@@ -19,6 +20,14 @@
         echo json_encode(User::getUsersEmails());
         break;
 
+      case 'getPermissions':
+        echo json_encode(Permissions::getPermissions());
+        break;
+
+      case 'getRoles':
+        echo json_encode(Role::getRoles());
+        break;
+
       case 'getRolePermissions':
         $roleId = htmlspecialchars($_GET['roleId']);
         echo json_encode(Permissions::getPermissionsByRole($roleId));
@@ -33,6 +42,21 @@
       case 'getUserPermissions':
         $userId = htmlspecialchars($_GET['userId']);
         echo json_encode(Permissions::getPermissionsByUser($userId));
+        break;
+
+      case 'getRolesByPermissionDesc':
+        $permissionDesc = htmlspecialchars($_GET['permissionDesc']);
+        echo json_encode(Role::getRolesByPermissionDesc($permissionDesc));
+        break;
+
+      case 'getMeeting':
+        $meetingDate = htmlspecialchars($_GET['date']);
+        echo json_encode(Meeting::getMeeting($meetingDate));
+        break;
+
+      case 'deleteMeeting':
+        $meetingDate = htmlspecialchars($_GET['date']);
+        echo json_encode(Meeting::deleteMeeting($meetingDate));
         break;
     }
   }

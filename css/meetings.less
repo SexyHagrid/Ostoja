@@ -1,0 +1,130 @@
+.meetings-div {
+  width: 100vw;
+  height: 80vh;
+}
+
+#meeting-closest {
+  position: absolute;
+  width: 40vw;
+  height: 45vh;
+  top: 50%;
+  left: 50%;
+  margin-top: -22.5vh;
+  margin-left: -20vw;
+  z-index: 15;
+  background: linear-gradient(45deg, #fdfcfc, #dddddd, #fdfcfc);
+}
+
+#meeting-past {
+  position: absolute;
+  width: 20vw;
+  height: 22.5vh;
+  top: 50%;
+  left: 20%;
+  margin-top: -11.25vh;
+  margin-left: -10vw;
+  background: linear-gradient(45deg, #cfcece, #bbbbbb, #cfcece);
+}
+
+#meeting-incoming {
+  position: absolute;
+  width: 20vw;
+  height: 22.5vh;
+  top: 50%;
+  right: 20%;
+  margin-top: -11.25vh;
+  margin-right: -10vw;
+  background: linear-gradient(45deg, #cfcece, #bbbbbb, #cfcece);
+}
+
+#meeting-closest, #meeting-past, #meeting-incoming {
+  padding: 1%;
+  text-align: center;
+  box-shadow: 0px 0px 5px 5px rgb(168, 168, 168);
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+hr {
+  width: 80%;
+}
+
+#meeting-closest, #meeting-past, #meeting-incoming {
+  h4, h3, h2, p {
+    user-select: none;
+  }
+}
+
+#meeting-past, #meeting-incoming {
+  &:hover {
+    opacity: 0.9;
+    cursor: pointer;
+  }
+}
+
+.upper-elements {
+  position: absolute;
+  width: 90vw;
+  height: 12vh;
+  left: 5vw;
+}
+
+.upper-meetings-overview-outer {
+  width: 90vw;
+  height: 10vh;
+  background-color: rgb(233, 233, 233);
+  box-shadow: 0px 0px 5px 5px rgb(168, 168, 168);
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.upper-meetings-overview-inner {
+  min-width: 90vw;
+  width: max-content;
+  height: 100%;
+}
+
+.meeting-overview-tile {
+  display: inline-block;
+  position: relative;
+  width: 10vw;
+  height: 7vh;
+  background-color: rgba(168, 168, 168, 0.562);
+  box-shadow: 0px 0px 2px 2px rgb(168, 168, 168);
+  margin: 1vh 0.5vw 0;
+  text-align: center;
+
+  .x-glyph {
+    display: none;
+    margin-bottom: 0;
+    font-size: medium;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  .inner-text {
+    margin-top: 10%;
+    font-size: large;
+  }
+
+  &:hover {
+    opacity: 0.9;
+    cursor: pointer;
+  }
+}
+
+.mot-chosen {
+  background-color: rgba(134, 134, 134, 0.733);
+}
+
+#add-meeting-form {
+  #buttons {
+    position: absolute;
+    right: 0;
+    margin-top: 1%;
+  }
+}

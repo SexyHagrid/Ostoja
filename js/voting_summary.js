@@ -4,69 +4,37 @@ $(document).ready(function () {
   onStart();
 
   function onStart() {
-    // Pobieramy z bazy danych id i rolę użytkownika
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var result = this.responseText.split('|');
-        data.userID = parseInt(result[0]);
-        data.userRole = parseInt(result[1]);
-
-        var urlParams = new URLSearchParams(window.location.search);
-        data.surveyID = urlParams.get('id');
-
-        // Jeżeli żaden użytkownik nie jest zalogowany -> przechodzimy do listy ankiet
-        if (isNaN(data.userID) || !isAdmin()) {
-          document.location.href = "Glosowania.html";
-        }
-
-        getSurveyAnswers();
-      }
-    }
-
-    xhttp.open('GET', 'user.php?sessionID=' + getSessionID(), true);
-    xhttp.send();
+    getSurveyAnswers();
   }
 
   function getSurveyAnswers() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var answersList = this.responseText.split('||');
+    data.surveyName = resultArray[0].surveyName;
+    data.questionIDList = [];
+    data.questionTextList = [];
+    data.questionTypeList = [];
+    data.answerTextList = [];
 
-        data.surveyName = answersList[0].split('|')[0];
-        data.questionIDList = [];
-        data.questionTextList = [];
-        data.questionTypeList = [];
-        data.answerTextList = [];
-
-        for (var i = 0; i < answersList.length; i++) {
-          var answerData = answersList[i].split('|');
-
-          var questionID = answerData[1];
-          if (isNaN(questionID)) {
-            break;
-          }
-          var questionText = answerData[2];
-          var questionType = answerData[3];
-          var answerText = answerData[4];
-
-          if (!data.questionIDList.includes(questionID)) {
-            data.questionIDList.push(questionID);
-            data.questionTextList.push(questionText);
-            data.questionTypeList.push(questionType);
-            data.answerTextList.push([]);
-          }
-
-          var index = data.questionIDList.indexOf(questionID);
-          data.answerTextList[index].push(answerText);
-        }
-
-        loadAnswers();
+    for (var i = 0; i < resultArray.length; i++) {
+      var questionID = resultArray[i].questionId;
+      if (isNaN(questionID)) {
+        break;
       }
+      var questionText = resultArray[i].questionText;
+      var questionType = resultArray[i].questionType;
+      var answerText = resultArray[i].answerText;
+
+      if (!data.questionIDList.includes(questionID)) {
+        data.questionIDList.push(questionID);
+        data.questionTextList.push(questionText);
+        data.questionTypeList.push(questionType);
+        data.answerTextList.push([]);
+      }
+
+      var index = data.questionIDList.indexOf(questionID);
+      data.answerTextList[index].push(answerText);
     }
-    xhttp.open('GET', 'voting.php?action=4&surveyID=' + data.surveyID, true);
-    xhttp.send();
+
+    loadAnswers();
   }
 
   function loadAnswers() {

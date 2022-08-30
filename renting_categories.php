@@ -1,7 +1,10 @@
 <?php
 
+  session_start();
+
   include_once 'config/messages.php';
   include_once 'utils/permissions.php';
+  include_once 'utils/breadcrumbs.php';
 
 ?>
 
@@ -12,6 +15,15 @@
   <?php include('templates/body.php'); ?>
 
         <div class="col-7 page-name">
+          <div id="breadcrumbs-div">
+            <nav class="navbar-expand-lg">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'Wynajem - kategorie', 'address' => 'renting_categories.php']); ?>
+                </ol>
+              </nav>
+            </nav>
+          </div>
           <p>Wynajem</p>
         </div>
         <div class="col-2 upper-right-buttons">
@@ -26,19 +38,19 @@
 
     <div class="row justify-content-center">
       <div class="col-3 main-col" style="background-color: lightblue;">
-        <a href="Wynajem_lista.html?id=1" class="czcionka_glowna_kategorie"><p>1-pokojowe</p></a>
+        <a href="renting_list.php?id=1" class="czcionka_glowna_kategorie"><p>1-pokojowe</p></a>
       </div>
       <div class="col-3 main-col" style="background-color: lightblue;">
-        <a href="Wynajem_lista.html?id=2" class="czcionka_glowna_kategorie"><p>2-pokojowe</p></a>
+        <a href="renting_list.php?id=2" class="czcionka_glowna_kategorie"><p>2-pokojowe</p></a>
       </div>
       <div class="col-3 main-col" style="background-color: lightblue;">
-        <a href="Wynajem_lista.html?id=3" class="czcionka_glowna_kategorie"><p>3-pokojowe</p></a>
+        <a href="renting_list.php?id=3" class="czcionka_glowna_kategorie"><p>3-pokojowe</p></a>
       </div>
       <div class="col-3 main-col" style="background-color: white;">
         <a class="czcionka_glowna_kategorie"><p></p></a>
       </div>
       <div id="addOfferButtonElement" class="col-3 main-col" style="background-color: lightblue; display: none;">
-        <a href="Wynajem_dodaj.html" class="czcionka_glowna_kategorie"><p>Dodaj ofertę</p></a>
+        <a href="renting_add.php" class="czcionka_glowna_kategorie"><p>Dodaj ofertę</p></a>
       </div>
       <div class="col-3 main-col" style="background-color: white;">
         <a class="czcionka_glowna_kategorie"><p></p></a>

@@ -1,52 +1,31 @@
 $(document).ready(function () {
   var data = {};
+  var submitButton = $('#submitButton');
+  submitButton.on('click', function() {
+    onSendButtonClick();
+  });
 
   onStart();
 
   function onStart() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var result = this.responseText.split('|');
-        data.userID = parseInt(result[0]);
-        data.userRole = parseInt(result[1]);
-
-        if (isNaN(data.userID) || data.userID == "") {
-          document.location.href = "Wynajem_kategorie.html";
-        }
-
-        getRentalCategories();
-      }
-    }
-    xhttp.open('GET', 'user.php?sessionID=' + getSessionID(), true);
-    xhttp.send();
+    getRentalCategories();
   }
 
   function getRentalCategories() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var resultList = this.responseText.split('||');
+    data.idList = [];
+    data.nameList = [];
 
-        data.idList = [];
-        data.nameList = [];
+    for (var i = 0; i < resultArray.length; i++) {
+      var id = resultArray[i].id;
+      var name = resultArray[i].text;
 
-        for (var i = 0; i < resultList.length; i++) {
-          var result = resultList[i].split('|');
-          var id = result[0];
-          var name = result[1];
-
-          if (!isNaN(id) && id != "") {
-            data.idList.push(id);
-            data.nameList.push(name);
-          }
-        }
-
-        displayData();
+      if (!isNaN(id) && id != "") {
+        data.idList.push(id);
+        data.nameList.push(name);
       }
     }
-    xhttp.open('GET', 'Wynajem_dodaj.php?action=0', true);
-    xhttp.send();
+
+    displayData();
   }
 
   function displayData() {
@@ -101,8 +80,8 @@ $(document).ready(function () {
       formData.append('files[]', uploadPhotosElement.files[i]);
     }
 
-    var directory = 'zdjeciaWynajem/' + typeSelectElement.value + 'pokojowe/';
-    fetch('Wynajem_dodaj.php?action=1&directory=' + directory, {
+    var directory = 'assets/zdjeciaWynajem/' + typeSelectElement.value + 'pokojowe/';
+    fetch('renting_add.php?action=1&directory=' + directory, {
       method: 'POST',
       body: formData
     })
@@ -131,7 +110,7 @@ $(document).ready(function () {
         sendPhotosInfoToDatabase(photosList, rentalId);
       }
     }
-    var url = 'Wynajem_dodaj.php?action=2&type=' + type + '&price=' + price + '&address=' + address + '&time=' + time + '&phone=' + phone + '&info=' + additionalInfo;
+    var url = 'renting_add.php?action=2&type=' + type + '&price=' + price + '&address=' + address + '&time=' + time + '&phone=' + phone + '&info=' + additionalInfo;
     xhttp.open('GET', url, true);
     xhttp.send();
   }
@@ -147,19 +126,15 @@ $(document).ready(function () {
           data.photosUploaded++;
           if (data.photosUploaded >= data.photosToUpload) {
             window.confirm("Oferta została dodana!");
-            document.location.href = "Wynajem_kategorie.html";
+            document.location.href = "renting_categories.php";
           }
         }
       }
-      var url = 'Wynajem_dodaj.php?action=3&rentalId=' + rentalId + '&fileName=' + photosList[i];
+      var url = 'renting_add.php?action=3&rentalId=' + rentalId + '&fileName=' + photosList[i];
       xhttp.open('GET', url, true);
       xhttp.send();
 
     }
-  }
-
-  function getSessionID() {
-    return localStorage.getItem('sessionID');
   }
 
 });

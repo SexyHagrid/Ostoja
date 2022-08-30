@@ -1,0 +1,54 @@
+@tile-image-linear-gradient: linear-gradient(355deg, rgba(2555, 255, 255, 0),rgba(255, 255, 255, 0.5), 60%,rgba(255, 255, 255, 1), 85%,rgba(255, 255, 255, 1));
+
+.main-col {
+  background-color: rgb(228, 227, 227);
+  box-shadow: 0px 0px 5px 5px rgb(168, 168, 168);
+  height: 37vh;
+  width: 31vw;
+  margin: 0.5% 0.7%;
+  font-size: 3vh;
+
+  h1 {
+    position: absolute;
+    margin: 2% 0 0 3%;
+    text-decoration: none;
+    color: black;
+  }
+}
+
+.tile-image {
+  height: 37vh;
+  width: 31vw;
+
+  a {
+    display: block;
+    position: absolute;
+    height: 37vh;
+    width: 31vw;
+  }
+}
+
+#tile-image-a-resolutions {
+  background-image: @tile-image-linear-gradient, url('../assets/resolutions.jpg');
+  background-size: cover;
+}
+#tile-image-a-news {
+  background-image: @tile-image-linear-gradient, url('../assets/news.jpg');
+  background-size: cover;
+}
+#tile-image-a-voting {
+  background-image: @tile-image-linear-gradient, url('../assets/voting.png');
+  background-size: cover;
+}
+#tile-image-a-meetings {
+  background-image: @tile-image-linear-gradient, url('../assets/meetings.jpg');
+  background-size: cover;
+}
+#tile-image-a-billings {
+  background-image: @tile-image-linear-gradient, url('../assets/billings.jpg');
+  background-size: cover;
+}
+#tile-image-a-support {
+  background-image: @tile-image-linear-gradient, url('../assets/support.jpg');
+  background-size: cover;
+}

@@ -4,58 +4,25 @@ $(document).ready(function () {
   onStart();
 
   function onStart() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var result = this.responseText.split('|');
-        data.userID = parseInt(result[0]);
-        data.userRole = parseInt(result[1]);
-
-        getRentalOffer();
-      }
-    }
-    xhttp.open('GET', 'user.php?sessionID=' + getSessionID(), true);
-    xhttp.send();
+    reorganizeData();
+    displayData();
   }
 
-  function getRentalOffer() {
-    data.id = new URLSearchParams(window.location.search).get('id');
-    data.isGalleryVisible = false;
+  function reorganizeData() {
+    var rentalData = resultArray[0];
 
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        reorganizeData(this.responseText);
-        displayData();
-      }
-    }
-    xhttp.open('GET', 'Wynajem_detale.php?id=' + data.id, true);
-    xhttp.send();
-  }
-
-  function reorganizeData(responseData) {
-    var rentalList = responseData.split('||');
-    var rentalData = rentalList[0].split('|');
-
-    data.rentalId = rentalData[0];
-    data.rentalPrice = rentalData[1];
-    data.rentalAddress = rentalData[2];
-    data.rentalTime = rentalData[3];
-    data.rentalPhone = rentalData[4];
-    data.rentalInfo = rentalData[5];
+    data.rentalId = rentalData.id;
+    data.rentalPrice = rentalData.price;
+    data.rentalAddress = rentalData.address;
+    data.rentalTime = rentalData.time;
+    data.rentalPhone = rentalData.phone;
+    data.rentalInfo = rentalData.info;
     data.rentalPhotos = [];
-    data.rentalType = rentalData[7];
+    data.rentalType = rentalData.type;
 
-    for (var i = 0; i < rentalList.length; i++) {
-      var rentalData = rentalList[i].split('|');
-
-      var id = rentalData[0];
-      if (isNaN(id) || id == "") {
-        break;
-      }
-
-      if (rentalData[6] != " ") {
-        data.rentalPhotos.push(rentalData[6]);
+    for (var i = 0; i < resultArray.length; i++) {
+      if (resultArray[i].photo != " ") {
+        data.rentalPhotos.push(resultArray[i].photo);
       }
     }
   }
@@ -66,7 +33,6 @@ $(document).ready(function () {
     var phoneLabel = document.getElementById('phoneLabel');
     var priceLabel = document.getElementById('priceLabel');
     var timeLabel = document.getElementById('timeLabel');
-    var rentalImage = document.getElementById('rentalImage');
 
     addressLabel.innerHTML = data.rentalAddress;
     additionalInfoLabel.innerHTML = data.rentalInfo;
@@ -74,7 +40,7 @@ $(document).ready(function () {
     priceLabel.innerHTML = data.rentalPrice;
     timeLabel.innerHTML = data.rentalTime;
 
-    var directory = 'zdjeciaWynajem/' + data.rentalType + 'pokojowe/';
+    var directory = 'assets/zdjeciaWynajem/' + data.rentalType + 'pokojowe/';
 
     if (data.rentalPhotos.length == 0) {
       addImageToSlider("placeholder.png", 0);
@@ -111,20 +77,5 @@ $(document).ready(function () {
     }
     var carouselIndicators = document.getElementById('carouselIndicators');
     carouselIndicators.append(li);
-  }
-
-  function toggleGalleryVisibility() {
-    data.isGalleryVisible = !data.isGalleryVisible;
-    var carousel = document.getElementById('carouselExampleIndicators');
-
-    if (data.isGalleryVisible) {
-      carousel.style.display = 'block';
-    } else {
-      carousel.style.display = 'none';
-    }
-  }
-
-  function getSessionID() {
-    return localStorage.getItem('sessionID');
   }
 });

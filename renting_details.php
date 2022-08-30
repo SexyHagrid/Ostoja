@@ -1,7 +1,10 @@
 <?php
 
+    session_start();
+
     include_once 'config/messages.php';
     include_once 'utils/permissions.php';
+    include_once 'utils/breadcrumbs.php';
 
     $id = $_GET['id'];
 
@@ -19,11 +22,30 @@
     $resultPhotos = $conn->query($queryPhotos);
     $resultPhotosCount = $resultPhotos->num_rows;
 
+    $resultArray = [];
     if ($resultPhotosCount == 0) {
-        echo $row['id'] . "|" .  $row['czynsz'] . "|" . $row['adres'] . "|" . $row['okres_wynajmu'] . "|" . $row['telefon'] . "|" . ($row['dodatkowe_informacje'] ?: ' ') . "|" . " " . "|" . $row['typ'] . "||";
+        $obj = new stdClass;
+        $obj->id = $row['id'];
+        $obj->price = $row['czynsz'];
+        $obj->address = $row['adres'];
+        $obj->time = $row['okres_wynajmu'];
+        $obj->phone = $row['telefon'];
+        $obj->info = ($row['dodatkowe_informacje'] ?: ' ');
+        $obj->photo = " ";
+        $obj->type = $row['typ'];
+        array_push($resultArray, $obj);
     } else {
         while ($rowPhoto = $resultPhotos->fetch_assoc()) {
-            echo $row['id'] . "|" .  $row['czynsz'] . "|" . $row['adres'] . "|" . $row['okres_wynajmu'] . "|" . $row['telefon'] . "|" . ($row['dodatkowe_informacje'] ?: ' ') . "|" . ($rowPhoto['link'] ?: " ") . "|" . $row['typ'] . "||";
+            $obj = new stdClass;
+            $obj->id = $row['id'];
+            $obj->price = $row['czynsz'];
+            $obj->address = $row['adres'];
+            $obj->time = $row['okres_wynajmu'];
+            $obj->phone = $row['telefon'];
+            $obj->info = ($row['dodatkowe_informacje'] ?: ' ');
+            $obj->photo = ($rowPhoto['link'] ?: " ");
+            $obj->type = $row['typ'];
+            array_push($resultArray, $obj);
         }
     }
 
@@ -36,20 +58,29 @@
     <link rel="stylesheet" type="text/css" href="css/renting_categories.css" media="screen" />
     <?php include('templates/body.php'); ?>
 
-                <div class="col-7 page-name">
-                    <p>Wynajem</p>
-                </div>
-                <div class="col-2 upper-right-buttons">
-                    <?php if (Permissions::hasPermission("Panel administracyjny")): ?>
-                        <a href="admin_panel.php"><p id="admin-panel">Panel administracyjny</p></a>
-                        <hr>
-                    <?php endif; ?>
-                    <a href="logout.php"><p>Wyloguj</p></a>
-                </div>
+        <div class="col-7 page-name">
+            <div id="breadcrumbs-div">
+                <nav class="navbar-expand-lg">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                    <?php Breadcrumbs::showBreadcrumbs(['page' => 'Wynajem - detale', 'address' => 'renting_details.php']); ?>
+                    </ol>
+                </nav>
+                </nav>
+            </div>
+            <p>Wynajem - detale</p>
+            </div>
+            <div class="col-2 upper-right-buttons">
+            <?php if (Permissions::hasPermission("Panel administracyjny")): ?>
+                <a href="admin_panel.php"><p id="admin-panel">Panel administracyjny</p></a>
+                <hr>
+            <?php endif; ?>
+            <a href="logout.php"><p>Wyloguj</p></a>
             </div>
         </div>
+        </div>
 
-        <div class="row justify-content-center" id="contentDiv">
+        <div class="row justify-content-center main-content-row" id="contentDiv">
             <table>
             <tr>
                 <td colspan="3">
@@ -100,6 +131,9 @@
         </div>
 
         <?php include('templates/footer.php'); ?>
+        <script>
+            var resultArray = <?= json_encode($resultArray) ?>;
+        </script>
         <script src="js/renting_details.js"></script>
     </body>
 </html>

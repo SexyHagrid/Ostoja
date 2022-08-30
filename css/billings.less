@@ -1,0 +1,213 @@
+body {
+  overflow-x: hidden;
+}
+
+.left-search-box, .main-data-box {
+  max-height: 80vh;
+  background: linear-gradient(45deg, #fdfcfc, #dddddd);
+  box-shadow: 0px 0px 5px 5px rgb(168, 168, 168);
+  margin-bottom: 0.5%;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.left-search-box {
+  padding: 1%;
+  overflow-y: hidden;
+}
+
+#search-report-input {
+  width: 100%;
+}
+
+.reports {
+  height: 90%;
+  overflow-y: auto;
+}
+
+.report-name {
+  width: 100%;
+  margin: 1% 0;
+  background-color: transparent;
+  border: none;
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+
+.main-data-box {
+  padding: 1%;
+  overflow-y: auto;
+}
+
+.fees-outer {
+  width: 100%;
+  min-height: 10vh;
+  margin: 0 0 2%;
+
+  p {
+    margin: 0;
+  }
+}
+
+.fees-inner {
+  width: 100%;
+  min-height: 10vh;
+  padding: 1%;
+  margin: 0;
+  border: 1px solid black;
+
+    input, label {
+    display: block;
+  }
+}
+
+.fee-inner-input {
+  display: inline-block;
+  width: 24%;
+  margin: 0;
+  padding: 0;
+
+  input, label {
+    display: block;
+  }
+}
+
+#add-report {
+  position: absolute;
+  width: 7vw;
+  top: 1%;
+  right: 1vw;
+  background: linear-gradient(45deg, #242c2c, #161f1f, 75%, #051218);
+  border-radius: 10%;
+  border-color: transparent;
+  color: white;
+
+  &:hover {
+    opacity: 0.9;
+    cursor: pointer;
+  }
+}
+
+#buttons {
+  position: absolute;
+  display: inline-block;
+  width: 20%;
+  top: 2vh;
+  right: 1vw;
+}
+
+#add-report-report-name {
+  width: 100%;
+  margin-bottom: 3%;
+}
+
+#fees-container-outer {
+  min-height: 60vh;
+}
+
+#fees-container-inner {
+  min-height: 55vh;
+  padding: 1%;
+  border: 1px solid black;
+}
+
+#add-field {
+  position: absolute;
+  right: 8vw;
+  width: 15%;
+  height: auto;
+  background: linear-gradient(45deg, #86e29c, #86e29c, 50%, rgb(94, 211, 121));
+  outline: 0;
+  border: 1px solid rgb(94, 211, 121);
+  border-radius: 10%;
+  border-color: transparent;
+  margin: 0 1%;
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+
+#add-report-submit {
+  position: absolute;
+  right: 0;
+  width: 7vw;
+  outline: 0;
+  background: linear-gradient(45deg, #242c2c, #161f1f, 75%, #051218);
+  border: 1px solid black;
+  border-radius: 10%;
+  border-color: transparent;
+  color: white;
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+
+.fee-div {
+  display: inline-block;
+  margin: 2% 0;
+  width: 48%;
+
+  &>label {
+    display: block;
+  }
+}
+
+#fee-categories {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.fee-name {
+  display: block;
+  width: 20vw;
+  margin: 1% 0;
+  outline: 0;
+  background-color: inherit;
+  border-width: 0 0 2px;
+  border-color: black;
+}
+.fee-value {
+  margin: 1% 0;
+  width: 20vw;
+}
+
+#report-name-div {
+  width: 30%;
+  display: inline-block;
+}
+
+#report-permission-type {
+  display: inline-block;
+  width: 68%;
+}
+.report-permission {
+  margin-left: 5%;
+}
+
+#report-permission-red-text {
+  margin-left: 20%;
+}
+
+.search-user {
+  margin-left: 5%;
+  width: 45%;
+  display: none;
+}
+
+#user-emails-list-input {
+  width: 100%;
+}
+
+.red-text {
+  display: block;
+}
