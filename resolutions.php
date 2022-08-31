@@ -59,30 +59,34 @@
 
         <div class="row justify-content-start main-content-row">
             <div class="col">
-            <div id="editorMenu" style="display: none;">
-                <button onclick="addResolution()">Dodaj uchwale</button>
-            </div>
                 <div class="row row-upper">
                     <h1>Baza uchwał</h1>
                 </div>
+                <?php if (Permissions::hasPermission("Dodawanie uchwał")): ?>
+                    <div>
+                        <button id="addNewResolutionButton">Dodaj uchwale</button>
+                    </div>
+                <?php endif; ?>
                 <div id="resolutionContent">
                 </div>
             </div>
         </div>
 
         <template id="resolutionTemplate">
-            <div class="row row-akt">
-            <div><h3></h3></div>
-            <label></label>
-            <img>
-            <button style="display: none;">Edytuj</button>
-            <button style="display: none;">Usuń</button>
+            <div class="row row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
+                <div style="width: 10%;"><h3></h3></div>
+                <label style="width: 50%;"></label>
+                <img>
+                <button style="display: none; position: absolute; right: 90px;">Edytuj</button>
+                <button style="display: none; position: absolute; right: 30px;">Usuń</button>
             </div>
         </template>
 
         <?php include('templates/footer.php'); ?>
         <script>
             var resolutionsList = <?= json_encode($resultArray) ?>;
+            var userId = <?= json_encode($_SESSION['userId']) ?>;
+            var hasEditDeletePermission = <?= json_encode(Permissions::hasPermission("Edytowanie i usuwanie uchwał innych uzytkowników")) ?>;
         </script>
         <script src="js/resolutions.js"></script>
     </body>

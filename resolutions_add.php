@@ -64,14 +64,14 @@
                 <div class="row row-upper">
                     <h1>Dodaj nową uchwałę</h1>
                 </div>
-                <form class="row-akt">
-                <label>Numer uchwały:</label> <br>
-                <input type="number" id="resolutionID"/> <br>
-                <label>Treść uchwały:</label> <br>
-                <textarea id="resolutionText" rows="10" cols="100"></textarea> <br>
-                <label>Link do zdjęcia (opcjonalne)</label> <br>
-                <input type="text" id="resolutionImage"/> <br>
-                <input id="createButton" type="button" value="Utwórz" style="cursor: pointer;"/>
+                <form class="row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
+                    <label>Numer uchwały:</label> <br>
+                    <input type="number" id="resolutionID"/> <br>
+                    <label>Treść uchwały:</label> <br>
+                    <textarea id="resolutionText" rows="10" cols="100"></textarea> <br>
+                    <label>Link do zdjęcia (opcjonalne)</label> <br>
+                    <input type="text" id="resolutionImage"/> <br>
+                    <input id="createButton" type="button" value="Utwórz" style="cursor: pointer;"/>
                 </form>
             </div>
         </div>

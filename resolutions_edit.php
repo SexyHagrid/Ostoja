@@ -73,21 +73,23 @@
                 <div class="row row-upper">
                     <h1>Edytuj uchwałę</h1>
                 </div>
-                <form class="row-akt">
-                <label>Numer uchwały:</label> <br>
-                <label id="resolutionID"></label> <br>
-                <label>Treść uchwały:</label> <br>
-                <input type="text" id="resolutionText"/> <br>
-                <label>Link do zdjęcia (opcjonalne)</label> <br>
-                <input type="text" id="resolutionImage"/> <br>
-                <input id="updateButton" type="button" value="Edytuj"/>
+                <form class="row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
+                    <label>Numer uchwały:</label> <br>
+                    <label id="resolutionID"></label> <br>
+                    <label>Treść uchwały:</label> <br>
+                    <textarea rows = "10" cols = "100" id="resolutionText"></textarea> <br>
+                    <label>Link do zdjęcia (opcjonalne)</label> <br>
+                    <input type="text" id="resolutionImage"/> <br>
+                    <input id="updateButton" type="button" value="Edytuj"/>
                 </form>
             </div>
         </div>
 
         <?php include('templates/footer.php'); ?>
         <script>
-            var resolution = <?= json_encode($resolution) ?>; 
+            var resolution = <?= json_encode($resolution) ?>;
+            var userId = <?= json_encode($_SESSION['userId']) ?>;
+            var hasEditDeletePermission = <?= json_encode(Permissions::hasPermission("Edytowanie i usuwanie uchwał innych uzytkowników")) ?>;
         </script>
         <script src="js/resolutions_edit.js"></script>
     </body>

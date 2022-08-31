@@ -74,14 +74,14 @@
                 <div class="row row-upper">
                     <h1>Edytuj aktualnosc</h1>
                 </div>
-                <form class="row-akt">
-                <label>Numer aktualnosci:</label> <br>
-                <label id="resolutionID"></label> <br>
-                <label>Treść aktualnosci:</label> <br>
-                <input type="text" id="resolutionText"/> <br>
-                <label>Link do zdjęcia (opcjonalne)</label> <br>
-                <input type="text" id="resolutionImage"/> <br>
-                <input id="updateButton" type="button" value="Edytuj"/>
+                <form class="row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
+                    <label>Numer aktualnosci:</label> <br>
+                    <label id="resolutionID"></label> <br>
+                    <label>Treść aktualnosci:</label> <br>
+                    <textarea rows = "10" cols = "100" id="resolutionText"></textarea> <br>
+                    <label>Link do zdjęcia (opcjonalne)</label> <br>
+                    <input type="text" id="resolutionImage"/> <br>
+                    <input id="updateButton" type="button" value="Edytuj"/>
                 </form>
             </div>
         </div>
@@ -89,6 +89,8 @@
         <?php include('templates/footer.php'); ?>
         <script>
             var result = <?= json_encode($obj) ?>;
+            var userId = <?= json_encode($_SESSION['userId']) ?>;
+            var hasEditDeletePermission = <?= json_encode(Permissions::hasPermission("Edytowanie i usuwanie aktualności innych")) ?>;
         </script>
         <script src="js/news_edit.js"></script>
     </body>

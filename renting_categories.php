@@ -36,27 +36,28 @@
       </div>
     </div>
 
-    <div class="row justify-content-center">
-      <div class="col-3 main-col" style="background-color: lightblue;">
-        <a href="renting_list.php?id=1" class="czcionka_glowna_kategorie"><p>1-pokojowe</p></a>
-      </div>
-      <div class="col-3 main-col" style="background-color: lightblue;">
-        <a href="renting_list.php?id=2" class="czcionka_glowna_kategorie"><p>2-pokojowe</p></a>
-      </div>
-      <div class="col-3 main-col" style="background-color: lightblue;">
-        <a href="renting_list.php?id=3" class="czcionka_glowna_kategorie"><p>3-pokojowe</p></a>
-      </div>
-      <div class="col-3 main-col" style="background-color: white;">
-        <a class="czcionka_glowna_kategorie"><p></p></a>
-      </div>
-      <div id="addOfferButtonElement" class="col-3 main-col" style="background-color: lightblue; display: none;">
-        <a href="renting_add.php" class="czcionka_glowna_kategorie"><p>Dodaj ofertę</p></a>
-      </div>
-      <div class="col-3 main-col" style="background-color: white;">
-        <a class="czcionka_glowna_kategorie"><p></p></a>
+    <div class="main-content-row">
+      <div class="row justify-content-center">
+        <div class="col-3 main-col" style="background-color: lightblue;">
+          <a href="renting_list.php?id=1" class="czcionka_glowna_kategorie"><p>1-pokojowe</p></a>
+        </div>
+        <div class="col-3 main-col" style="background-color: lightblue;">
+          <a href="renting_list.php?id=2" class="czcionka_glowna_kategorie"><p>2-pokojowe</p></a>
+        </div>
+        <div class="col-3 main-col" style="background-color: lightblue;">
+          <a href="renting_list.php?id=3" class="czcionka_glowna_kategorie"><p>3-pokojowe</p></a>
+        </div>
+        <div class="col-3 main-col" style="background-color: white;">
+          <a class="czcionka_glowna_kategorie"><p></p></a>
+        </div>
+        <div id="addOfferButtonElement" class="col-3 main-col" style="background-color: lightblue; display: none;">
+          <a href="renting_add.php" class="czcionka_glowna_kategorie"><p>Dodaj ofertę</p></a>
+        </div>
+        <div class="col-3 main-col" style="background-color: white;">
+          <a class="czcionka_glowna_kategorie"><p></p></a>
+        </div>
       </div>
     </div>
-
     <?php include('templates/footer.php'); ?>
     <script src="js/renting_categories.js"></script>
   </body>

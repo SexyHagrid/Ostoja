@@ -6,8 +6,6 @@
     include_once 'utils/permissions.php';
     include_once 'utils/breadcrumbs.php';
 
-    //$number = intval($_GET['numer']);
-
     $conn = new mysqli('localhost', 'root', '', 'wspolnota_ostoja');
 
     if ($conn->connect_error) {
@@ -61,31 +59,35 @@
 
         <div class="row justify-content-start main-content-row">
             <div class="col">
-            <div id="editorMenu" style="display: none;">
-                <button onclick="addResolution()">Dodaj aktualność</button>
-            </div>
                 <div class="row row-upper">
                     <h1>Aktualności</h1>
                 </div>
-                <div id="resolutionContent">
+                <?php if (Permissions::hasPermission("Dodawanie aktualności")): ?>
+                    <div>
+                        <button id="addNewNewsButton">Dodaj aktualność</button>
+                    </div>
+                <?php endif; ?>
+                <div id="newsContent">
 
                 </div>
             </div>
         </div>
 
-        <template id="resolutionTemplate">
-            <div class="row row-akt">
-                <div><h3></h3></div>
-                <label></label>
+        <template id="newsTemplate">
+            <div class="row row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
+                <div style="width: 15%;"><h3></h3></div>
+                <label style="width: 50%;"></label>
                 <img>
-                <button style="display: none;">Edytuj</button>
-                <button style="display: none;">Usuń</button>
+                <button style="display: none; position: absolute; right: 90px;">Edytuj</button>
+                <button style="display: none; position: absolute; right: 30px;">Usuń</button>
             </div>
         </template>
 
         <?php include('templates/footer.php'); ?>
         <script>
             var resultArray = <?= json_encode($resultArray) ?>;
+            var userId = <?= json_encode($_SESSION['userId']) ?>;
+            var hasEditDeletePermission = <?= json_encode(Permissions::hasPermission("Edytowanie i usuwanie aktualności innych")) ?>;
         </script>
         <script src="js/news.js"></script>
     </body>

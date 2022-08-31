@@ -63,7 +63,7 @@
                 <div class="row row-upper">
                     <h1>Dodaj nową aktualność</h1>
                 </div>
-                <form class="row-akt">
+                <form class="row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
                     <label>Numer aktualnosci:</label> <br>
                     <input type="number" id="resolutionID"/> <br>
                     <label>Treść aktualnosci:</label> <br>
