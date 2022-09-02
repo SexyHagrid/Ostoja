@@ -1,6 +1,10 @@
 <?php
 
   session_start();
+  if (!isset($_SESSION['firstVisit']) || $_SESSION['firstVisit'] === true) {
+    header('Location: welcome.php');
+  }
+
   if (!isset($_SESSION["loggedin"]) || $_SESSION['loggedin'] !== true) {
     header('Location: login.php');
   }
@@ -18,7 +22,7 @@
   <?php include('templates/body.php'); ?>
 
         <div class="col-7 page-name">
-          <div id="breadcrumbs-div">
+          <!-- <div id="breadcrumbs-div">
             <nav class="navbar-expand-lg">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -26,8 +30,11 @@
                 </ol>
               </nav>
             </nav>
+          </div> -->
+          <div id="rentingButton" style="display: flex; justify-content: center; align-items: center; padding: 16px; border: solid 2px white; width: 40%; background-image: linear-gradient(135deg, #222222, #444444); cursor: pointer;">
+            <a style="font-size: 48px; color: white; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;  ">Przeglądanie ofert</a>
           </div>
-          <p>Hub</p>
+          <!-- <p>Hub</p> -->
         </div>
         <div class="col-2 upper-right-buttons">
           <?php if (Permissions::hasPermission("Panel administracyjny")): ?>
@@ -73,5 +80,6 @@
     </div>
 
     <?php include('templates/footer.php'); ?>
+    <script src="js/index.js"></script>
   </body>
 </html>

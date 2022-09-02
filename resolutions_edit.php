@@ -1,6 +1,10 @@
 <?php
     session_start();
 
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] === false) {
+        header('Location: index.php');
+    }
+
     include_once 'config/messages.php';
     include_once 'utils/permissions.php';
     include_once 'utils/breadcrumbs.php';

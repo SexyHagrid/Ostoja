@@ -10,40 +10,34 @@
   include_once 'utils/permissions.php';
   include_once 'utils/breadcrumbs.php';
 
-  $action = intval($_GET['action']);
-
   $conn = new mysqli('localhost', 'root', '', 'wspolnota_ostoja');
 
   if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
   }
 
-  $surveyID = $_GET['surveyID'];
+  if (isset($_GET['question']) && isset($_GET['answer'])) {
+    $question = $_GET['question'];
+    $answer = $_GET['answer'];
+  
+    $query = "INSERT INTO faq(pytanie, odpowiedz) VALUES ('".$question."', '".$answer."');";
 
-  $query = "SELECT a.nazwa as anazwa, p.id as pid, p.tresc as ptresc, p.typ as ptyp, o.tresc as otresc FROM ankieta_odpowiedzi o
-      INNER JOIN ankieta_pytania p ON o.pytanie_id=p.id
-      INNER JOIN ankieta a ON a.id=p.ankieta_id
-      WHERE p.ankieta_id=".$surveyID.";";
-  $result = $conn->query($query);
-
-  $resultArray = [];
-  while ($row = $result->fetch_assoc()) {
-    $obj = new stdClass;
-    $obj->surveyName = $row['anazwa'];
-    $obj->questionId = $row['pid'];
-    $obj->questionText = $row['ptresc'];
-    $obj->questionType = $row['ptyp'];
-    $obj->answerText = $row['otresc'];
-    array_push($resultArray, $obj);
+    $result = $conn->query($query);
+    if ($result === TRUE) {
+      echo "SUCCESS";
+    } else {
+      echo "FAIL";
+    }
   }
 
   $conn->close();
+
 ?>
 
 <!doctype html>
 <html>
   <?php include('templates/header.php'); ?>
-  <link rel="stylesheet" type="text/css" href="css/contakt.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/faq.css" media="screen" />
   <?php include('templates/body.php'); ?>
 
         <div class="col-7 page-name">
@@ -51,12 +45,12 @@
             <nav class="navbar-expand-lg">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'Głosowanie - wyniki', 'address' => 'voting_summary.php']); ?>
+                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'FAQ_Add', 'address' => 'faq_add.php']); ?>
                 </ol>
               </nav>
             </nav>
           </div>
-          <p>Głosowanie</p>
+          <p>FAQ</p>
         </div>
         <div class="col-2 upper-right-buttons">
           <?php if (Permissions::hasPermission("Panel administracyjny")): ?>
@@ -68,20 +62,26 @@
       </div>
     </div>
 
-    <div class="row justify-content-start main-content-row">
-      <div class="col">
+    <div class="main-content-row">
+      <div class="row justify-content-start">
+        <div class="col">
           <div class="row row-upper">
-              <h1 id="surveyTitle"></h1>
+              <h1>Dodaj FAQ</h1>
           </div>
-          <div class="row-akt" id="surveyContent">
+          <div class="row justify-content-center">
+            <form>
+              <label>Pytanie: </label> <br/>
+              <textarea rows="6" cols="150" id="faqQuestionInput"></textarea> <br/> <br/>
+              <label>Odpowiedź: </label> <br/>
+              <textarea rows="6" cols="150" id="faqAnswerInput"></textarea> <br/>
+              <input id="faqSubmitButton" type="button" value="Wyślij" style="cursor: pointer;"/>
+            </form>
           </div>
+        </div>
       </div>
     </div>
 
-    <?php include('templates/footer.php'); ?>
-    <script>
-      var resultArray = <?= json_encode($resultArray) ?>;
-    </script>
-    <script src="js/voting_summary.js"></script>
+    <?php include('templates/footer.php'); ?> <!-- // TODO: remove appr link -->
+    <script src="js/faq_add.js"></script>
   </body>
 </html>
