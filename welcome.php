@@ -14,42 +14,38 @@
 <html>
   <?php include('templates/header.php'); ?>
   <link rel="stylesheet" type="text/less" href="css/index.less" />
+  <link rel="stylesheet" type="text/css" href="css/welcome.css" media="screen" />
   <?php include('templates/body.php'); ?>
 
         <div class="col-7 page-name">
-          <div id="breadcrumbs-div">
-            <nav class="navbar-expand-lg">
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'HUB', 'address' => 'index.php']); ?>
-                </ol>
-              </nav>
-            </nav>
-          </div>
           <p>Witaj</p>
         </div>
         <div class="col-2 upper-right-buttons">
         </div>
       </div>
     </div>
-    
-    
-    <div class="row justify-content-center" style="padding: 50px;">
-      <h1 style="font-weight: bold;">Witaj na stronie wspólnoty mieszkaniowej "Ostoja"</h1>
-    </div>
-    <div class="row main-content-row justify-content-center">      
-      <div class="main-col tile-image">
-        <a class="tile-image-a" href="login.php" style="display: flex; justify-content: center; align-items: center;">
-          <h1>Zaloguj się</h1>
-        </a>
-      </div>
-      <div class="main-col tile-image">
-        <a class="tile-image-a" href="renting_categories.php" style="display: flex; justify-content: center; align-items: center;">
-          <h1>Przeglądaj oferty</h1>
-        </a>
-      </div>
-    </div>
 
+    <div class="row main-content-row" style="display: flex; justify-content: center; padding: 50px;">
+      <table>
+        <tr>
+          <td colspan=2>
+          <h1 style="font-weight: bold; text-align: center; display: block;">Witaj na stronie wspólnoty mieszkaniowej "Ostoja"</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-right: 50px;">
+            <div class="main-col tile-image" id="img-login">
+            </div>
+          </td>
+          <td>
+            <div class="main-col tile-image" id="img-renting">
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+      
     <?php include('templates/footer.php'); ?>
+    <script src="js/welcome.js"></script>
   </body>
 </html>

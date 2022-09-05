@@ -65,10 +65,12 @@
         <div class="row row-upper">
             <h1>FAQ</h1>
         </div>
+        <?php if (isset($_SESSION['userId'])): ?>
         <?php if (Permissions::hasPermission("Dodawanie faq")): ?>
             <div>
                 <button id="addNewFaqEntryButton">Dodaj faq</button>
             </div>
+           <?php endif; ?>
         <?php endif; ?>
         <div id="faqContent">
         </div>

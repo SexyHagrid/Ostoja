@@ -35,7 +35,7 @@
             <a href="logout.php"><p>Wyloguj</p></a>
           <?php else:  ?>
             <a><p style="color: black;">A</p></a>
-            <hr>
+            
             <a href="logout.php"><p>Zaloguj się</p></a>
           <?php endif; ?>
         </div>
@@ -44,20 +44,20 @@
 
     <div class="main-content-row">
       <div class="row justify-content-center">
-        <div class="col-3 main-col" style="background-color: lightblue;">
-          <a href="renting_list.php?id=1" class="czcionka_glowna_kategorie"><p>1-pokojowe</p></a>
+        <div class="col-3 main-col" id="oneRoomButton">
+          <p class="czcionka_glowna_kategorie">1-pokojowe</p>
         </div>
-        <div class="col-3 main-col" style="background-color: lightblue;">
-          <a href="renting_list.php?id=2" class="czcionka_glowna_kategorie"><p>2-pokojowe</p></a>
+        <div class="col-3 main-col" id="twoRoomButton">
+          <p class="czcionka_glowna_kategorie">2-pokojowe</p>
         </div>
-        <div class="col-3 main-col" style="background-color: lightblue;">
-          <a href="renting_list.php?id=3" class="czcionka_glowna_kategorie"><p>3-pokojowe</p></a>
+        <div class="col-3 main-col" id="threeRoomButton">
+          <p class="czcionka_glowna_kategorie">3-pokojowe</p>
         </div>
         <div class="col-3 main-col" style="background-color: white;">
           <a class="czcionka_glowna_kategorie"><p></p></a>
         </div>
-        <div id="addOfferButtonElement" class="col-3 main-col" style="background-color: lightblue; display: none;">
-          <a href="renting_add.php" class="czcionka_glowna_kategorie"><p>Dodaj ofertę</p></a>
+        <div id="addOfferButtonElement" class="col-3 main-col" id="addOfferButton" style="display: none;">
+          <p class="czcionka_glowna_kategorie">Dodaj ofertę</p>
         </div>
         <div class="col-3 main-col" style="background-color: white;">
           <a class="czcionka_glowna_kategorie"><p></p></a>

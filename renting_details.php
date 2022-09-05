@@ -86,54 +86,56 @@
         </div>
         </div>
 
-        <div class="row justify-content-center main-content-row" id="contentDiv">
-            <table>
-            <tr>
-                <td colspan="3">
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width: 600px;">
-                    <ol class="carousel-indicators" id="carouselIndicators">
-                    </ol>
-                    <div class="carousel-inner" id="carouselContent">
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                <label style="font-weight: bold;">Adres: </label>
-                <label id="addressLabel"></label>
-                </td>
-                <td>
-                <label style="font-weight: bold;">Dodatkowe informacje:</label>
-                <br/>
-                <label id="additionalInfoLabel"></label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                <label style="font-weight: bold;">Czynsz: </label>
-                <label id="priceLabel"></label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                <label style="font-weight: bold;">Okres wynajmu: </label>
-                <label id="timeLabel"></label>
-                </td>
-                <td>
-                <label style="font-weight: bold;">Telefon: </label>
-                <label id="phoneLabel"></label>
-                </td>
-            </tr>
-            </table>
+        <div class="row main-content-row">
+            <div class="row justify-content-center" id="contentDiv">
+                <table>
+                    <tr>
+                        <td colspan="3">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width: 600px;">
+                            <ol class="carousel-indicators" id="carouselIndicators">
+                            </ol>
+                            <div class="carousel-inner" id="carouselContent">
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <label style="font-weight: bold;">Adres: </label>
+                        <label id="addressLabel"></label>
+                        </td>
+                        <td>
+                        <label style="font-weight: bold;">Dodatkowe informacje:</label>
+                        <br/>
+                        <label id="additionalInfoLabel"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <label style="font-weight: bold;">Czynsz: </label>
+                        <label id="priceLabel"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <label style="font-weight: bold;">Okres wynajmu: </label>
+                        <label id="timeLabel"></label>
+                        </td>
+                        <td>
+                        <label style="font-weight: bold;">Telefon: </label>
+                        <label id="phoneLabel"></label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <?php include('templates/footer.php'); ?>

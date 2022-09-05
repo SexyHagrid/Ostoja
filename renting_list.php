@@ -52,7 +52,7 @@
             <nav class="navbar-expand-lg">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'Wynajem - lista', 'address' => 'renting_list.php']); ?>
+                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'Wynajem - lista', 'address' => 'renting_list.php?id=' . $id]); ?>
                 </ol>
               </nav>
             </nav>
@@ -75,7 +75,9 @@
       </div>
     </div>
 
-    <div class="row justify-content-center" id="contentDiv">
+    <div class="row main-content-row">
+      <div class="row justify-content-center" id="contentDiv">
+      </div>
     </div>
 
     <?php include('templates/footer.php'); ?>
