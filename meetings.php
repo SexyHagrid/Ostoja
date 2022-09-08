@@ -9,12 +9,40 @@
   include_once 'config/messages.php';
   include_once 'utils/breadcrumbs.php';
 
-
   $dbConn = new DBConnector();
+
+  if (isset($_POST['edit-meeting-submit'])) {
+    $meetingDateEdit = '';
+    if (!isset($_POST['meeting-date-edit'])) {
+      $error_prompt_message = 'Data jest wymagana';
+    } else {
+      $meetingDateEdit = $_POST['meeting-date-edit'];
+    }
+
+    if (isset($_POST['agenda-textarea-edit'])) {
+      $meetingAgendaEdit = $_POST['agenda-textarea-edit'];
+    }
+
+    if (!$error_prompt_message) {
+      $old_date = $_POST['meeting-date-old'];
+      $sql = "UPDATE meetings SET meetingDate='$meetingDateEdit', agenda='$meetingAgendaEdit' WHERE meetingDate='$old_date'";
+      $stmt = $dbConn->dbRequest($sql);
+      $stmt->execute();
+    }
+  }
+
+  function sortByDate($date_1, $date_2) {
+    if ($date_1['meetingDate'] == $date_2['meetingDate']) {
+        return 0;
+    }
+    return ($date_1['meetingDate'] < $date_2['meetingDate']) ? -1 : 1;
+  }
+
   $stmt = $dbConn->dbRequest("SELECT * FROM meetings");
   $stmt->execute();
   $meetings = $stmt->fetchAll();
   $meetingsCount = count($meetings);
+  usort($meetings, "sortByDate");
 
   $closestMeeting = $meetings[0]['meetingDate'];
   $currentDateTime = new DateTime(date('Y-m-d h:i:s'));
@@ -28,12 +56,14 @@
       $closestMeeting = $meetings[$i]['meetingDate'];
     }
   }
+
 ?>
 
 <!doctype html>
 <html>
   <?php include('templates/header.php'); ?>
   <link rel="stylesheet" type="text/less" href="css/meetings.less" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <?php include('templates/body.php'); ?>
 
         <div class="col-7 page-name">
@@ -58,6 +88,7 @@
       </div>
     </div>
 
+    <div class="curtain"></div>
     <div class="row main-content-row">
       <div class="upper-elements">
         <div class="upper-meetings-overview-outer">
@@ -83,6 +114,7 @@
         <?php for($i = 0; $i < $meetingsCount; $i++):
           if ($meetings[$i]['meetingDate'] == $closestMeeting): ?>
             <div id="meeting-closest">
+              <div id="edit-closest-button"><span class="fa fa-pencil"></span></div>
               <p class="div-header">Najbliższe spotkanie</p>
               <h2 class="div-date" id="closest-date"><?php echo $meetings[$i]['meetingDate']; ?></h2>
               <hr>
@@ -103,6 +135,27 @@
             </div>
           <?php endif; ?>
         <?php endfor; ?>
+
+        <form id="edit-meeting-div" action="meetings.php" method="post">
+          <div id="close-curtain">&#10006;</div>
+          <h2>Edytuj spotkanie</h2>
+          <input id="meeting-date-old" name="meeting-date-old" value="">
+          <hr>
+          <div id="edit-meeting-div-inner">
+            <div id="edit-meeting-data">
+              <label>
+                <p>Data</p>
+                <div class="red-text meeting-date-edit-red"></div>
+                <input id="meeting-date-edit" name="meeting-date-edit">
+              </label>
+            </div>
+            <label>
+              <p>Agenda</p>
+              <textarea id="agenda-textarea-edit" name="agenda-textarea-edit" cols="100" rows="20"></textarea>
+            </label>
+            <input class="hover-bttn" id="edit-meeting-submit" type="submit" name="edit-meeting-submit" value="Zatwierdź">
+          </div>
+        </form>
       </div>
     </div>
 

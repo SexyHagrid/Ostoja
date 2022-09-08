@@ -21,6 +21,15 @@
 
       return $details;
     }
+
+    public static function getEmailsByRoleName($roleName) {
+      $dbConn = new DBConnector();
+      $stmt = $dbConn->dbRequest("SELECT email FROM users u inner join roles r on u.roleId=r.roleId where roleName = '$roleName'");
+      $stmt->execute();
+      $emails = $stmt->fetchAll();
+
+      return $emails;
+    }
   }
 
 ?>

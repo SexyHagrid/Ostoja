@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Sep 07, 2022 at 01:05 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Host: 127.0.0.1
+-- Czas generowania: 09 Wrz 2022, 01:49
+-- Wersja serwera: 10.4.24-MariaDB
+-- Wersja PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wspolnota_ostoja`
+-- Baza danych: `wspolnota_ostoja`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `aktualnosci`
+-- Struktura tabeli dla tabeli `aktualnosci`
 --
 
 CREATE TABLE `aktualnosci` (
@@ -35,17 +35,17 @@ CREATE TABLE `aktualnosci` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `aktualnosci`
+-- Zrzut danych tabeli `aktualnosci`
 --
 
 INSERT INTO `aktualnosci` (`ID_aktualnosci`, `tresc_aktualnosci`, `link`, `autor`) VALUES
-(1, 'Aktualnosc nr 1000', '', 0),
+(1, 'Aktualnosc nr 1', '', 0),
 (2, 'Aktualnosc nr 2', '', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ankieta`
+-- Struktura tabeli dla tabeli `ankieta`
 --
 
 CREATE TABLE `ankieta` (
@@ -54,10 +54,13 @@ CREATE TABLE `ankieta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ankieta`
+-- Zrzut danych tabeli `ankieta`
 --
 
 INSERT INTO `ankieta` (`id`, `nazwa`) VALUES
+(1, 'Ankieta dotycząca bezpieczeństwa'),
+(2, 'Budżet na rok 2023'),
+(3, 'Piknik Dla Rodzin'),
 (1, 'Ankieta dotycząca bezpieczeństwa'),
 (2, 'Budżet na rok 2023'),
 (3, 'Piknik Dla Rodzin');
@@ -65,7 +68,7 @@ INSERT INTO `ankieta` (`id`, `nazwa`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ankieta_odpowiedzi`
+-- Struktura tabeli dla tabeli `ankieta_odpowiedzi`
 --
 
 CREATE TABLE `ankieta_odpowiedzi` (
@@ -76,7 +79,7 @@ CREATE TABLE `ankieta_odpowiedzi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ankieta_odpowiedzi`
+-- Zrzut danych tabeli `ankieta_odpowiedzi`
 --
 
 INSERT INTO `ankieta_odpowiedzi` (`id`, `pytanie_id`, `uzytkownik_id`, `tresc`) VALUES
@@ -112,7 +115,7 @@ INSERT INTO `ankieta_odpowiedzi` (`id`, `pytanie_id`, `uzytkownik_id`, `tresc`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ankieta_pytania`
+-- Struktura tabeli dla tabeli `ankieta_pytania`
 --
 
 CREATE TABLE `ankieta_pytania` (
@@ -123,10 +126,22 @@ CREATE TABLE `ankieta_pytania` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ankieta_pytania`
+-- Zrzut danych tabeli `ankieta_pytania`
 --
 
 INSERT INTO `ankieta_pytania` (`id`, `tresc`, `typ`, `ankieta_id`) VALUES
+(1, 'W skali od 0 do 10, jak oceniasz ogólny poziom bezpieczeństwa na naszym osiedlu?', 1, 1),
+(2, 'W skali od 0 do 10, jak oceniasz firmę ochroniarską \"GUARDIANS\"?', 1, 1),
+(3, 'Czy uważasz, że na osiedlach powinniśmy zwiększyć monitoring?', 2, 1),
+(4, 'Czy sądzisz, że powinniśmy zainstalowć brameki otwierane na kod lub chip? ', 2, 1),
+(5, 'Czy posiadasz samochód/korzystasz rególarnie z osiedlowego parkingu?', 2, 2),
+(6, 'W skali od 0 do 10, ile budżetu powinniśmy poświęcić na poprawę infrastruktury/osiedlowych dróg i chodników?', 1, 2),
+(7, 'W skali od 0 do 10, ile budżetu powinniśmy poświęcić na place zabaw?', 1, 2),
+(8, 'W skali od 0 do 10, ile budżetu powinniśmy poświęcić na \"siłownie na powietrzu\"?', 1, 2),
+(9, 'Czy brałeś udział w zeszłorocznym pikniku?', 2, 3),
+(10, 'Co sądzisz o naszej inicjatywie (piknik dla rodzin)?', 0, 3),
+(11, 'Czy wybierasz się na piknik w przyszłym roku?', 2, 3),
+(12, 'Jakich atrakcji spodziewasz się na tego typu imprezie?', 0, 3),
 (1, 'W skali od 0 do 10, jak oceniasz ogólny poziom bezpieczeństwa na naszym osiedlu?', 1, 1),
 (2, 'W skali od 0 do 10, jak oceniasz firmę ochroniarską \"GUARDIANS\"?', 1, 1),
 (3, 'Czy uważasz, że na osiedlach powinniśmy zwiększyć monitoring?', 2, 1),
@@ -143,7 +158,7 @@ INSERT INTO `ankieta_pytania` (`id`, `tresc`, `typ`, `ankieta_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `faq`
+-- Struktura tabeli dla tabeli `faq`
 --
 
 CREATE TABLE `faq` (
@@ -153,7 +168,7 @@ CREATE TABLE `faq` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `faq`
+-- Zrzut danych tabeli `faq`
 --
 
 INSERT INTO `faq` (`id`, `pytanie`, `odpowiedz`) VALUES
@@ -163,7 +178,33 @@ INSERT INTO `faq` (`id`, `pytanie`, `odpowiedz`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permissions`
+-- Struktura tabeli dla tabeli `meetings`
+--
+
+CREATE TABLE `meetings` (
+  `meetingId` int(10) UNSIGNED NOT NULL,
+  `meetingDate` varchar(50) NOT NULL,
+  `agenda` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `meetings`
+--
+
+INSERT INTO `meetings` (`meetingId`, `meetingDate`, `agenda`) VALUES
+(2, '2022-02-15 18:00:00', NULL),
+(13, '2022-10-05 18:00:00', NULL),
+(20, '2022-05-27  18:45:00', '1. Część 1'),
+(21, '2022-11-28 15:30:00', NULL),
+(23, '2022-08-18 14:15:00', NULL),
+(24, '2022-09-15 16:45:00', ' Planowanie przyszłych projektów\r\n                \r\n                \r\n                                                                        '),
+(25, '2022-10-24 18:00:00', NULL),
+(26, '2022-09-17 18:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `permissions`
 --
 
 CREATE TABLE `permissions` (
@@ -172,7 +213,7 @@ CREATE TABLE `permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `permissions`
+-- Zrzut danych tabeli `permissions`
 --
 
 INSERT INTO `permissions` (`permissionId`, `permissionDesc`) VALUES
@@ -185,16 +226,67 @@ INSERT INTO `permissions` (`permissionId`, `permissionDesc`) VALUES
 (7, 'Edytowanie użytkowników'),
 (8, 'Dodawanie i usuwanie postów'),
 (9, 'Edytowanie postów innych użytkowników'),
-(10, 'Dodawanie uchwał'),
-(11, 'Edytowanie i usuwanie uchwał innych uzytkowników'),
-(12, 'Dodawanie aktualności'),
-(13, 'Edytowanie i usuwanie aktualności innych'),
-(14, 'Dodawanie faq');
+(17, 'Dodawanie raportów'),
+(18, 'Dostęp do wszystkich raportów'),
+(33, 'Panel wsparcia technicznego'),
+(34, 'Edytowanie detali zgłoszeń'),
+(35, 'Edytowanie komentarzy zgłoszeń');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Struktura tabeli dla tabeli `reports`
+--
+
+CREATE TABLE `reports` (
+  `reportId` int(10) UNSIGNED NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `userId` int(10) UNSIGNED NOT NULL,
+  `creationDate` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `reports`
+--
+
+INSERT INTO `reports` (`reportId`, `name`, `userId`, `creationDate`) VALUES
+(1, '2022-06-30', 1, '2022-08-25 17:09:52'),
+(2, '2022-07-30', 1, '2022-08-25 17:10:04'),
+(15, '2022-08-30 mieszkanie 45', 1, '2022-08-26 21:42:58'),
+(27, '2022-06-30 Łódź ul. Szkolna 97', 219, '2022-08-27 13:21:34');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `report_fees`
+--
+
+CREATE TABLE `report_fees` (
+  `feeId` int(10) UNSIGNED NOT NULL,
+  `reportId` int(10) UNSIGNED NOT NULL,
+  `feeName` varchar(30) NOT NULL,
+  `amount` float NOT NULL,
+  `category` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `report_fees`
+--
+
+INSERT INTO `report_fees` (`feeId`, `reportId`, `feeName`, `amount`, `category`) VALUES
+(1, 1, 'Prąd', 12547.7, 'fixed'),
+(2, 1, 'Woda', 7251.4, 'fixed'),
+(3, 1, 'Gaz', 5241.78, 'fixed'),
+(4, 1, 'Naprawa oświetlenia', 450, 'unplanned'),
+(5, 1, 'Wymiana ogrodzenia', 4500, 'long-term'),
+(6, 15, 'Prąd', 450, 'fixed'),
+(7, 15, 'Woda', 230, 'fixed'),
+(8, 15, 'Ogrodzenie', 145, 'unplanned');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `roles`
 --
 
 CREATE TABLE `roles` (
@@ -203,20 +295,20 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `roles`
+-- Zrzut danych tabeli `roles`
 --
 
 INSERT INTO `roles` (`roleId`, `roleName`) VALUES
 (1, 'admin'),
 (2, 'Edytor'),
 (3, 'Użytkownik'),
-(4, 'Nikt szczególny'),
-(5, 'sdsds');
+(4, 'Nikt szczególny v2'),
+(10, 'Wsparcie techniczne');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role_permissions`
+-- Struktura tabeli dla tabeli `role_permissions`
 --
 
 CREATE TABLE `role_permissions` (
@@ -225,10 +317,28 @@ CREATE TABLE `role_permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `role_permissions`
+-- Zrzut danych tabeli `role_permissions`
 --
 
 INSERT INTO `role_permissions` (`roleId`, `permissionId`) VALUES
+(2, 8),
+(2, 9),
+(2, 1),
+(3, 1),
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(1, 8),
+(1, 9),
+(1, 17),
+(1, 18),
+(10, 33),
+(10, 34),
+(10, 35),
 (1, 1),
 (1, 2),
 (1, 3),
@@ -238,38 +348,92 @@ INSERT INTO `role_permissions` (`roleId`, `permissionId`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `uchwaly`
+-- Struktura tabeli dla tabeli `tickets`
+--
+
+CREATE TABLE `tickets` (
+  `ticketId` int(6) UNSIGNED NOT NULL,
+  `ticketName` varchar(50) NOT NULL,
+  `description` text DEFAULT NULL,
+  `ticketStatus` enum('OTWARTY','W TRAKCIE','ZAKOŃCZONY','ANULOWANY') DEFAULT NULL,
+  `priority` enum('Krytyczny','Wysoki','Średni','Niski') DEFAULT NULL,
+  `ticketDateStart` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ticketDateEnd` timestamp NULL DEFAULT NULL,
+  `userId` int(10) UNSIGNED DEFAULT NULL,
+  `ticketType` enum('Awarie','Błąd na stronie','Usprawnienie strony','Konto użytkownika') DEFAULT NULL,
+  `assigneeId` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `tickets`
+--
+
+INSERT INTO `tickets` (`ticketId`, `ticketName`, `description`, `ticketStatus`, `priority`, `ticketDateStart`, `ticketDateEnd`, `userId`, `ticketType`, `assigneeId`) VALUES
+(1, 'Niedziałające oświetlenie w strefie 5B', 'Cześć,\r\n\r\nOd wczoraj przestało działać oświetlenie w strefie 5B. Nasze podejrzenie to przerwany przewód po pracach wykonywanych dziś rano przez firmę remontową.\r\n\r\nProśba o sprawdzenie i naprawienie usterki.\r\n\r\nPozdrawiam\r\nAnna', 'ZAKOŃCZONY', 'Krytyczny', '2022-09-07 21:08:37', NULL, 1, 'Awarie', 220),
+(2, 'Brak połączenia z internetem w strefie 4C', NULL, 'OTWARTY', '', '2022-09-03 23:24:20', NULL, 1, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `ticket_comments`
+--
+
+CREATE TABLE `ticket_comments` (
+  `ticketCommentId` int(10) UNSIGNED NOT NULL,
+  `ticketId` int(10) UNSIGNED DEFAULT NULL,
+  `userId` int(10) UNSIGNED DEFAULT NULL,
+  `userName` varchar(30) NOT NULL,
+  `userSurname` varchar(30) NOT NULL,
+  `commentText` text NOT NULL,
+  `commentDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `ticket_comments`
+--
+
+INSERT INTO `ticket_comments` (`ticketCommentId`, `ticketId`, `userId`, `userName`, `userSurname`, `commentText`, `commentDate`) VALUES
+(22, 1, 220, 'Mikołaj', 'Stasiak', 'Cześć Anno,\n\nZgłoszenie przyjęte. W przeciągu 2 godzin zespół techniczny powinien być na miejscu. Będziemy Cię informować na bieżaco.\n\nPozdrawiam', '2022-09-07 21:14:46'),
+(23, 1, 1, 'Anna', 'Stańczyk', 'Dziękuję ślicznie. Będę oczekiwać na informację :)', '2022-09-07 21:16:14'),
+(24, 1, 220, 'Mikołaj', 'Stasiak', 'Niestety naprawa usterki zajmie dłużej niż zakładaliśmy. Prawdopodobnie zostanie ona usunięta dopiero za kilka godzin', '2022-09-07 22:05:48'),
+(25, 1, 1, 'Anna', 'Stańczyk', 'Hej,\nI jak tam naprawa? Wszystko ok?', '2022-09-08 18:06:03'),
+(26, 1, 220, 'Mikołaj', 'Stasiak', 'W jak najlepszym porzadku. Raport został wysłany do Marzenki z kadr', '2022-09-08 18:06:40');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `uchwaly`
 --
 
 CREATE TABLE `uchwaly` (
   `ID_uchwaly` int(11) NOT NULL,
   `tresc_uchwaly` text NOT NULL,
+  `link` text DEFAULT NULL,
   `autor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `uchwaly`
+-- Zrzut danych tabeli `uchwaly`
 --
 
-INSERT INTO `uchwaly` (`ID_uchwaly`, `tresc_uchwaly`, `autor`) VALUES
-(1, 'Uchwała o powstaniu Wspólnoty Mieszkaniowej Ostoja', 2),
-(2, 'Uchwała o powołaniu Prezydenta Wspólnoty Mieszkaniowej Ostoja', 1),
-(3, 'Test', 1),
-(4, 'Testttttttttttttttttt', 1),
-(5, 'AAAAAAAAAAAAAAA', 1),
-(6, 'BBBBBBBBBBBBBBBBBBBBBBBB', 1),
-(7, 'QQQQQQQQQQQQQQQQQQQ', 1),
-(8, 'BBBBBBBBBBBBBBBBB', 1),
-(9, 'WWWWWWWWWWWWWWWWWWw', 1),
-(11, 'asdasdasda', 1),
-(21, 'Nowa uchwala z plikami po zmianie', 1),
-(22, 'Nowa uchwała z zupełnie nowymi plikami', 1),
-(23, 'AAAAAAAAAAAAAAA', 1);
+INSERT INTO `uchwaly` (`ID_uchwaly`, `tresc_uchwaly`, `link`, `autor`) VALUES
+(1, 'Uchwała o powstaniu Wspólnoty Mieszkaniowej Ostoja', NULL, 1),
+(2, 'Uchwała o powołaniu Prezydenta Wspólnoty Mieszkaniowej Ostoja', NULL, 1),
+(3, 'Test', '', 1),
+(4, 'Test', '', 1),
+(5, 'AAAAAAAAAAAAAAA', '', 1),
+(6, 'BBBBBBBBBBBBBBBBBBBBBBBB', '', 1),
+(7, 'QQQQQQQQQQQQQQQQQQQ', '', 1),
+(8, 'BBBBBBBBBBBBBBBBB', '', 1),
+(9, 'WWWWWWWWWWWWWWWWWWw', '', 1),
+(11, 'asdasdasda', '', 1),
+(20, 'Cos tam sobie', '', 1),
+(21, 'Ze zdjęciem', 'assets/logo.png', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `uchwaly_pliki`
+-- Struktura tabeli dla tabeli `uchwaly_pliki`
 --
 
 CREATE TABLE `uchwaly_pliki` (
@@ -279,7 +443,7 @@ CREATE TABLE `uchwaly_pliki` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `uchwaly_pliki`
+-- Zrzut danych tabeli `uchwaly_pliki`
 --
 
 INSERT INTO `uchwaly_pliki` (`id`, `uchwala_id`, `nazwa`) VALUES
@@ -291,7 +455,7 @@ INSERT INTO `uchwaly_pliki` (`id`, `uchwala_id`, `nazwa`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktura tabeli dla tabeli `users`
 --
 
 CREATE TABLE `users` (
@@ -304,16 +468,18 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `users`
+-- Zrzut danych tabeli `users`
 --
 
 INSERT INTO `users` (`name`, `surname`, `userId`, `email`, `password`, `roleId`) VALUES
-('', '', 1, 'anna.s@gmail.com', 'ania_pass', 1);
+('Anna', 'Stańczyk', 1, 'anna.s@gmail.com', 'ania_pass', 1),
+('Jake', 'Blake', 219, 'jake.b@xyz.com', 'jakey_p', 2),
+('Mikołaj', 'Stasiak', 220, 'miki@ostoja.com', 'miki_pass', 10);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_permissions`
+-- Struktura tabeli dla tabeli `user_permissions`
 --
 
 CREATE TABLE `user_permissions` (
@@ -322,22 +488,26 @@ CREATE TABLE `user_permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user_permissions`
+-- Zrzut danych tabeli `user_permissions`
 --
 
 INSERT INTO `user_permissions` (`userId`, `permissionId`) VALUES
 (1, 1),
 (1, 2),
-(1, 10),
-(1, 11),
-(1, 12),
-(1, 13),
-(1, 14);
+(1, 1),
+(1, 2),
+(1, 7),
+(1, 17),
+(1, 1),
+(1, 2),
+(1, 7),
+(1, 17),
+(1, 18);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wynajem`
+-- Struktura tabeli dla tabeli `wynajem`
 --
 
 CREATE TABLE `wynajem` (
@@ -351,7 +521,7 @@ CREATE TABLE `wynajem` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `wynajem`
+-- Zrzut danych tabeli `wynajem`
 --
 
 INSERT INTO `wynajem` (`id`, `typ`, `czynsz`, `adres`, `okres_wynajmu`, `telefon`, `dodatkowe_informacje`) VALUES
@@ -371,7 +541,7 @@ INSERT INTO `wynajem` (`id`, `typ`, `czynsz`, `adres`, `okres_wynajmu`, `telefon
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wynajem_typ`
+-- Struktura tabeli dla tabeli `wynajem_typ`
 --
 
 CREATE TABLE `wynajem_typ` (
@@ -380,10 +550,13 @@ CREATE TABLE `wynajem_typ` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `wynajem_typ`
+-- Zrzut danych tabeli `wynajem_typ`
 --
 
 INSERT INTO `wynajem_typ` (`id`, `text`) VALUES
+(1, '1-pokojowe'),
+(2, '2-pokojowe'),
+(3, '3-pokojowe'),
 (1, '1-pokojowe'),
 (2, '2-pokojowe'),
 (3, '3-pokojowe');
@@ -391,7 +564,7 @@ INSERT INTO `wynajem_typ` (`id`, `text`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wynajem_zdjecia`
+-- Struktura tabeli dla tabeli `wynajem_zdjecia`
 --
 
 CREATE TABLE `wynajem_zdjecia` (
@@ -401,7 +574,7 @@ CREATE TABLE `wynajem_zdjecia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `wynajem_zdjecia`
+-- Zrzut danych tabeli `wynajem_zdjecia`
 --
 
 INSERT INTO `wynajem_zdjecia` (`id`, `mieszkanie_id`, `link`) VALUES
@@ -422,63 +595,118 @@ INSERT INTO `wynajem_zdjecia` (`id`, `mieszkanie_id`, `link`) VALUES
 (28, 10, '3pok2c.jpg'),
 (29, 11, '3pok3a.jpg'),
 (30, 11, '3pok3b.jpg'),
+(31, 11, '3pok3c.jpg'),
+(14, 1, '1pok1a.jpg'),
+(15, 2, '1pok2a.jpg'),
+(16, 3, '1pok3a.jpg'),
+(17, 5, '2pok1a.jpg'),
+(18, 5, '2pok1b.jpg'),
+(19, 6, '2pok2a.jpg'),
+(20, 6, '2pok2b.jpg'),
+(21, 7, '2pok3a.jpg'),
+(22, 7, '2pok3b.jpg'),
+(23, 9, '3pok1a.jpg'),
+(24, 9, '3pok1b.jpg'),
+(25, 9, '3pok1c.jpg'),
+(26, 10, '3pok2a.jpg'),
+(27, 10, '3pok2b.jpg'),
+(28, 10, '3pok2c.jpg'),
+(29, 11, '3pok3a.jpg'),
+(30, 11, '3pok3b.jpg'),
 (31, 11, '3pok3c.jpg');
 
 --
--- Indexes for dumped tables
+-- Indeksy dla zrzutów tabel
 --
 
 --
--- Indexes for table `aktualnosci`
+-- Indeksy dla tabeli `aktualnosci`
 --
 ALTER TABLE `aktualnosci`
   ADD PRIMARY KEY (`ID_aktualnosci`);
 
 --
--- Indexes for table `ankieta_odpowiedzi`
+-- Indeksy dla tabeli `ankieta_odpowiedzi`
 --
 ALTER TABLE `ankieta_odpowiedzi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `faq`
+-- Indeksy dla tabeli `faq`
 --
 ALTER TABLE `faq`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `permissions`
+-- Indeksy dla tabeli `meetings`
+--
+ALTER TABLE `meetings`
+  ADD PRIMARY KEY (`meetingId`);
+
+--
+-- Indeksy dla tabeli `permissions`
 --
 ALTER TABLE `permissions`
   ADD PRIMARY KEY (`permissionId`);
 
 --
--- Indexes for table `roles`
+-- Indeksy dla tabeli `reports`
+--
+ALTER TABLE `reports`
+  ADD PRIMARY KEY (`reportId`),
+  ADD UNIQUE KEY `UQ_rep_name` (`name`),
+  ADD KEY `FK_rep_userIdr` (`userId`);
+
+--
+-- Indeksy dla tabeli `report_fees`
+--
+ALTER TABLE `report_fees`
+  ADD PRIMARY KEY (`feeId`),
+  ADD KEY `FK_fee_rep_id` (`reportId`);
+
+--
+-- Indeksy dla tabeli `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`roleId`);
 
 --
--- Indexes for table `role_permissions`
+-- Indeksy dla tabeli `role_permissions`
 --
 ALTER TABLE `role_permissions`
   ADD KEY `FK_rp_roleId` (`roleId`),
   ADD KEY `FK_rp_permissionId` (`permissionId`);
 
 --
--- Indexes for table `uchwaly`
+-- Indeksy dla tabeli `tickets`
+--
+ALTER TABLE `tickets`
+  ADD PRIMARY KEY (`ticketId`),
+  ADD KEY `FK_ticketUserId` (`userId`),
+  ADD KEY `FK_assigneeId` (`assigneeId`);
+
+--
+-- Indeksy dla tabeli `ticket_comments`
+--
+ALTER TABLE `ticket_comments`
+  ADD PRIMARY KEY (`ticketCommentId`),
+  ADD KEY `FK_tc_ticketId` (`ticketId`),
+  ADD KEY `FK_tc_userId` (`userId`);
+
+--
+-- Indeksy dla tabeli `uchwaly`
 --
 ALTER TABLE `uchwaly`
   ADD PRIMARY KEY (`ID_uchwaly`);
 
 --
--- Indexes for table `uchwaly_pliki`
+-- Indeksy dla tabeli `uchwaly_pliki`
 --
 ALTER TABLE `uchwaly_pliki`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`userId`),
@@ -486,89 +714,139 @@ ALTER TABLE `users`
   ADD KEY `roleId` (`roleId`);
 
 --
--- Indexes for table `user_permissions`
+-- Indeksy dla tabeli `user_permissions`
 --
 ALTER TABLE `user_permissions`
   ADD KEY `FK_up_userId` (`userId`),
   ADD KEY `FK_up_permissionId` (`permissionId`);
 
 --
--- Indexes for table `wynajem`
+-- Indeksy dla tabeli `wynajem`
 --
 ALTER TABLE `wynajem`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT dla zrzuconych tabel
 --
 
 --
--- AUTO_INCREMENT for table `aktualnosci`
+-- AUTO_INCREMENT dla tabeli `aktualnosci`
 --
 ALTER TABLE `aktualnosci`
   MODIFY `ID_aktualnosci` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `ankieta_odpowiedzi`
+-- AUTO_INCREMENT dla tabeli `ankieta_odpowiedzi`
 --
 ALTER TABLE `ankieta_odpowiedzi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
--- AUTO_INCREMENT for table `faq`
+-- AUTO_INCREMENT dla tabeli `faq`
 --
 ALTER TABLE `faq`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `permissions`
+-- AUTO_INCREMENT dla tabeli `meetings`
+--
+ALTER TABLE `meetings`
+  MODIFY `meetingId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT dla tabeli `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `permissionId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `permissionId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT dla tabeli `reports`
+--
+ALTER TABLE `reports`
+  MODIFY `reportId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT dla tabeli `report_fees`
+--
+ALTER TABLE `report_fees`
+  MODIFY `feeId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT dla tabeli `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `roleId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `roleId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `uchwaly`
+-- AUTO_INCREMENT dla tabeli `tickets`
+--
+ALTER TABLE `tickets`
+  MODIFY `ticketId` int(6) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT dla tabeli `ticket_comments`
+--
+ALTER TABLE `ticket_comments`
+  MODIFY `ticketCommentId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT dla tabeli `uchwaly`
 --
 ALTER TABLE `uchwaly`
-  MODIFY `ID_uchwaly` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `ID_uchwaly` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `uchwaly_pliki`
---
-ALTER TABLE `uchwaly_pliki`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
+  MODIFY `userId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
 
 --
--- AUTO_INCREMENT for table `wynajem`
+-- AUTO_INCREMENT dla tabeli `wynajem`
 --
 ALTER TABLE `wynajem`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- Constraints for dumped tables
+-- Ograniczenia dla zrzutów tabel
 --
 
 --
--- Constraints for table `role_permissions`
+-- Ograniczenia dla tabeli `reports`
+--
+ALTER TABLE `reports`
+  ADD CONSTRAINT `FK_rep_userIdr` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON DELETE CASCADE;
+
+--
+-- Ograniczenia dla tabeli `report_fees`
+--
+ALTER TABLE `report_fees`
+  ADD CONSTRAINT `FK_fee_rep_id` FOREIGN KEY (`reportId`) REFERENCES `reports` (`reportId`);
+
+--
+-- Ograniczenia dla tabeli `role_permissions`
 --
 ALTER TABLE `role_permissions`
   ADD CONSTRAINT `FK_rp_permissionId` FOREIGN KEY (`permissionId`) REFERENCES `permissions` (`permissionId`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_rp_roleId` FOREIGN KEY (`roleId`) REFERENCES `roles` (`roleId`) ON DELETE CASCADE;
 
 --
--- Constraints for table `user_permissions`
+-- Ograniczenia dla tabeli `tickets`
+--
+ALTER TABLE `tickets`
+  ADD CONSTRAINT `FK_assigneeId` FOREIGN KEY (`assigneeId`) REFERENCES `users` (`userId`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_ticketUserId` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`);
+
+--
+-- Ograniczenia dla tabeli `ticket_comments`
+--
+ALTER TABLE `ticket_comments`
+  ADD CONSTRAINT `FK_tc_ticketId` FOREIGN KEY (`ticketId`) REFERENCES `tickets` (`ticketId`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_tc_userId` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`) ON DELETE CASCADE;
+
+--
+-- Ograniczenia dla tabeli `user_permissions`
 --
 ALTER TABLE `user_permissions`
   ADD CONSTRAINT `FK_up_permissionId` FOREIGN KEY (`permissionId`) REFERENCES `permissions` (`permissionId`) ON DELETE CASCADE,

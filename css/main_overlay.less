@@ -1,6 +1,8 @@
-.body {
+body {
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .upper-row {
@@ -19,7 +21,7 @@
 }
 
 .container {
-  min-width: 100vw;
+  width: 100vw;
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -107,7 +109,15 @@
     text-align: center;
     font-size: x-large;
     color: white;
-    margin: 10%;
+    margin: 0;
+  }
+
+  hr {
+    background: linear-gradient(60deg, #af4261, orange);
+    height: 1px;
+    width: 75%;
+    margin: 3% auto 2%;
+    padding: 0;
   }
 
   a:hover {
@@ -119,13 +129,13 @@
 .main-content-row {
   width: 100vw;
   min-height: 80vh;
-  margin: 1vh 0 0 0;
+  margin: 1vh 0 0;
   padding: 0;
 }
 
 .footer {
   min-height: 7vh;
-  width: 100%;
+  width: 100vw;
   margin: 0;
   padding: 0;
   position: relative;
@@ -133,7 +143,7 @@
 }
 
 #footer-left {
-  width: 60%;
+  width: 60vw;
   height: 7vh;
   position: absolute;
   margin: 0;
@@ -157,13 +167,12 @@
 }
 
 #footer-right {
-  width: 100%;
+  width: 100vw;
   height: 6vh;
   position: absolute;
   margin: 0;
   padding: 0;
   bottom: 0;
-  right: 0;
   background-color: rgb(7, 7, 7);
   z-index: 5;
   text-align: center;
@@ -262,18 +271,6 @@
   font-size: small;
 }
 
-.upper-right-buttons hr {
-  background: linear-gradient(60deg, #af4261, orange);
-  height: 1px;
-  width: 75%;
-  margin: 3% auto 2%;
-  padding: 0;
-}
-
-.upper-right-buttons p {
-  margin: 0;
-}
-
 #admin-panel {
   background-color: orange;
   background-image: linear-gradient(45deg, #f3ec78, #af4261);
@@ -284,4 +281,31 @@
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
   margin-top: 4%;
+}
+
+.hover-bttn {
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+.disabled-input {
+  opacity: 0.6;
+
+  &:hover {
+    cursor: default;
+  }
+}
+
+.curtain {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #515e5e;
+  opacity: 0.6;
+  z-index: 17;
 }

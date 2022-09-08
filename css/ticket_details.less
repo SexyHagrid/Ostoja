@@ -1,0 +1,191 @@
+.main-ticket-details-outer {
+  width: 100vw;
+  min-height: 77vh;
+  margin: 0;
+  padding-bottom: 1vh;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.main-ticket-details {
+  display: inline-block;
+  width: 50vw;
+  min-height: 32vh;
+  margin-top: 2vh;
+  margin-left: 25vw;
+}
+
+.ticket-details {
+  width: 50vw;
+  min-height: 16vh;
+  padding: 1vw;
+  background-color: #ebebeb;
+  box-shadow: 0px 0px 5px 0px rgb(212, 210, 197);
+  border-radius: 10px;
+}
+
+.ticket-details-name-and-status {
+  width: 48vw;
+  min-height: 4vh;
+  margin: 0;
+  padding: 0;
+}
+
+.ticket-details-name {
+  display: inline-block;
+  width: 69%;
+  height: 4vh;
+}
+
+.ticket-details-status {
+  display: inline-block;
+  position: relative;
+  width: 30%;
+  height: 4vh;
+  user-select: none;
+
+  .ticket-details-status-outer {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: max-content;
+    padding: 2px;
+    background-image: linear-gradient(45deg, #af4261, #f3ec78, #af4261);
+    border-radius: 25px;
+  }
+
+  .ticket-details-status-inner {
+    min-width: 7vw;
+    height: 4vh;
+    background: linear-gradient(45deg, #eeeeee, #f7f5f5, #eeeeee);
+    border-radius: 25px;
+
+    h4 {
+      vertical-align: middle;
+      padding-top: 3%;
+      text-align: center;
+    }
+  }
+}
+
+.ticket-details-description {
+  width: 48vw;
+  min-height: 14vh;
+  padding: 1vw;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.ticket-comments {
+  width: 50vw;
+  min-height: 16vh;
+  padding: 1vw;
+  margin-top: 2vh;
+  background-color: #ebebeb;
+  box-shadow: 0px 0px 5px 0px rgb(212, 210, 197);
+  border-radius: 10px;
+}
+
+.ticket-comments-add-comment {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#add-comment {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#ticket-comment-add {
+  width: 48vw;
+  height: 7vh;
+  padding: 0.5vw;
+  resize: none;
+  border-radius: 10px;
+}
+
+.buttons-div {
+  display: none;
+  width: 48vw;
+  height: 5vh;
+}
+
+#cancel-add-comment, #submit-add-comment {
+  position: absolute;
+  border-radius: 10px;
+}
+
+#cancel-add-comment {
+  width: 5vw;
+  right: 5.5vw;
+  background: linear-gradient(45deg, #323a3a, #323a3a, 75%, #040d11);
+  color: white;
+}
+
+#submit-add-comment {
+  width: 5vw;
+  right: 0vw;
+  background: linear-gradient(45deg, #323a3a, #323a3a, 75%, #051218);
+  color: white;
+}
+
+// Comments
+.ticket-comments-comments {
+  margin-top: 4vh;
+}
+
+.ticket-comment-outer {
+  width: 48vw;
+  min-height: 7vh;
+  padding: 0.5vw;
+  margin: 1.5vh 0 2vh;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #b4b4b4;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.ticket-comment-inner {
+  position: relative;
+}
+
+.ticket-comment-inner-label-c-user {
+  position: absolute;
+  width: max-content;
+  padding: 0 0.5vw;
+  height: 2vh;
+  top: -2vh;
+  left: 0.3vw;
+  font-size: small;
+  background: linear-gradient(0deg, #ffffff 40%, #ebebeb 50%);
+
+  p {
+    display: inline-block;
+  }
+}
+
+.ticket-comment-inner-label-o-user {
+  position: absolute;
+  width: max-content;
+  padding: 0 0.5vw;
+  height: 2vh;
+  top: -2vh;
+  right: 0.3vw;
+  font-size: small;
+  background: linear-gradient(0deg, #ffffff 40%, #ebebeb 50%);
+
+  p {
+    display: inline-block;
+  }
+}
+
+.ticket-comment-inner-text-o-user {
+  // text-align: end;  // FIXME:
+}

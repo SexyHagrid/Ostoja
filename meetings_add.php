@@ -21,8 +21,8 @@
     } else {
       $meetingDate = $_POST['meeting-date'];
 
-      if (!empty($_POST['meeting-agenda'])) {
-        $meetingAgenda = $_POST['meeting-agenda'];
+      if (!empty($_POST['agenda-textarea'])) {
+        $meetingAgenda = $_POST['agenda-textarea'];
       }
 
       $dbConn = new DBConnector();
@@ -39,7 +39,7 @@
 <!doctype html>
 <html>
   <?php include('templates/header.php'); ?>
-  <link rel="stylesheet" type="text/less" href="css/meetings.less" />
+  <link rel="stylesheet" type="text/less" href="css/meetings_add.less" />
   <?php include('templates/body.php'); ?>
 
         <div class="col-7 page-name">
@@ -66,14 +66,17 @@
 
     <div class="row main-content-row">
       <form id="submit-meeting-form" action="meetings_add.php" method="post">
+        <h2>Dodaj spotkanie</h2>
+        <hr>
         <div id="buttons">
           <label>
+            <p>Data</p>
             <div class="red-text"><?php echo $errors['meeting-date']; ?></div>
-            <input id="meeting-date" name="meeting-date" placeholder="Data spotkania">
+            <input id="meeting-date" name="meeting-date">
           </label>
           <label>
             <p>Agenda</p>
-            <input id="meeting-agenda" name="meeting-agenda">
+            <textarea id="agenda-textarea" name="agenda-textarea" cols="100" rows="20"></textarea>
           </label>
           <input id="add-meeting-cancel" type="submit" name="add-meeting-cancel" value="Anuluj">
           <input id="add-meeting-submit" type="submit" name="add-meeting-submit" value="Zatwierdź">
