@@ -133,7 +133,6 @@ $(document).ready(function () {
       var url = 'renting_add.php?action=3&rentalId=' + rentalId + '&fileName=' + photosList[i];
       xhttp.open('GET', url, true);
       xhttp.send();
-
     }
   }
 

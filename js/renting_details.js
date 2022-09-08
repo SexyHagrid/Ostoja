@@ -65,7 +65,7 @@ $(document).ready(function () {
 
     div.append(image);
 
-    var carouselContent = document.getElementById('carouselContent');
+    var carouselContent = $('#carouselContent');
     carouselContent.append(div);
 
 
@@ -75,7 +75,7 @@ $(document).ready(function () {
     if (index == 0) {
       li.classList.add('active');
     }
-    var carouselIndicators = document.getElementById('carouselIndicators');
+    var carouselIndicators = $('#carouselIndicators');
     carouselIndicators.append(li);
   }
 });

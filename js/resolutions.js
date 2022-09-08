@@ -1,6 +1,11 @@
 $(document).ready(function () {
   var data = {};
 
+  var addNewResolutionButton = $('#addNewResolutionButton');
+  addNewResolutionButton.on('click', function() {
+    addResolution();
+  });
+
   loadData();
 
   function loadData() {
@@ -11,23 +16,31 @@ $(document).ready(function () {
     for (var i = 0; i < resolutionsList.length; i++) {
       var resolutionID = resolutionsList[i].id;
       var resolutionText = resolutionsList[i].text;
-      var resolutionImage = resolutionsList[i].image;
       var resolutionAuthor = resolutionsList[i].author;
+      var resolutionFiles = resolutionsList[i].filesList;
 
       var clone = template.content.cloneNode(true);
       var h3 = clone.querySelectorAll('h3');
-      var label = clone.querySelectorAll('label');
+      var h2 = clone.querySelectorAll('h2');
+      var filesDiv = clone.querySelector('#files');
       var button = clone.querySelectorAll('button');
 
       h3[0].textContent = "Uchwała nr. " + resolutionID;
-      label[0].textContent = resolutionText;
+      h2[0].textContent = resolutionText;
 
-      if (resolutionImage != null) {
-        var image = clone.querySelectorAll('img');
-        image[0].src = resolutionImage;
+      var directory = "assets/uchwalyPliki/" + resolutionID + "/";
+      for (var j = 0; j < resolutionFiles.length; j++) {
+        var name = resolutionFiles[j];
+        var a = document.createElement('a');
+        a.href = directory + name;
+        a.download = name;
+        a.innerHTML = name;
+
+        filesDiv.appendChild(a);
+        filesDiv.appendChild(document.createElement('div'));
       }
 
-      if (isUserTheAdmin() || isUserTheAuthor(resolutionAuthor)) {
+      if (hasEditDeletePermission() || isUserTheAuthor(resolutionAuthor)) {
         button[0].setAttribute('data-id', resolutionID);
         button[0].onclick = function(event) {
           editResolution(event.target.getAttribute('data-id'));
@@ -46,27 +59,20 @@ $(document).ready(function () {
     } 
   }
 
-  function showEditorMenu() {
-    if (data.userRole == 1 || data.userRole == 2) {
-      var editorMenu = document.getElementById("editorMenu");
-      editorMenu.style.display = "block";
-    }
-  }
-
-  function isUserTheAdmin() {
-    return data.userRole == 1;
+  function hasEditDeletePermission() {
+    return hasEditDeletePermission;
   }
 
   function isUserTheAuthor(author) {
-    return parseInt(author) == data.userID;
+    return parseInt(author) == userId;
   }
 
   function addResolution() {
-    document.location.href = "Baza_uchwal_dodaj.html";
+    document.location.href = "resolutions_add.php";
   }
 
   function editResolution(uchwalaID) {
-    document.location.href = "Baza_uchwal_edytuj.html?id=" + uchwalaID;
+    document.location.href = "resolutions_edit.php?id=" + uchwalaID;
   }
 
   function deleteResolution(resolutionID) {

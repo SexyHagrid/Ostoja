@@ -1,0 +1,85 @@
+.login-box {
+  width: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #191970;
+}
+
+.login-box h1 {
+  float: left;
+  font-size: 40px;
+  border-bottom: 4px solid #191970;
+  margin-bottom: 50px;
+  padding: 13px;
+}
+
+.textbox {
+  width: 100%;
+  overflow: hidden;
+  font-size: 20px;
+  padding: 8px 0;
+  margin: 8px 0;
+  border-bottom: 1px solid #191970;
+}
+
+.textbox input {
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 18px;
+  float: left;
+  margin: 0 10px;
+}
+
+.button {
+  width: 100%;
+  padding: 8px;
+  color: #ffffff;
+  background: none #191970;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 12px 0;
+}
+
+.red-text {
+  color: red;
+  font-size: small;
+}
+
+#img-login {
+  background-image: url('../assets/Zaloguj-sie_2.jpg'); 
+  background-repeat: no-repeat; 
+  background-size: contain;
+  background-position: center;
+  background-color: white;
+  cursor: pointer;
+}
+
+#img-renting {
+  background-image: url('../assets/wynajem.jpg'); 
+  background-repeat: no-repeat; 
+  background-size: cover;
+  background-position: right;
+  cursor: pointer;
+}
+
+.welcome-title-first {
+  display: inline-block;
+  font-size: 48px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-style: italic;
+  color: #555555;
+}
+
+.welcome-title-second {
+  display: inline-block;
+  font-size: 64px;
+  text-shadow: -1px -1px 0 grey, 1px -1px 0 grey, -1px 1px 0 grey, 1px 1px 0 grey;
+  padding-left: 30px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: #00CC00;
+}

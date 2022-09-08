@@ -1,25 +1,82 @@
 $(document).ready(function () {
-  var data = {};
   var createResolutionButton = $('#createButton');
 
   createResolutionButton.on('click', function() {
-    createResolution();
+    validateData();
   });
 
+  function validateData() {
+    var resolutionID = document.getElementById('resolutionID').value;
+    var resolutionText = document.getElementById('resolutionText').value;
 
-  function createResolution() {
+    if (resolutionID.replace(" ", "") == "") {
+      alert("Numer uchwały nie może być pusty");
+      return;
+    }
+
+    if (resolutionText.replace(" ", "") == "") {
+      alert("Tytuł uchwały nie może być pusty");
+      return;
+    }
+
+    createFilesFolder();
+  }
+
+  function createFilesFolder() {
+    var xhttp = new XMLHttpRequest();
+    
+    var resolutionID = document.getElementById('resolutionID').value;
+    var directory = "assets/uchwalyPliki/" + resolutionID;
+    var request = "file_manager.php?action=1&directoryPath=" + directory;
+    xhttp.onreadystatechange = function() {
+      if (this.readyState === this.DONE) {
+        if (this.responseText.includes("SUCCESS")) {
+          handleFilesUpload();
+        } else {
+          alert("Błąd podczas przesyłania plików");
+        }
+      }
+    };
+    xhttp.open('GET', request, true);
+    xhttp.send();
+  }
+
+  function handleFilesUpload() {
+    var resolutionID = document.getElementById('resolutionID');
+    var resolutionFiles = document.getElementById('uploadFilesInput');
+    const formData = new FormData();
+
+    for (var i = 0; i < resolutionFiles.files.length; i++) {
+      formData.append('files[]', resolutionFiles.files[i]);
+    }
+
+    var directory = "assets/uchwalyPliki/" + resolutionID.value + "/";
+
+    fetch('resolutions_add.php?action=1&directory=' + directory, {
+      method: 'POST',
+      body: formData
+    })
+    .then((response) => {
+      response.text().then(text => {
+        var responseList = text.split('|');
+        responseList.pop();
+
+        createResolution(responseList);
+      })
+    })
+  }
+
+  function createResolution(filesList) {
     xhttp = new XMLHttpRequest();
     var resolutionID = document.getElementById('resolutionID').value;
     var resolutionText = document.getElementById('resolutionText').value;
-    var resolutionImage = document.getElementById('resolutionImage').value;
   
-    var request = 'resolutions_add.php?id=' + resolutionID + '&text=' + resolutionText + '&image=' + resolutionImage;
+    var request = 'resolutions_add.php?action=2&id=' + resolutionID + '&text=' + resolutionText;
   
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4) {
         if (this.responseText.includes("SUCCESS")) {
-          alert('Uchwała została dodana');
-          document.location.href = "resolutions.php";
+          sendFilesToDatabase(resolutionID ,filesList);
         } else {
           alert('Błąd podczas dodawania uchwały');
         }
@@ -30,30 +87,29 @@ $(document).ready(function () {
     xhttp.send();
   }
 
-  function getUserRole() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var result = this.responseText.split('|');
-        data.userID = parseInt(result[0]);
-        data.userRole = parseInt(result[1]);
+  function sendFilesToDatabase(resolutionID, filesList) {
+    var filesUploaded = 0;
+    var totalFilesCount = filesList.length;
 
-        // Przekieruj do bazy uchwał jeżeli typ użytkownika różny od admina i redaktora
-        if (!isAdminOrEditor()) {
-          document.location.href = "resolutions.php";
+    if (totalFilesCount != 0) {
+      for (var i = 0; i < totalFilesCount; i++) {
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            filesUploaded++;
+            if (filesUploaded >= totalFilesCount) {
+              window.confirm("Uchwała została dodana!");
+              document.location.href = "resolutions.php";
+            }
+          }
         }
+        var url = 'resolutions_add.php?action=3&resolutionId=' + resolutionID + '&fileName=' + filesList[i];
+        xhttp.open('GET', url, true);
+        xhttp.send();
       }
+    } else {
+      window.confirm("Uchwała została dodana!");
+      document.location.href = "resolutions.php";
     }
-
-    xhttp.open('GET', 'user.php?sessionID=' + getSessionID(), true);
-    xhttp.send();
-  }
-
-  function isAdminOrEditor() {
-    return data.userRole == 1 || data.userRole == 2;
-  }
-
-  function getSessionID() {
-    return localStorage.getItem('sessionID');
   }
 });

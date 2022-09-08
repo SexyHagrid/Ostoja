@@ -1,31 +1,35 @@
 $(document).ready(function () {
-  var data = {};
+  var oneRoomButton = $('#oneRoomButton');
+  var twoRoomButton = $('#twoRoomButton');
+  var threeRoomButton = $('#threeRoomButton');
+  var addOfferButton = $('#addOfferButtonElement');
+
+  oneRoomButton.on('click', function() {
+    document.location.href = "renting_list.php?id=1";
+  });
+
+  twoRoomButton.on('click', function() {
+    document.location.href = "renting_list.php?id=2";
+  });
+
+  threeRoomButton.on('click', function() {
+    document.location.href = "renting_list.php?id=3";
+  });
+
+  addOfferButton.on('click', function() {
+    document.location.href = "renting_add.php";
+  });
 
   onStart();
 
   function onStart() {
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var result = this.responseText.split('|');
-        data.userID = parseInt(result[0]);
-        data.userRole = parseInt(result[1]);
-
-        if (!isNaN(data.userID) && data.userID != "") {
-          showAddOfferButton();
-        }
-      }
+    if (isLoggedIn) {
+      showAddOfferButton();
     }
-    xhttp.open('GET', 'user.php?sessionID=' + getSessionID(), true);
-    xhttp.send();
   }
 
   function showAddOfferButton() {
     var addOfferButtonElement = document.getElementById('addOfferButtonElement');
     addOfferButtonElement.style.display = 'block';
-  }
-
-  function getSessionID() {
-    return localStorage.getItem('sessionID');
   }
 });

@@ -37,28 +37,20 @@ $(document).ready(function () {
 
     // Sprawdzamy czy użytkownik jest adminem lub autorem aktualnosci
     // Jeżeli nie -> wracamy do listy aktualnosci
-    if (!isUserTheAdmin() && !isUserTheAuthor(result.author)) {
+    if (!hasEditDeletePermission() && !isUserTheAuthor(result.author)) {
       document.location.href = "news.php";
     } else {
-      document.getElementById('resolutionID').innerHTML = data.resolutionID;
+      document.getElementById('resolutionID').innerHTML = result.id;
       document.getElementById('resolutionText').value = resolutionText;
       document.getElementById('resolutionImage').value = resolutionImage;
     }
   }
 
-  function isAdminOrEditor() {
-    return data.userRole == 1 || data.userRole == 2;
-  }
-
-  function getSessionID() {
-    return localStorage.getItem('sessionID');
-  }
-
-  function isUserTheAdmin() {
-    return true;
+  function hasEditDeletePermission() {
+    return hasEditDeletePermission;
   }
 
   function isUserTheAuthor(author) {
-    return true;
+    return author == userId;
   }
 });
