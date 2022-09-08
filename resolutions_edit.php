@@ -9,10 +9,6 @@
     include_once 'utils/permissions.php';
     include_once 'utils/breadcrumbs.php';
 
-    $id = intval($_GET['id']);
-    $text = $_GET['text'];
-    $image = $_GET['image'];
-    $author = $_GET['author'];
 
     $conn = new mysqli('localhost', 'root', '', 'wspolnota_ostoja');
 
@@ -20,16 +16,78 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    if (isset($text)) {
-        $query = "UPDATE uchwaly SET tresc_uchwaly='".$text."', link='".$image."' WHERE ID_uchwaly='".$id."';";
-        $result=$conn->query($query);
+    if (isset($_GET['action'])) {
+        $action = intval($_GET['action']);
+        
+        if ($action == 1) {
+            $errors = [];
+            $directory = $_GET['directory'];
+    
+            if (isset($_FILES['files']['tmp_name'])) {
+                $all_files = count($_FILES['files']['tmp_name']);
+    
+                for ($i = 0; $i < $all_files; $i++) {
+                    $file_name = $_FILES['files']['name'][$i];
+                    $file_tmp = $_FILES['files']['tmp_name'][$i];
+                    $file_type = $_FILES['files']['type'][$i];
+                    $file_size = $_FILES['files']['size'][$i];
+                    $tmp = explode('.', $_FILES['files']['name'][$i]);
+                    $file_ext = strtolower(end($tmp));
+    
+                    $file = $directory . $file_name;
+    
+                    if ($file_size > 2097152) {
+                        $errors[] = 'File size exceeds limit: ' . $file_name . ' ' . $file_type;
+                    }
+    
+                    if (empty($errors)) {
+                        move_uploaded_file($file_tmp, $file);
+                        echo($file_name . "|");
+                    }
+                }
+            }
+        } else if ($action == 2) {
+            $id = intval($_GET['id']);
+            $text = $_GET['text'];
 
-        if ($result === TRUE) {
-            echo "SUCCESS";
-        } else {
-            echo $result;
+            $conn = new mysqli('localhost', 'root', '', 'wspolnota_ostoja');
+
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            $query = "UPDATE uchwaly SET tresc_uchwaly='".$text."' WHERE ID_uchwaly=".$id.";";
+
+            $result=$conn->query($query);
+            if ($result === TRUE) {
+                echo "SUCCESS";
+            } else {
+                echo $result;
+            }
+        } else if ($action == 3) {
+            $resolutionId = intval($_GET['resolutionId']);
+            $fileName = $_GET['fileName'];
+    
+            $query = "INSERT INTO uchwaly_pliki (uchwala_id, nazwa) VALUES (".$resolutionId.", '".$fileName."');";
+            $conn->query($query);
+        } else if ($action == 4) {
+            $resolutionId = intval($_GET['resolutionId']);
+            $fileName = $_GET['fileName'];
+
+            $query = "DELETE FROM uchwaly_pliki WHERE uchwala_id=".$resolutionId." AND nazwa='".$fileName."';";
+            $result = $conn->query($query);
+            if ($result === TRUE) {
+                echo "SUCCESS";
+            } else {
+                echo $result;
+            }
         }
+
+
+
     } else {
+        $id = intval($_GET['id']);
+
         $query = "SELECT * FROM uchwaly WHERE ID_uchwaly='".$id."';";
         $result=$conn->query($query);
         $row=$result->fetch_assoc();
@@ -37,8 +95,15 @@
         $resolution = new stdClass;
         $resolution->id = $row['ID_uchwaly'];
         $resolution->text = $row['tresc_uchwaly'];
-        $resolution->image = $row['link'];
         $resolution->author = $row['autor'];
+
+        $resolutionFiles = [];
+        $queryFiles = "SELECT * FROM uchwaly_pliki WHERE uchwala_id=".$resolution->id.";";
+        $resultFiles = $conn->query($queryFiles);
+        while($rowFile = $resultFiles->fetch_assoc()) {
+            array_push($resolutionFiles, $rowFile['nazwa']);
+        }
+        $resolution->files = $resolutionFiles;
     }
 
     $conn->close();
@@ -78,12 +143,15 @@
                     <h1>Edytuj uchwałę</h1>
                 </div>
                 <form class="row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
-                    <label>Numer uchwały:</label> <br>
-                    <label id="resolutionID"></label> <br>
-                    <label>Treść uchwały:</label> <br>
-                    <textarea rows = "10" cols = "100" id="resolutionText"></textarea> <br>
-                    <label>Link do zdjęcia (opcjonalne)</label> <br>
-                    <input type="text" id="resolutionImage"/> <br>
+                    <label>Numer uchwały:</label> <br/>
+                    <label id="resolutionID"></label> <br/> <br/>
+                    <label>Tytuł uchwały:</label> <br/>
+                    <textarea rows = "1" cols = "100" id="resolutionText"></textarea> <br/> <br/>
+                    <div id="existingFilesList" style="display: none;">
+                        <label>Pliki</label> <br/>
+                    </div>
+                    <label>Dodaj nowe pliki (opcjonalne):</label> <br/>
+                    <input id="uploadFilesInput" type="file" multiple/> <br/> <br/>
                     <input id="updateButton" type="button" value="Edytuj"/>
                 </form>
             </div>

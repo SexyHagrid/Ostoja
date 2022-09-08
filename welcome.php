@@ -28,8 +28,9 @@
     <div class="row main-content-row" style="display: flex; justify-content: center; padding: 50px;">
       <table>
         <tr>
-          <td colspan=2>
-          <h1 style="font-weight: bold; text-align: center; display: block;">Witaj na stronie wspólnoty mieszkaniowej "Ostoja"</h1>
+          <td colspan=2 style="text-align: center;">
+            <label class="welcome-title-first">Witaj na stronie wspólnoty mieszkaniowej</label>
+            <label class="welcome-title-second">"Ostoja"</label>
           </td>
         </tr>
         <tr>

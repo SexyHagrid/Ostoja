@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 31, 2022 at 10:48 AM
+-- Generation Time: Sep 07, 2022 at 01:05 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -143,6 +143,26 @@ INSERT INTO `ankieta_pytania` (`id`, `tresc`, `typ`, `ankieta_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `faq`
+--
+
+CREATE TABLE `faq` (
+  `id` int(11) NOT NULL,
+  `pytanie` text NOT NULL,
+  `odpowiedz` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `faq`
+--
+
+INSERT INTO `faq` (`id`, `pytanie`, `odpowiedz`) VALUES
+(1, 'Ile mieszkań jest dostępnych?', '2000'),
+(3, 'AAAAAAAAAAAAAAAAAA', 'BBBBBBBBBBBBBBBBBB');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `permissions`
 --
 
@@ -168,7 +188,8 @@ INSERT INTO `permissions` (`permissionId`, `permissionDesc`) VALUES
 (10, 'Dodawanie uchwał'),
 (11, 'Edytowanie i usuwanie uchwał innych uzytkowników'),
 (12, 'Dodawanie aktualności'),
-(13, 'Edytowanie i usuwanie aktualności innych');
+(13, 'Edytowanie i usuwanie aktualności innych'),
+(14, 'Dodawanie faq');
 
 -- --------------------------------------------------------
 
@@ -223,7 +244,6 @@ INSERT INTO `role_permissions` (`roleId`, `permissionId`) VALUES
 CREATE TABLE `uchwaly` (
   `ID_uchwaly` int(11) NOT NULL,
   `tresc_uchwaly` text NOT NULL,
-  `link` text DEFAULT NULL,
   `autor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -231,18 +251,42 @@ CREATE TABLE `uchwaly` (
 -- Dumping data for table `uchwaly`
 --
 
-INSERT INTO `uchwaly` (`ID_uchwaly`, `tresc_uchwaly`, `link`, `autor`) VALUES
-(1, 'Uchwała o powstaniu Wspólnoty Mieszkaniowej Ostoja', NULL, 2),
-(2, 'Uchwała o powołaniu Prezydenta Wspólnoty Mieszkaniowej Ostoja', NULL, 1),
-(3, 'Test', '', 1),
-(4, 'Testttttttttttttttttt', '', 1),
-(5, 'AAAAAAAAAAAAAAA', '', 1),
-(6, 'BBBBBBBBBBBBBBBBBBBBBBBB', '', 1),
-(7, 'QQQQQQQQQQQQQQQQQQQ', '', 1),
-(8, 'BBBBBBBBBBBBBBBBB', '', 1),
-(9, 'WWWWWWWWWWWWWWWWWWw', '', 1),
-(11, 'asdasdasda', '', 1),
-(20, 'Cos tam sobie', '', 1);
+INSERT INTO `uchwaly` (`ID_uchwaly`, `tresc_uchwaly`, `autor`) VALUES
+(1, 'Uchwała o powstaniu Wspólnoty Mieszkaniowej Ostoja', 2),
+(2, 'Uchwała o powołaniu Prezydenta Wspólnoty Mieszkaniowej Ostoja', 1),
+(3, 'Test', 1),
+(4, 'Testttttttttttttttttt', 1),
+(5, 'AAAAAAAAAAAAAAA', 1),
+(6, 'BBBBBBBBBBBBBBBBBBBBBBBB', 1),
+(7, 'QQQQQQQQQQQQQQQQQQQ', 1),
+(8, 'BBBBBBBBBBBBBBBBB', 1),
+(9, 'WWWWWWWWWWWWWWWWWWw', 1),
+(11, 'asdasdasda', 1),
+(21, 'Nowa uchwala z plikami po zmianie', 1),
+(22, 'Nowa uchwała z zupełnie nowymi plikami', 1),
+(23, 'AAAAAAAAAAAAAAA', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `uchwaly_pliki`
+--
+
+CREATE TABLE `uchwaly_pliki` (
+  `id` int(11) NOT NULL,
+  `uchwala_id` int(11) NOT NULL,
+  `nazwa` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `uchwaly_pliki`
+--
+
+INSERT INTO `uchwaly_pliki` (`id`, `uchwala_id`, `nazwa`) VALUES
+(5, 21, 'file1.txt'),
+(6, 21, 'main.cpp'),
+(8, 22, 'file1.txt'),
+(9, 23, 'main.cpp');
 
 -- --------------------------------------------------------
 
@@ -287,7 +331,8 @@ INSERT INTO `user_permissions` (`userId`, `permissionId`) VALUES
 (1, 10),
 (1, 11),
 (1, 12),
-(1, 13);
+(1, 13),
+(1, 14);
 
 -- --------------------------------------------------------
 
@@ -396,6 +441,12 @@ ALTER TABLE `ankieta_odpowiedzi`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `faq`
+--
+ALTER TABLE `faq`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `permissions`
 --
 ALTER TABLE `permissions`
@@ -419,6 +470,12 @@ ALTER TABLE `role_permissions`
 --
 ALTER TABLE `uchwaly`
   ADD PRIMARY KEY (`ID_uchwaly`);
+
+--
+-- Indexes for table `uchwaly_pliki`
+--
+ALTER TABLE `uchwaly_pliki`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -458,10 +515,16 @@ ALTER TABLE `ankieta_odpowiedzi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
+-- AUTO_INCREMENT for table `faq`
+--
+ALTER TABLE `faq`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `permissionId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `permissionId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -473,7 +536,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `uchwaly`
 --
 ALTER TABLE `uchwaly`
-  MODIFY `ID_uchwaly` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `ID_uchwaly` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `uchwaly_pliki`
+--
+ALTER TABLE `uchwaly_pliki`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -9,30 +9,71 @@
     include_once 'utils/permissions.php';
     include_once 'utils/breadcrumbs.php';
 
-    if (isset($_GET['id']) && isset($_GET['text']) && isset($_SESSION['userId'])) {
-        $id = $_GET['id'];
-        $text = $_GET['text'];
-        $image = $_GET['image'];
-        
-        $author = $_SESSION['userId'];
+    $conn = new mysqli('localhost', 'root', '', 'wspolnota_ostoja');
 
-        $conn = new mysqli('localhost', 'root', '', 'wspolnota_ostoja');
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        $query = "INSERT INTO uchwaly (ID_uchwaly, tresc_uchwaly, link, autor) VALUES ('".$id."', '".$text."', '".$image."', '".$author."')";
-
-        $result=$conn->query($query);
-        if ($result === TRUE) {
-            echo "SUCCESS";
-        } else {
-            echo $result;
-        }
-
-        $conn->close();
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
+
+    if (isset($_GET['action'])) {
+        $action = intval($_GET['action']);
+
+        if ($action == 1) {
+            $errors = [];
+            $directory = $_GET['directory'];
+    
+            if (isset($_FILES['files']['tmp_name'])) {
+                $all_files = count($_FILES['files']['tmp_name']);
+    
+                for ($i = 0; $i < $all_files; $i++) {
+                    $file_name = $_FILES['files']['name'][$i];
+                    $file_tmp = $_FILES['files']['tmp_name'][$i];
+                    $file_type = $_FILES['files']['type'][$i];
+                    $file_size = $_FILES['files']['size'][$i];
+                    $tmp = explode('.', $_FILES['files']['name'][$i]);
+                    $file_ext = strtolower(end($tmp));
+    
+                    $file = $directory . $file_name;
+    
+                    if ($file_size > 2097152) {
+                        $errors[] = 'File size exceeds limit: ' . $file_name . ' ' . $file_type;
+                    }
+    
+                    if (empty($errors)) {
+                        move_uploaded_file($file_tmp, $file);
+                        echo($file_name . "|");
+                    }
+                }
+            }
+        } else if ($action == 2) {
+            $id = $_GET['id'];
+            $text = $_GET['text'];
+            $author = $_SESSION['userId'];
+
+            $conn = new mysqli('localhost', 'root', '', 'wspolnota_ostoja');
+
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            $query = "INSERT INTO uchwaly (ID_uchwaly, tresc_uchwaly, autor) VALUES ('".$id."', '".$text."', '".$author."')";
+
+            $result=$conn->query($query);
+            if ($result === TRUE) {
+                echo "SUCCESS";
+            } else {
+                echo $result;
+            }
+        } else if ($action == 3) {
+            $resolutionId = intval($_GET['resolutionId']);
+            $fileName = $_GET['fileName'];
+    
+            $query = "INSERT INTO uchwaly_pliki (uchwala_id, nazwa) VALUES (".$resolutionId.", '".$fileName."');";
+            $conn->query($query);
+        }
+    }
+
+    $conn->close();
 ?>
 
 <!doctype html>
@@ -69,12 +110,12 @@
                     <h1>Dodaj nową uchwałę</h1>
                 </div>
                 <form class="row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
-                    <label>Numer uchwały:</label> <br>
-                    <input type="number" id="resolutionID"/> <br>
-                    <label>Treść uchwały:</label> <br>
-                    <textarea id="resolutionText" rows="10" cols="100"></textarea> <br>
-                    <label>Link do zdjęcia (opcjonalne)</label> <br>
-                    <input type="text" id="resolutionImage"/> <br>
+                    <label>Numer uchwały:</label> <br/>
+                    <input type="number" id="resolutionID"/> <br/> <br/>
+                    <label>Tytuł uchwały:</label> <br/>
+                    <textarea id="resolutionText" rows="1" cols="100"></textarea> <br/> <br/>
+                    <label>Pliki (opcjonalne):</label> <br/>
+                    <input id="uploadFilesInput" type="file" multiple/> <br/> <br/>
                     <input id="createButton" type="button" value="Utwórz" style="cursor: pointer;"/>
                 </form>
             </div>

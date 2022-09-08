@@ -12,10 +12,13 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $query="DELETE FROM uchwaly WHERE ID_uchwaly='".$id."';";
-
+    $query="DELETE FROM uchwaly WHERE ID_uchwaly=".$id.";";
     $result=$conn->query($query);
-    if ($result === TRUE) {
+
+    $queryFiles="DELETE FROM uchwaly_pliki WHERE uchwala_id=".$id.";";
+    $resultFiles = $conn->query($queryFiles);
+
+    if ($result === TRUE && $resultFiles === TRUE) {
         echo "SUCCESS";
     } else {
         echo $result;

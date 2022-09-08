@@ -25,8 +25,16 @@
         $obj = new stdClass;
         $obj->id = $row['ID_uchwaly'];
         $obj->text = $row['tresc_uchwaly'];
-        $obj->image = $row['link'];
         $obj->author = $row['autor'];
+
+        $filesArray = [];
+        $queryFiles = "SELECT * FROM uchwaly_pliki WHERE uchwala_id=".$obj->id.";";
+        $resultFiles = $conn->query($queryFiles);
+        while ($rowFile = $resultFiles->fetch_assoc()) {
+            array_push($filesArray, $rowFile['nazwa']);
+        }
+        $obj->filesList = $filesArray;
+
         array_push($resultArray, $obj);
     }
 
@@ -61,9 +69,9 @@
             </div>
         </div>
 
-        <div class="row justify-content-start main-content-row">
+        <div class="main-content-row">
             <div class="col">
-                <div class="row row-upper">
+                <div class="row-upper">
                     <h1>Baza uchwał</h1>
                 </div>
                 <?php if (Permissions::hasPermission("Dodawanie uchwał")): ?>
@@ -78,11 +86,25 @@
 
         <template id="resolutionTemplate">
             <div class="row row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
-                <div style="width: 10%;"><h3></h3></div>
-                <label style="width: 50%;"></label>
-                <img>
-                <button style="display: none; position: absolute; right: 90px;">Edytuj</button>
-                <button style="display: none; position: absolute; right: 30px;">Usuń</button>
+                <table style="width: 100%;">
+                    <tr>
+                        <td rowspan="2" style="width: 15%;">
+                            <h3></h3>
+                        </td>
+                        <td>
+                            <h2></h2>
+                        </td>
+                        <td>
+                            <button style="display: none; position: absolute; right: 90px;">Edytuj</button>
+                            <button style="display: none; position: absolute; right: 30px;">Usuń</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="files"></div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </template>
 
