@@ -31,6 +31,7 @@ $(document).ready(function () {
       var div = document.createElement('div');
       div.setAttribute('class', 'row-akt');
       div.setAttribute('data-id', surveyID);
+      div.style.padding = "10px";
 
       // Ładujemy dane ankiety
       var labelNumber = createNumberLabel(i + 1);
@@ -53,7 +54,9 @@ $(document).ready(function () {
       if (!isNaN(userId) && !data.completedSurveys.includes(surveyID)) {
         div.onclick = function (event) {
           var id = event.target.getAttribute('data-id');
-          if (id == null) {
+          if (event.target.type == "submit") {
+            return;
+          } else if (id == null) {
             id = event.target.parentElement.getAttribute('data-id');
           }
           onSurveyClick(id);
@@ -63,9 +66,7 @@ $(document).ready(function () {
         labelTitle.style.cursor = "pointer";
       }
 
-      // Sprawdzamy, czy użytkownik jest adminem
-      // Jeżeli tak, to wyświetlamy przycisk do przejścia do podsumowania
-      if (isAdmin()) {
+      if (hasViewSummaryPermission) {
         div.appendChild(createSummaryButton(surveyID));
       }
 
@@ -74,7 +75,7 @@ $(document).ready(function () {
   }
 
   function showSurveySummary(surveyID) {
-    document.location.href = 'voting_summary.php?id=' + surveyID;
+    document.location.href = 'voting_summary.php?surveyID=' + surveyID;
   }
 
   function onSurveyClick(id) {
@@ -98,6 +99,7 @@ $(document).ready(function () {
     var label = document.createElement('label');
     label.innerHTML = "   --- WYPEŁNIONA ---";
     label.setAttribute('style', 'color: red;');
+    label.style.marginLeft = "20px";
     return label;
   }
 
@@ -109,17 +111,11 @@ $(document).ready(function () {
     var button = document.createElement('button');
     button.innerHTML = "Podsumowanie";
     button.setAttribute('data-id', id);
+    button.style.marginLeft = "20px";
+    button.style.cursor = "pointer";
     button.onclick = function(event) {
       showSurveySummary(event.target.getAttribute('data-id'));
     }
     return button;
-  }
-
-  function isAdmin() {
-    return data.userRole == 1;
-  }
-
-  function getSessionID() {
-    return localStorage.getItem('sessionID');
   }
 });

@@ -146,8 +146,8 @@ $(document).ready(function () {
     e.stopPropagation();
 
     let date = $(this).next().text();
-    let isRemoved = await removeMeeting(date);
-    if (isRemoved) {
+    // let isRemoved = await removeMeeting(date);
+    if (true) {
       $(`.meeting-overview-tile:contains('${date}')`).remove();
 
       if (date == $('#past-date').text()) {
@@ -173,25 +173,28 @@ $(document).ready(function () {
       if (date == $('#closest-date').text()) {
         let incomingDate = $(`.meeting-overview-tile:contains('${$('#incoming-date').text()}')`);
         let pastDate = $(`.meeting-overview-tile:contains('${$('#past-date').text()}')`);
+
         if (incomingDate.children('.inner-text').text()) {
           $('#closest-date').text(incomingDate.children('.inner-text').text());
+          $(`.meeting-overview-tile:contains('${$('#closest-date').text()}')`).addClass('mot-chosen');
           setHeader('meeting-closest');
 
           incomingDate = $(`.meeting-overview-tile:contains('${$('#incoming-date').text()}')`).next();
           if (incomingDate.children('.inner-text').text()) {
-            $('#closest-date').text(incomingDate.children('.inner-text').text());
-            setHeader('meeting-closest');
+            $('#incoming-date').text(incomingDate.children('.inner-text').text());
+            setHeader('meeting-incoming');
           } else {
             $('#meeting-incoming').css('display', 'none');
           }
         } else if (pastDate.children('.inner-text').text()) {
           $('#closest-date').text(pastDate.children('.inner-text').text());
+          $(`.meeting-overview-tile:contains('${$('#closest-date').text()}')`).addClass('mot-chosen');
           setHeader('meeting-closest');
 
-          pastDate = $(`.meeting-overview-tile:contains('${$('#past-date').text()}')`).past();
+          pastDate = $(`.meeting-overview-tile:contains('${$('#past-date').text()}')`).prev();
           if (pastDate.children('.inner-text').text()) {
-            $('#closest-date').text(pastDate.children('.inner-text').text());
-            setHeader('meeting-closest');
+            $('#past-date').text(pastDate.children('.inner-text').text());
+            setHeader('meeting-past');
           } else {
             $('#meeting-past').css('display', 'none');
           }
@@ -202,6 +205,34 @@ $(document).ready(function () {
     }
   })
 
+  $('#meeting-date-edit').on('input', function() {
+    if ($(this).val().length === 0) {
+      $('.meeting-date-edit-red').text('Data jest wymagana');
+      $('#edit-meeting-submit').prop('disabled', true);
+      $('#edit-meeting-submit').addClass('disabled-input')
+      $('#edit-meeting-submit').removeClass('hover-bttn')
+    } else {
+      $('.meeting-date-edit-red').text('');
+      $('#edit-meeting-submit').prop('disabled', false);
+      $('#edit-meeting-submit').removeClass('disabled-input')
+      $('#edit-meeting-submit').addClass('hover-bttn')
+    }
+  })
+
+  $('#edit-closest-button').on('click', function() {
+    $('.curtain').css('display', 'block');
+    $('#edit-meeting-div').css('display', 'block');
+    $('#meeting-date-edit').val($('#closest-date').text());
+    $('#agenda-textarea-edit').val($('#closest-agenda').text());
+    $('#meeting-date-old').val($('#closest-date').text())
+  });
+
+  $('#close-curtain').on('click', function() {
+    $('.curtain').css('display', 'none');
+    $('#edit-meeting-div').css('display', 'none');
+    $('#edit-meetings').text('Edytuj');
+  })
+
   $('#edit-meetings').on('click', function() {
     let btnText = $(this).text();
     if (btnText == 'Edytuj') {
@@ -209,11 +240,13 @@ $(document).ready(function () {
       $('.inner-text').css('font-size', 'medium');
       $('.inner-text').css('margin-top', '0');
       $('.x-glyph').css('display', 'block');
+      $('#edit-closest-button').css('display', 'block');
     } else if (btnText == 'Zakończ') {
       $(this).text('Edytuj');
       $('.x-glyph').css('display', 'none');
       $('.inner-text').css('font-size', 'large');
       $('.inner-text').css('margin-top', '10%');
+      $('#edit-closest-button').css('display', 'none');
     }
   })
 });

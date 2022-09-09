@@ -100,6 +100,7 @@ $(document).ready(function () {
   function createSubmitButton() {
     var button = document.createElement('button');
     button.innerHTML = "Wyślij";
+    button.style.marginTop = "10px";
     button.onclick = function(event) {
       sendSurvey();
     }

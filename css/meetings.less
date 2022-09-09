@@ -128,3 +128,107 @@ hr {
     margin-top: 1%;
   }
 }
+
+#edit-meetings {
+  background: linear-gradient(45deg, #515e5e, #515e5e, 75%, #0b1a20);
+}
+
+#add-meeting {
+  background: linear-gradient(45deg, #394444, #394444, 75%, #060f13);
+}
+
+#edit-meetings, #add-meeting {
+  height: 4vh;
+  color: white;
+  border: 1px solid black;
+  border-radius: 10%;
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+
+#edit-closest-button {
+  display: none;
+  position: absolute;
+  height: 10%;
+  width: 5%;
+  color: black;
+  font-size: x-large;
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+
+#edit-meeting-div {
+  display: none;
+  position: absolute;
+  width: 50vw;
+  height: 70vh;
+  left: 50%;
+  margin-left: -25vw;
+  top: 50%;
+  margin-top: -35vh;
+  background: linear-gradient(45deg, #cfcece, #bbbbbb, #cfcece);
+  box-shadow: 0px 0px 2px 2px rgb(168, 168, 168);
+  z-index: 20;
+
+  h2 {
+    text-align: center;
+    margin-top: 1%;
+  }
+}
+
+#edit-meeting-div-inner {
+  margin-left: 2%;
+}
+
+#close-curtain {
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  font-size: larger;
+  user-select: none;
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+
+#edit-meeting-submit {
+  position: absolute;
+  color: white;
+  height: 4vh;
+  margin-left: 5%;
+  bottom: 1.5vh;
+  background: linear-gradient(45deg, #242c2c, #161f1f, 75%, #051218);
+  color: white;
+  border-radius: 10%;
+  border: 1px solid black;
+}
+
+label p {
+  margin-bottom: 1%;
+}
+
+#agenda-textarea {
+  resize: none
+}
+
+#edit-meeting-data {
+  position: relative;
+}
+
+.meeting-date-edit-red {
+  position: absolute;
+  right: 1vw;
+  top: 0;
+}
+
+#meeting-date-old {
+  display: none;
+}

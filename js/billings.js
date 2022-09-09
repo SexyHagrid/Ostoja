@@ -4,7 +4,7 @@ $(document).ready(function () {
   function addUsersEmail() {
     $.ajax({
       type: 'GET',
-      url: 'utils/getUsersDetails.php',
+      url: 'utils/getDetails.php',
       data: { method: 'getUsersEmails' },
       dataType: 'json',
     }).done(function (emails) {
