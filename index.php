@@ -73,8 +73,8 @@
         </a>
       </div>
       <div class="main-col tile-image">
-        <a class="tile-image-a" id="tile-image-a-support" href="Awarie.html">
-          <h1>Zgłaszanie awarii</h1>
+        <a class="tile-image-a" id="tile-image-a-support" href="support.php">
+          <h1>Wsparcie techniczne</h1>
         </a>
       </div>
     </div>

@@ -87,7 +87,7 @@
         <div class="row row-upper">
           <h1 id="surveyTitle"></h1>
         </div>
-        <div class="row-akt" id="surveysContent">
+        <div class="row-akt" id="surveysContent" style="padding: 10px;">
         </div>
       </div>
     </div>

@@ -58,6 +58,17 @@
         $meetingDate = htmlspecialchars($_GET['date']);
         echo json_encode(Meeting::deleteMeeting($meetingDate));
         break;
+
+      case 'getEmailsByRoleName':
+        $roleName = htmlspecialchars($_GET['roleName']);
+        echo json_encode(['success' => true, 'data' => User::getEmailsByRoleName($roleName)]);
+        break;
+
+      case 'assignAssignee':
+        $email = htmlspecialchars($_GET['userEmail']);
+        $ticketId = htmlspecialchars($_GET['ticketId']);
+        echo json_encode(['success' => Ticket::assignAssignee($email, $ticketId)]);
+        break;
     }
   }
 

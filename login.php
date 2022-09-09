@@ -28,7 +28,7 @@
 
     if (!array_filter($errors)) {
       $dbConn = new DBConnector();
-      $stmt = $dbConn->dbRequest("SELECT email, password, userId FROM users where email like '$email'");
+      $stmt = $dbConn->dbRequest("SELECT * FROM users where email like '$email'");
       $stmt->execute();
       $users = $stmt->fetchAll();
 
@@ -40,6 +40,8 @@
         $_SESSION["loggedin"] = true;
         $_SESSION["userId"] = $users[0]["userId"];
         $_SESSION["email"] = $users[0]["email"];
+        $_SESSION["name"] = $users[0]["name"];
+        $_SESSION["surname"] = $users[0]["surname"];
 
         $sessionID = 'dsfsdfsdf'; // getRandomString();  // TODO: ????
 
