@@ -10,7 +10,7 @@
   include_once 'utils/permissions.php';
   include_once 'utils/breadcrumbs.php';
 
-  $action = intval($_GET['action']);
+  //$action = intval($_GET['action']);
 
   $conn = new mysqli('localhost', 'root', '', 'wspolnota_ostoja');
 
@@ -67,13 +67,23 @@
         </div>
       </div>
     </div>
-
-    <div class="row justify-content-start main-content-row">
-      <div class="col">
-          <div class="row row-upper">
-              <h1 id="surveyTitle"></h1>
-          </div>
-          <div class="row-akt" id="surveyContent">
+    
+    <div class="row main-content-row">
+      <div class="row justify-content-center">
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <table>
+              <tr>
+                <td>
+                  <h1 id="surveyTitle" style="text-align: center; padding-bottom: 20px;"></h1>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div id="surveyContent" style="padding: 10px; border: solid 1px black;">
+                  </div>
+                </td>
+              </tr>
+            </table>
           </div>
       </div>
     </div>

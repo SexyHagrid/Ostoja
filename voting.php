@@ -29,6 +29,7 @@
     }
 
     $userId = $_SESSION['userId'];
+    $hasViewSummaryPermission = Permissions::hasPermission("Wyświetlanie podsumowania ankiet");
     
     $completedSurveysArray = [];
     $query = "SELECT * FROM ankieta_odpowiedzi INNER JOIN ankieta_pytania ON ankieta_odpowiedzi.pytanie_id=ankieta_pytania.id WHERE ankieta_odpowiedzi.uzytkownik_id='".$userId."';";
@@ -84,6 +85,7 @@
             var votingArray = <?= json_encode($votingArray) ?>;
             var completedSurveysArray = <?= json_encode($completedSurveysArray) ?>;
             var userId = <?= json_encode($_SESSION['userId']) ?>;
+            var hasViewSummaryPermission = <?= json_encode($hasViewSummaryPermission) ?>;
         </script>
         <script src="js/voting.js"></script>
     </body>
