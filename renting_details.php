@@ -63,7 +63,7 @@
                 <nav class="navbar-expand-lg">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                    <?php Breadcrumbs::showBreadcrumbs(['page' => 'Wynajem - detale', 'address' => 'renting_details.php']); ?>
+                    <?php Breadcrumbs::showBreadcrumbs(['page' => 'Wynajem - detale', 'address' => 'wynajem-detale']); ?>
                     </ol>
                 </nav>
                 </nav>
@@ -73,69 +73,63 @@
             <div class="col-2 upper-right-buttons">
           <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
             <?php if (Permissions::hasPermission("Panel administracyjny")): ?>
-              <a href="admin_panel.php"><p id="admin-panel">Panel administracyjny</p></a>
+              <a href="panel-administracyjny"><p id="admin-panel">Panel administracyjny</p></a>
               <hr>
             <?php endif; ?>
-            <a href="logout.php"><p>Wyloguj</p></a>
+            <a href="wyloguj"><p id="logout-in-p">Wyloguj</p></a>
           <?php else:  ?>
-            <a><p style="color: black;">A</p></a>
-            <hr>
-            <a href="logout.php"><p>Zaloguj się</p></a>
+            <a href="zaloguj"><p id="logout-in-p">Zaloguj</p></a>
           <?php endif; ?>
         </div>
         </div>
         </div>
 
-        <div class="row main-content-row">
-            <div class="row justify-content-center" id="contentDiv">
-                <table>
-                    <tr>
-                        <td colspan="3">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width: 600px;">
-                            <ol class="carousel-indicators" id="carouselIndicators">
-                            </ol>
-                            <div class="carousel-inner" id="carouselContent">
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                            </a>
-                        </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        <label style="font-weight: bold;">Adres: </label>
-                        <label id="addressLabel"></label>
-                        </td>
-                        <td>
-                        <label style="font-weight: bold;">Dodatkowe informacje:</label>
-                        <br/>
-                        <label id="additionalInfoLabel"></label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        <label style="font-weight: bold;">Czynsz: </label>
-                        <label id="priceLabel"></label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        <label style="font-weight: bold;">Okres wynajmu: </label>
-                        <label id="timeLabel"></label>
-                        </td>
-                        <td>
-                        <label style="font-weight: bold;">Telefon: </label>
-                        <label id="phoneLabel"></label>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+        <div class="row justify-content-center main-content-row" id="contentDiv">
+            <table>
+            <tr>
+                <td colspan="3">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width: 600px;">
+                    <ol class="carousel-indicators" id="carouselIndicators">
+                    </ol>
+                    <div class="carousel-inner" id="carouselContent">
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+                </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <label style="font-weight: bold;">Adres: </label>
+                <label id="addressLabel"></label>
+                </td>
+                <td>
+                <label style="font-weight: bold;">Dodatkowe informacje:</label>
+                <br/>
+                <label id="additionalInfoLabel"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <label style="font-weight: bold;">Czynsz: </label>
+                <label id="priceLabel"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <label style="font-weight: bold;">Okres wynajmu: </label>
+                <label id="timeLabel"></label>
+                </td>
+                <td>
+                <label style="font-weight: bold;">Telefon: </label>
+                <label id="phoneLabel"></label>
+                </td>
+            </tr>
+            </table>
         </div>
 
         <?php include('templates/footer.php'); ?>

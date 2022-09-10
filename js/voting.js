@@ -75,11 +75,11 @@ $(document).ready(function () {
   }
 
   function showSurveySummary(surveyID) {
-    document.location.href = 'voting_summary.php?surveyID=' + surveyID;
+    document.location.href = 'głosowanie-wyniki?surveyID=' + surveyID;
   }
 
   function onSurveyClick(id) {
-    document.location.href = 'voting_vote.php?id=' + id;
+    document.location.href = 'głosowanie-głosuj?id=' + id;
   }
 
   function createNumberLabel(number) {

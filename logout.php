@@ -8,6 +8,6 @@
     unset($_SESSION['breadcrumbs']);
   }
 
-  header('Location: login.php');
+  header('Location: witaj');
 
 ?>

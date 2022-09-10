@@ -3,7 +3,7 @@
     session_start();
 
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] === false) {
-        header('Location: index.php');
+        header('Location: witaj');
     }
 
     include_once 'config/messages.php';
@@ -31,7 +31,7 @@
             echo $result;
         }
     } else {
-        $query = "SELECT * FROM aktualnosci WHERE ID_aktualnosci='".$id."';";  // TODO: why id not autoincremented key?
+        $query = "SELECT * FROM aktualnosci WHERE ID_aktualnosci='".$id."';";
         $result=$conn->query($query);
         $row=$result->fetch_assoc();
 
@@ -56,7 +56,7 @@
                     <nav class="navbar-expand-lg">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                        <?php Breadcrumbs::showBreadcrumbs(['page' => 'Aktualności - edytuj', 'address' => 'news_edit.php']); ?>
+                        <?php Breadcrumbs::showBreadcrumbs(['page' => 'Aktualności - edytuj', 'address' => 'aktualności-dodaj']); ?>
                         </ol>
                     </nav>
                     </nav>
@@ -65,17 +65,17 @@
                 </div>
                 <div class="col-2 upper-right-buttons">
                 <?php if (Permissions::hasPermission("Panel administracyjny")): ?>
-                    <a href="admin_panel.php"><p id="admin-panel">Panel administracyjny</p></a>
+                    <a href="panel-administracyjny"><p id="admin-panel">Panel administracyjny</p></a>
                     <hr>
                 <?php endif; ?>
-                <a href="logout.php"><p>Wyloguj</p></a>
+                <a href="wyloguj"><p id="logout-in-p">Wyloguj</p></a>
                 </div>
             </div>
         </div>
 
-        <div class="row justify-content-start">
+        <div class="row justify-content-start main-content-row">
             <div class="col">
-                <div class="row row-upper">
+                <div class="row-upper">
                     <h1>Edytuj aktualnosc</h1>
                 </div>
                 <form class="row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">

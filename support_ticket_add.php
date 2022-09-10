@@ -2,14 +2,14 @@
 
   session_start();
   if (!isset($_SESSION["loggedin"]) || $_SESSION['loggedin'] !== true) {
-    header('Location: login.php');
+    header('Location: witaj');
   }
 
   include_once 'utils/permissions.php';
   include_once 'config/messages.php';
 
   if (!Permissions::hasPermission('Dodawanie zgłoszeń')) {
-    header('Location: support.php');
+    header('Location: wsparcie-techniczne');
   }
 
   $dbConn = new DBConnector();

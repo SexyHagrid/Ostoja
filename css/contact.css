@@ -1,31 +1,21 @@
-.row {
+.row-ct {
     min-height: 13vh;
     height: 13vh;
     min-width: 100%;
     max-width: 100%;
 }
 
-.row h1 {
+.row-ct h1 {
     margin: auto;
 }
 
-.row-upper {
+.row-upper-ct {
     min-height: 7vh;
     background-color: white;
     margin: 0;
 }
 
-.justify-content-start {
-    min-width: 100vw;
-    min-height: 75vh;
-    margin: 0;
-    padding: 0%;
-    background-color: white;
-    overflow: scroll;
-    overflow-x: hidden;
-}
-
-.row-akt {
+.row-akt-ct {
     border: 1px solid black;
     box-shadow: 1px 1px grey;
     margin: 1% auto;
@@ -34,7 +24,7 @@
     max-width: 60%;
 }
 
-.row-akt p {
+.row-akt-ct p {
     margin: auto;
 }
 

@@ -2,7 +2,7 @@
 
   session_start();
   if (!isset($_SESSION["loggedin"]) || $_SESSION['loggedin'] !== true) {
-    header('Location: login.php');
+    header('Location: witaj');
   }
 
   include_once 'utils/permissions.php';
@@ -12,7 +12,7 @@
   $errors = ['meeting-date' => ''];
 
   if (isset($_POST['add-meeting-cancel'])) {
-    header('Location: meetings.php');
+    header('Location: spotkania');
   }
 
   if (isset($_POST['add-meeting-submit'])) {
@@ -30,7 +30,7 @@
       $stmt = $dbConn->dbRequest($sql);
       $stmt->execute([':meetingId'=>null, ':meetingDate'=>$meetingDate, ':agenda'=>$meetingAgenda]);
 
-      header('Location: meetings.php');
+      header('Location: spotkania');
     }
   }
 
@@ -47,7 +47,7 @@
             <nav class="navbar-expand-lg">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'Spotkania - dodaj', 'address' => 'meetings_add.php']); ?>
+                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'Spotkania - dodaj', 'address' => 'spotkania-dodaj']); ?>
                 </ol>
               </nav>
             </nav>
@@ -56,16 +56,16 @@
         </div>
         <div class="col-2 upper-right-buttons">
           <?php if (Permissions::hasPermission("Panel administracyjny")): ?>
-            <a href="admin_panel.php"><p id="admin-panel">Panel administracyjny</p></a>
+            <a href="panel-administracyjny"><p id="admin-panel">Panel administracyjny</p></a>
             <hr>
           <?php endif; ?>
-          <a href="logout.php"><p>Wyloguj</p></a>
+          <a href="wyloguj"><p id="logout-in-p">Wyloguj</p></a>
         </div>
       </div>
     </div>
 
     <div class="row main-content-row">
-      <form id="submit-meeting-form" action="meetings_add.php" method="post">
+      <form id="submit-meeting-form" action="spotkania-dodaj" method="post">
         <h2>Dodaj spotkanie</h2>
         <hr>
         <div id="buttons">

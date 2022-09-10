@@ -3,10 +3,10 @@ $(document).ready(function () {
   var imgRenting = $('#img-renting');
 
   imgLogin.on('click', function() {
-    document.location.href = "login.php";
+    document.location.href = "zaloguj";
   });
 
   imgRenting.on('click', function() {
-    document.location.href = "renting_categories.php";
+    document.location.href = "wynajem-kategorie";
   });
 });

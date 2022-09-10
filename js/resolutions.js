@@ -68,11 +68,11 @@ $(document).ready(function () {
   }
 
   function addResolution() {
-    document.location.href = "resolutions_add.php";
+    document.location.href = "uchwały-dodaj.php";
   }
 
   function editResolution(uchwalaID) {
-    document.location.href = "resolutions_edit.php?id=" + uchwalaID;
+    document.location.href = "uchwały-edytuj?id=" + uchwalaID;
   }
 
   function deleteResolution(resolutionID) {
