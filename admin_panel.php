@@ -2,7 +2,7 @@
 
   session_start();
   if (!isset($_SESSION["loggedin"]) || $_SESSION['loggedin'] !== true) {
-    header('Location: login.php');
+    header('Location: witaj');
   }
 
   include_once 'config/db_connect.php';
@@ -11,7 +11,7 @@
   include_once 'utils/breadcrumbs.php';
 
   if (!Permissions::hasPermission("Panel administracyjny")) {
-    header('Location: index.php');
+    header('Location: hub');
   }
 
   $errors = ['ua_name' => '', 'ua_surname' => '', 'ua_email' => '', 'ua_password' => '', 'ua_role' => '',
@@ -348,7 +348,7 @@
               <nav class="navbar-expand-lg">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
-                    <?php Breadcrumbs::showBreadcrumbs(['page' => 'Panel administracyjny', 'address' => 'admin_panel.php']); ?>
+                    <?php Breadcrumbs::showBreadcrumbs(['page' => 'Panel administracyjny', 'address' => 'panel-administracyjny']); ?>
                   </ol>
                 </nav>
               </nav>
@@ -357,7 +357,7 @@
           </div>
         </div>
         <div class="col-2 upper-right-buttons">
-          <a href="logout.php"><p>Wyloguj</p></a>
+          <a href="wyloguj"><p id="logout-in-p">Wyloguj</p></a>
         </div>
       </div>
     </div>
@@ -408,7 +408,7 @@
 
       <div class="col-7 admin-panel-main-body">
         <!-- Add user -->
-        <form class="forms" id="add-user-form" action="admin_panel.php" method="post" <?php if($ua_show) { echo 'style="display: block;"'; } ?>>
+        <form class="forms" id="add-user-form" action="panel-administracyjny" method="post" <?php if($ua_show) { echo 'style="display: block;"'; } ?>>
           <div class="col-12 user-data-outer">
             <p>Dane użytkownika:</p>
             <div class="col-12 user-data-inner">
@@ -475,7 +475,7 @@
         </form>
 
         <!-- Edit user -->
-        <form class="forms" id="edit-user-form" action="admin_panel.php" method="post" <?php if($ue_show) { echo 'style="display: block;"'; } ?>>
+        <form class="forms" id="edit-user-form" action="panel-administracyjny" method="post" <?php if($ue_show) { echo 'style="display: block;"'; } ?>>
           <div class="search-user">
             <input type="text" list="users-emails-list" id="user-emails-list-input" name="user-emails-list-input" placeholder="Wprowadź adres email..."/>
 
@@ -553,7 +553,7 @@
         </form>
 
         <!-- Add role -->
-        <form class="forms" id="add-role-form" action="admin_panel.php" method="post" <?php if($ra_show) { echo 'style="display: block;"'; } ?>>
+        <form class="forms" id="add-role-form" action="panel-administracyjny" method="post" <?php if($ra_show) { echo 'style="display: block;"'; } ?>>
           <div class="col-12 add-role-data-outer">
             <div class="col-12 add-role-data-inner">
               <label for="add-role-label">Dodaj rolę:</label>
@@ -568,7 +568,7 @@
         </form>
 
        <!-- Edit role -->
-        <form class="forms" id="edit-role-form" action="admin_panel.php" method="post" <?php if($re_show) { echo 'style="display: block;"'; } ?>>
+        <form class="forms" id="edit-role-form" action="panel-administracyjny" method="post" <?php if($re_show) { echo 'style="display: block;"'; } ?>>
           <div class="search-role">
             <input type="text" list="roles-names-list" id="roles-names-list-input" name="roles-names-list-input" placeholder="Wprowadź rolę..."/>
 
@@ -614,7 +614,7 @@
         </form>
 
         <!-- Add permission -->
-        <form class="forms" id="add-permission-form" action="admin_panel.php" method="post" <?php if($pa_show) { echo 'style="display: block;"'; } ?>>
+        <form class="forms" id="add-permission-form" action="panel-administracyjny" method="post" <?php if($pa_show) { echo 'style="display: block;"'; } ?>>
           <div class="col-12 add-permission-data-outer">
             <div class="col-12 add-permission-data-inner">
               <label for="add-permission-label">Dodaj permisję:</label>
@@ -629,7 +629,7 @@
         </form>
 
         <!-- Edit permission -->
-        <form class="forms" id="edit-permission-form" action="admin_panel.php" method="post" <?php if($pe_show) { echo 'style="display: block;"'; } ?>>
+        <form class="forms" id="edit-permission-form" action="panel-administracyjny" method="post" <?php if($pe_show) { echo 'style="display: block;"'; } ?>>
           <div class="search-role">
             <input type="text" list="permissions-desc-list" id="permissions-desc-list-input" name="permissions-desc-list-input" placeholder="Wprowadź permisję..."/>
 

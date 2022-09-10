@@ -5,19 +5,19 @@ $(document).ready(function () {
   var addOfferButton = $('#addOfferButtonElement');
 
   oneRoomButton.on('click', function() {
-    document.location.href = "renting_list.php?id=1";
+    document.location.href = "wynajem-lista?id=1";
   });
 
   twoRoomButton.on('click', function() {
-    document.location.href = "renting_list.php?id=2";
+    document.location.href = "wynajem-lista?id=2";
   });
 
   threeRoomButton.on('click', function() {
-    document.location.href = "renting_list.php?id=3";
+    document.location.href = "wynajem-lista?id=3";
   });
 
   addOfferButton.on('click', function() {
-    document.location.href = "renting_add.php";
+    document.location.href = "wynajem-dodaj";
   });
 
   onStart();

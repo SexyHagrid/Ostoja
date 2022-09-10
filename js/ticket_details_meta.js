@@ -3,6 +3,9 @@ $(document).ready(function () {
   let priorities = ['Krytyczny', 'Wysoki', 'Średni', 'Niski'];
   let ticketTypes = ['Awarie', 'Błąd na stronie', 'Usprawnienie strony', 'Konto użytkownika'];
   let ticketId = $('.active').text().trim().substring(4);
+  let ticketDescription = $('.ticket-details-description').val();
+
+  $('.tdd-ta').css('height', ($('.tdd-ta').prop('scrollHeight')) + "px");
 
   function getUsersByRole() {
     $.ajax({
@@ -35,6 +38,7 @@ $(document).ready(function () {
     }).done(function(response) {
       if (response.success) {
         $('#ticket-meta-details-assignee').val(response.data.email);
+        $('#ticket-details-meta-date-update-value').text(response.data.ticketDateUpdate);
       }
     })
   })
@@ -56,6 +60,8 @@ $(document).ready(function () {
         }).done(function(response) {
           if (!response.success) {
             $('#ticket-meta-details-assignee').val();
+          } else {
+            $('#ticket-details-meta-date-update-value').text(response.data.ticketDateUpdate);
           }
         })
       }
@@ -79,6 +85,8 @@ $(document).ready(function () {
         }).done(function(response) {
           if (!response.success) {
             $('#ticket-meta-details-priority').val();
+          } else {
+            $('#ticket-details-meta-date-update-value').text(response.data.ticketDateUpdate);
           }
         })
       }
@@ -102,6 +110,8 @@ $(document).ready(function () {
         }).done(function(response) {
           if (!response.success) {
             $('#ticket-meta-details-type').val();
+          } else {
+            $('#ticket-details-meta-date-update-value').text(response.data.ticketDateUpdate);
           }
         })
       }
@@ -109,6 +119,13 @@ $(document).ready(function () {
   })
 
   $('.ticket-details-status-outer').on('click', function() {
+    let status = $('#ticket-details-status-inner-h4').text();
+    if (status === 'ZAKOŃCZONY' || status === 'ANULOWANY') {
+      $('input[name="change-ticket-status"][value="OTWARTY"]').prop('disabled', true);
+      $('input[name="change-ticket-status"][value="W TRAKCIE"]').prop('disabled', true);
+
+    }
+
     $('.curtain').css('display', 'block');
     $('.change-ticket-status').css('display', 'block');
   })
@@ -132,6 +149,13 @@ $(document).ready(function () {
       dataType: 'json'
     }).done(function(response) {
       if (response.success === true) {
+        $('#ticket-details-meta-date-update-value').text(response.data.ticketDateUpdate);
+        $('#ticket-details-meta-date-end-value').text(response.data.ticketDateEnd);
+
+        if ($('.ticket-details-meta-date').css('display') === 'none' && response.data.ticketDateEnd) {
+          $('.ticket-details-meta-date').css('display', 'block');
+        }
+
         $('#ticket-details-status-inner-h4').text(ticketStatus);
         let statusColor = 'linear-gradient(45deg, #eeeeee, #f7f5f5, #eeeeee)';
         switch (ticketStatus) {
@@ -157,6 +181,58 @@ $(document).ready(function () {
 
       $('.curtain').css('display', 'none');
       $('.change-ticket-status').css('display', 'none');
+    })
+  })
+
+  let clickedDescription = false;
+  let canceledDescription = false;
+  $(".ticket-details-description-outer").on('click', function() {
+    clickedDescription = true;
+  });
+
+  $(document).on('click', function() {
+    if (clickedDescription) {
+      if (!canceledDescription) {
+        $('.buttons-div-tdd-ta').css('display', 'block');
+      }
+
+      canceledDescription = false;
+      clickedDescription = false;
+    } else {
+      $('.buttons-div-tdd-ta').css('display', 'none');
+    }
+  })
+
+  function cancelEditDescription() {
+    $('.ticket-details-description').val(ticketDescription);
+    $('.buttons-div-tdd-ta').css('display', 'none');
+  }
+
+  $('#cancel-edit-description').on('click', function() {
+    canceledDescription = true;
+    cancelEditDescription();
+  })
+
+  $('#submit-edit-description').on('click', function() {
+    let ticketDescriptionEdit = $('.ticket-details-description').val();
+
+    $.ajax({
+      type: "POST",
+      url: "utils/ticketDetails.php",
+      data: {
+        ticketId,
+        method: 'changeTicketDescription',
+        ticketDescription: ticketDescriptionEdit
+      },
+      dataType: 'json'
+    }).done(function(response) {
+      if (response.success) {
+        $('#ticket-details-meta-date-update-value').text(response.data.ticketDateUpdate);
+        $('.buttons-div-tdd-ta').css('display', 'none');
+        ticketDescription = $('.ticket-details-description').val();
+      } else {
+        cancelEditDescription();
+      }
     })
   })
 });

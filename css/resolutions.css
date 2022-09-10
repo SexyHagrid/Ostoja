@@ -1,11 +1,11 @@
-.row {
+.row-res {
     min-height: 15vh;
     height: 15vh;
     min-width: 100%;
     max-width: 100%;
 }
 
-.row-upper {
+.row-upper-res {
     min-height: 7vh;
     background-color: white;
     margin: 0;

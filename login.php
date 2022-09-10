@@ -2,7 +2,7 @@
 
   session_start();
   if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header('Location: index.php');
+    header('Location: witaj');
   } else {
     echo "<script> localStorage.removeItem('sessionID'); </script>";
   }
@@ -54,7 +54,7 @@
         //   localStorage.setItem('sessionID', '".$sessionID."');  // TODO: ????
         // </script>";
 
-        header('Location: index.php');
+        header('Location: hub');
       }
     }
   }
@@ -76,7 +76,7 @@
 
     <div class="row main-content-row">
       <div class="login-body">
-        <form id="login-form" action="login.php" method="post">
+        <form id="login-form" action="zaloguj" method="post">
           <div class="login-box">
             <h1>Zaloguj</h1>
             <div>

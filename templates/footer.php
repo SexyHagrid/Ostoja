@@ -3,9 +3,9 @@
       </div>
       <div id="footer-right">
         <div id="footer-right-inner">
-          <a href="faq.php">Faq</a>
-          <a href="contact.php">Kontakt</a>
-          <a href="renting_categories.php">Wynajem</a>
+          <a href="faq">Faq</a>
+          <a href="kontakt">Kontakt</a>
+          <a href="wynajem-kategorie">Wynajem</a>
         </div>
       </div>
     </div>
@@ -16,3 +16,4 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script src="js/show_error.js"></script>
   <script src="js/show_notification.js"></script>
+  <script src='js/main_overlay.js'></script>

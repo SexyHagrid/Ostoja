@@ -83,6 +83,6 @@ $(document).ready(function () {
 
   $('.ticket').on('click', function() {
     let text = $(this).children('.ticket-details-outer').children('.ticket-name').text().trim();
-    window.location = 'ticket_details.php?ticketId=' + text.substring(0, text.indexOf(' '));
+    window.location = 'zgłoszenie?ticketId=' + text.substring(0, text.indexOf(' '));
   })
 });

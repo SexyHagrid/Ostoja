@@ -1,0 +1,32 @@
+RewriteEngine on
+
+RewriteRule ^witaj/?$ index.php [NC,L]
+RewriteRule ^hub/?$ hub.php [NC,L]
+RewriteRule ^zaloguj/?$ login.php [NC,L]
+RewriteRule ^wyloguj/?$ logout.php [NC,L]
+RewriteRule ^panel-administracyjny/?$ admin_panel.php [NC,L]
+RewriteRule ^opłaty/?$ billings.php [NC,L]
+RewriteRule ^kontakt/?$ contact.php [NC,L]
+RewriteRule ^faq-dodaj/?$ faq_add.php [NC,L]
+RewriteRule ^spotkania/?$ meetings.php [NC,L]
+RewriteRule ^spotkania-dodaj/?$ meetings_add.php [NC,L]
+RewriteRule ^aktualności/?$ news.php [NC,L]
+RewriteRule ^aktualności-dodaj/?$ news_add.php [NC,L]
+RewriteRule ^aktualności-edytuj/?$ news_edit.php [NC,L]
+RewriteRule ^wynajem-dodaj/?$ renting_add.php [NC,L]
+RewriteRule ^wynajem-kategorie/?$ renting_categories.php [NC,L]
+RewriteRule ^wynajem-detale/?$ renting_details.php [NC,L]
+RewriteRule ^wynajem-lista/?$ renting_list.php [NC,L]
+RewriteRule ^uchwały/?$ resolutions.php [NC,L]
+RewriteRule ^uchwały-dodaj/?$ resolutions_add.php [NC,L]
+RewriteRule ^uchwały-edytuj/?$ resolutions_edit.php [NC,L]
+RewriteRule ^wsparcie-techniczne/?$ support.php [NC,L]
+RewriteRule ^zgłoszenie/?$ ticket_details.php/ [NC,L]
+RewriteRule ^głosowanie/?$ voting.php [NC,L]
+RewriteRule ^głosowanie-wyniki/?$ voting_summary.php [NC,L]
+RewriteRule ^głosowanie-głosuj/?$ voting_vote.php [NC,L]
+
+
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule (.*) $1\.php [L]

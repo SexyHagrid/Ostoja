@@ -51,21 +51,36 @@
       $ticketId = (int) htmlspecialchars($_POST['ticketId']);
       $ticketType = htmlspecialchars($_POST['ticketType']);
 
-      echo json_encode(['success' => Ticket::changeType($ticketType, $ticketId)]);
+      $response = Ticket::changeType($ticketType, $ticketId);
+
+      echo json_encode(['success' =>  $response['status'], 'data' => $response['data']]);
     }
 
     if ($_POST['method'] === 'changeTicketPriority') {
       $ticketId = (int) htmlspecialchars($_POST['ticketId']);
       $ticketPriority = htmlspecialchars($_POST['priority']);
 
-      echo json_encode(['success' => Ticket::changePriority($ticketPriority, $ticketId)]);
+      $response = Ticket::changePriority($ticketPriority, $ticketId);
+
+      echo json_encode(['success' => $response['status'], 'data' => $response['data']]);
     }
 
     if ($_POST['method'] === 'changeTicketStatus') {
       $ticketId = (int) htmlspecialchars($_POST['ticketId']);
       $ticketStatus = htmlspecialchars($_POST['ticketStatus']);
 
-      echo json_encode(['success' => Ticket::changeStatus($ticketStatus, $ticketId)]);
+      $response = Ticket::changeStatus($ticketStatus, $ticketId);
+
+      echo json_encode(['success' => $response['status'], 'data' => $response['data']]);
+    }
+
+    if ($_POST['method'] === 'changeTicketDescription') {
+      $ticketId = (int) htmlspecialchars($_POST['ticketId']);
+      $ticketDescription = htmlspecialchars($_POST['ticketDescription']);
+
+      $response = Ticket::changeDescription($ticketDescription, $ticketId);
+
+      echo json_encode(['success' =>  $response['status'], 'data' => $response['data']]);
     }
   }
 ?>

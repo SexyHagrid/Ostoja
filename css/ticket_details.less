@@ -105,6 +105,7 @@
   height: 7vh;
   padding: 0.5vw;
   resize: none;
+  overflow-y: hidden;
   border-radius: 10px;
 }
 
@@ -143,13 +144,20 @@
   min-height: 7vh;
   padding: 0.5vw;
   margin: 1.5vh 0 2vh;
-  background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid #b4b4b4;
 
   &:last-of-type {
     margin-bottom: 0;
   }
+}
+
+.c-user {
+  background-color: #ffffff;
+}
+
+.o-user {
+  background-color: #fafafa;
 }
 
 .ticket-comment-inner {
@@ -179,13 +187,9 @@
   top: -2vh;
   right: 0.3vw;
   font-size: small;
-  background: linear-gradient(0deg, #ffffff 40%, #ebebeb 50%);
+  background: linear-gradient(0deg, #fafafa 40%, #ebebeb 50%);
 
   p {
     display: inline-block;
   }
-}
-
-.ticket-comment-inner-text-o-user {
-  // text-align: end;  // FIXME:
 }

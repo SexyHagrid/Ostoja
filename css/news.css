@@ -1,24 +1,7 @@
-.row {
-    min-height: 15vh;
-    height: 15vh;
-    min-width: 100%;
-    max-width: 100%;
-}
-
-.row-upper {
+.row-upper-akt {
     min-height: 7vh;
     background-color: white;
     margin: 0;
-}
-
-.justify-content-start {
-    min-width: 100vw;
-    min-height: 75vh;
-    margin: 0;
-    padding: 0%;
-    background-color: white;
-    overflow: scroll;
-    overflow-x: hidden;
 }
 
 .row-akt {
@@ -31,7 +14,7 @@
 .row-akt:hover {
     border: 1px solid black;
     box-shadow: 1px 1px grey;
-    margin: 1% 0;
+    margin: 0.5% 0;
     overflow-y: hidden;
     height: min-content;
 }

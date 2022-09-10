@@ -81,7 +81,7 @@ $(document).ready(function () {
     }
 
     var directory = 'assets/zdjeciaWynajem/' + typeSelectElement.value + 'pokojowe/';
-    fetch('renting_add.php?action=1&directory=' + directory, {
+    fetch('wynajem-dodaj?action=1&directory=' + directory, {
       method: 'POST',
       body: formData
     })
@@ -110,7 +110,7 @@ $(document).ready(function () {
         sendPhotosInfoToDatabase(photosList, rentalId);
       }
     }
-    var url = 'renting_add.php?action=2&type=' + type + '&price=' + price + '&address=' + address + '&time=' + time + '&phone=' + phone + '&info=' + additionalInfo;
+    var url = 'wynajem-dodaj?action=2&type=' + type + '&price=' + price + '&address=' + address + '&time=' + time + '&phone=' + phone + '&info=' + additionalInfo;
     xhttp.open('GET', url, true);
     xhttp.send();
   }
@@ -130,7 +130,7 @@ $(document).ready(function () {
           }
         }
       }
-      var url = 'renting_add.php?action=3&rentalId=' + rentalId + '&fileName=' + photosList[i];
+      var url = 'wynajem-dodaj?action=3&rentalId=' + rentalId + '&fileName=' + photosList[i];
       xhttp.open('GET', url, true);
       xhttp.send();
     }

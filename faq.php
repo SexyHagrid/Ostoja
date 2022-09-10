@@ -41,7 +41,7 @@
             <nav class="navbar-expand-lg">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'FAQ', 'address' => 'faq.php']); ?>
+                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'FAQ', 'address' => 'faq']); ?>
                 </ol>
               </nav>
             </nav>
@@ -51,18 +51,20 @@
         <div class="col-2 upper-right-buttons">
           <?php if (isset($_SESSION['userId'])): ?>
             <?php if (Permissions::hasPermission("Panel administracyjny")): ?>
-              <a href="admin_panel.php"><p id="admin-panel">Panel administracyjny</p></a>
+              <a href="panel-administracyjny"><p id="admin-panel">Panel administracyjny</p></a>
               <hr>
             <?php endif; ?>
-            <a href="logout.php"><p>Wyloguj</p></a>
+            <a href="wyloguj"><p id="logout-in-p">Wyloguj</p></a>
+          <?php else: ?>
+            <a href="zaloguj"><p id="logout-in-p">Zaloguj</p></a>
           <?php endif; ?>
         </div>
       </div>
     </div>
 
-    <div class="row justify-content-start main-content-row">
+    <div class="row main-content-row">
       <div class="col">
-        <div class="row row-upper">
+        <div class="row row-upper-faq">
             <h1>FAQ</h1>
         </div>
         <?php if (isset($_SESSION['userId'])): ?>
@@ -78,7 +80,7 @@
     </div>
 
     <template id="faqTemplate">
-      <div class="row row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
+      <div class="row row-akt-faq" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
         <table style="width: 100%;">
           <tr>
             <td rowspan=2 style="width: 20%">
@@ -90,14 +92,14 @@
           </tr>
           <tr>
             <td>
-              <label style="font-weight: bold;"></label> 
+              <label style="font-weight: bold;"></label>
             </td>
           </tr>
         </table>
       </div>
     </template>
 
-    <?php include('templates/footer.php'); ?> <!-- // TODO: remove appr link -->
+    <?php include('templates/footer.php'); ?>
     <script>
       var resultArray = <?= json_encode($resultArray) ?>;
     </script>

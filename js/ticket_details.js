@@ -43,7 +43,7 @@ $(document).ready(function () {
       if (response.success === true) {
         response.data.forEach(function(comment) {
           $('.ticket-comments-comments').prepend(`
-          <div class="ticket-comment-outer">
+          <div class="ticket-comment-outer ${comment.reporter}-user">
             <div class="ticket-comment-inner">
               <div class="ticket-comment-inner-label-${comment.reporter}-user">
                 <p class="ticket-comment-label-name">${comment.userName} ${comment.userSurname}</p>
@@ -122,7 +122,7 @@ $(document).ready(function () {
     }).done(function(response) {
       if (response.success) {
         $('.ticket-comments-comments').prepend(`
-        <div class="ticket-comment-outer">
+        <div class="ticket-comment-outer c-user">
           <div class="ticket-comment-inner">
             <div class="tcilu ticket-comment-inner-label-c-user">
               <p class="ticket-comment-label-name">${response.data.userName} ${response.data.userSurname}</p>
@@ -150,6 +150,11 @@ $(document).ready(function () {
       $('#submit-add-comment').removeClass('hover-bttn')
     }
   })
+
+  $("textarea").on("input", function() {
+    this.style.height = '14vh';
+    this.style.height = (this.scrollHeight) + "px";
+  });
 
   fetchNewComments();
 });
