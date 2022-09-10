@@ -1,10 +1,10 @@
 <?php
 
   class DBConnector {
-    private static $servername = 'localhost';
-    private static $dbname = 'wspolnota_ostoja';
-    private static $username = 'root';
-    private static $password = '';
+    private static $servername = 'remotemysql.com';
+    private static $dbname = 'lpqiJahZh5';
+    private static $username = 'lpqiJahZh5';
+    private static $password = '6m9cW0YAt2';
 
     public static function dbRequest($query) {
       try {

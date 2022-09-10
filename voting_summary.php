@@ -12,7 +12,7 @@
 
   //$action = intval($_GET['action']);
 
-  $conn = new mysqli('localhost', 'root', '', 'wspolnota_ostoja');
+  $conn = new mysqli('remotemysql.com', 'lpqiJahZh5', '6m9cW0YAt2', 'lpqiJahZh5');
 
   if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
