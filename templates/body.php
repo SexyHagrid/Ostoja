@@ -4,7 +4,6 @@
 <body>
   <?php if ($error_prompt_message): ?>
     <div id="alertpopup">
-      <div id="close-popup">&#10006;</div>
       <div id="alertpopup-text"><?php echo $error_prompt_message; ?></div>
       <div id="alertpopup-progress-bar"></div>
     </div>
