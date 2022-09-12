@@ -149,9 +149,9 @@
                 <input id="meeting-date-edit" name="meeting-date-edit">
               </label>
             </div>
-            <label>
+            <label id="agenda-edit-outer">
               <p>Agenda</p>
-              <textarea id="agenda-textarea-edit" name="agenda-textarea-edit" cols="100" rows="20"></textarea>
+              <textarea id="agenda-textarea-edit" name="agenda-textarea-edit"></textarea>
             </label>
             <input class="hover-bttn" id="edit-meeting-submit" type="submit" name="edit-meeting-submit" value="Zatwierdź">
           </div>

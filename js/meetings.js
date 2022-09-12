@@ -230,7 +230,6 @@ $(document).ready(function () {
   $('#close-curtain').on('click', function() {
     $('.curtain').css('display', 'none');
     $('#edit-meeting-div').css('display', 'none');
-    $('#edit-meetings').text('Edytuj');
   })
 
   $('#edit-meetings').on('click', function() {

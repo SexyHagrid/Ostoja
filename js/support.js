@@ -58,9 +58,22 @@ $(document).ready(function () {
     }
   })
 
+  function priorityInArray() {
+    let val = $('#create-ticket-priority').val();
+    let prioArray = ['Krytyczny', 'Wysoki', 'Średni', 'Niski'];
+    let contains = false;
+
+    prioArray.forEach(priority => {
+      if (val == priority) {
+        contains = true;
+      }
+    });
+
+    return contains;
+  }
+
   $('#create-ticket-priority').on('input', function() {
-    let text = $(this).val();
-    if ($.inArray(text, ['Krytyczny', 'Wysoki', 'Średni', 'Niski'])) {
+    if (!priorityInArray()) {
       $('.create-ticket-data-priority').css('border-color', 'red');
       $('.create-ticket-data-priority').css('color', 'red');
     } else {
@@ -70,7 +83,7 @@ $(document).ready(function () {
   })
 
   $('.create-ticket-input').on('input', function() {
-    if ($('#create-ticket-topic').val().length !== 0 && !$.inArray($('#create-ticket-priority').val(), ['Krytyczny', 'Wysoki', 'Średni', 'Niski'])) {
+    if ($('#create-ticket-topic').val().length !== 0 && priorityInArray()) {
       $('#create-ticket-submit').prop('disabled', false);
       $('#create-ticket-submit').removeClass('disabled-input')
       $('#create-ticket-submit').addClass('hover-bttn')

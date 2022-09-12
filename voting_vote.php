@@ -84,10 +84,10 @@
 
     <div class="row justify-content-start main-content-row">
       <div class="col">
-        <div class="row row-upper">
+        <div class="row row-ct row-upper-ct">
           <h1 id="surveyTitle"></h1>
         </div>
-        <div class="row-akt" id="surveysContent" style="padding: 10px;">
+        <div class="row-akt-ct" id="surveysContent" style="padding: 10px;">
         </div>
       </div>
     </div>

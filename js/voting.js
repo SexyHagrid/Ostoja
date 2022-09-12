@@ -29,7 +29,7 @@ $(document).ready(function () {
       }
 
       var div = document.createElement('div');
-      div.setAttribute('class', 'row-akt');
+      div.setAttribute('class', 'row-akt-ct');
       div.setAttribute('data-id', surveyID);
       div.style.padding = "10px";
 

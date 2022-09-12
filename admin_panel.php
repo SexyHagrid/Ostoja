@@ -343,18 +343,16 @@
   <?php include('templates/body.php'); ?>
 
         <div class="col-7 page-name">
-          <div id="page-name-outer">
-            <div id="breadcrumbs-div">
-              <nav class="navbar-expand-lg">
-                <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <?php Breadcrumbs::showBreadcrumbs(['page' => 'Panel administracyjny', 'address' => 'panel-administracyjny']); ?>
-                  </ol>
-                </nav>
+          <div id="breadcrumbs-div">
+            <nav class="navbar-expand-lg">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <?php Breadcrumbs::showBreadcrumbs(['page' => 'Panel administracyjny', 'address' => 'panel-administracyjny']); ?>
+                </ol>
               </nav>
-            </div>
-            <p>Panel administracyjny</p>
+            </nav>
           </div>
+          <p>Panel administracyjny</p>
         </div>
         <div class="col-2 upper-right-buttons">
           <a href="wyloguj"><p id="logout-in-p">Wyloguj</p></a>
@@ -368,12 +366,16 @@
           <div class="action-inner">
             <p>Użytkownicy</p>
             <div class="subactions user-list">
-              <div class="user-list-button-outer">
-                <div class="action-list-button-inner" id="add-user"><p>Dodaj</p></div>
-              </div>
-              <div class="user-list-button-outer">
-                <div class="action-list-button-inner" id="edit-user"><p>Edytuj</p></div>
-              </div>
+              <?php if (Permissions::hasPermission('Dodawanie użytkowników')): ?>
+                <div class="user-list-button-outer">
+                  <div class="action-list-button-inner" id="add-user"><p>Dodaj</p></div>
+                </div>
+              <?php endif; ?>
+              <?php if (Permissions::hasPermission('Edytowanie użytkowników')): ?>
+                <div class="user-list-button-outer">
+                  <div class="action-list-button-inner" id="edit-user"><p>Edytuj</p></div>
+                </div>
+              <?php endif; ?>
             </div>
           </div>
         </div>
@@ -381,12 +383,16 @@
           <div class="action-inner">
             <p>Role</p>
             <div class="subactions role-list">
-              <div class="user-list-button-outer">
-                <div class="action-list-button-inner" id="add-role"><p>Dodaj</p></div>
-              </div>
-              <div class="user-list-button-outer">
-                <div class="action-list-button-inner" id="edit-role"><p>Edytuj</p></div>
-              </div>
+              <?php if (Permissions::hasPermission('Dodawanie roli')): ?>
+                <div class="user-list-button-outer">
+                  <div class="action-list-button-inner" id="add-role"><p>Dodaj</p></div>
+                </div>
+              <?php endif; ?>
+              <?php if (Permissions::hasPermission('Edytowanie roli')): ?>
+                <div class="user-list-button-outer">
+                  <div class="action-list-button-inner" id="edit-role"><p>Edytuj</p></div>
+                </div>
+              <?php endif; ?>
             </div>
           </div>
         </div>
@@ -394,12 +400,16 @@
           <div class="action-inner">
             <p>Permisje</p>
             <div class="subactions permission-list">
-              <div class="user-list-button-outer">
-                <div class="action-list-button-inner" id="add-permission"><p>Dodaj</p></div>
-              </div>
-              <div class="user-list-button-outer">
-                <div class="action-list-button-inner" id="edit-permission"><p>Edytuj</p></div>
-              </div>
+              <?php if (!Permissions::hasPermission('Dodawanie permisji')): ?>
+                <div class="user-list-button-outer">
+                  <div class="action-list-button-inner" id="add-permission"><p>Dodaj</p></div>
+                </div>
+              <?php endif; ?>
+              <?php if (!Permissions::hasPermission('Edytowanie permisji')): ?>
+                <div class="user-list-button-outer">
+                  <div class="action-list-button-inner" id="edit-permission"><p>Edytuj</p></div>
+                </div>
+              <?php endif; ?>
             </div>
           </div>
         </div>
@@ -547,7 +557,9 @@
           </div>
 
           <div id="buttons-div">
-            <input id="remove-user-button" type="submit" name="remove-user-button" value="Usuń">
+            <?php if (Permissions::hasPermission('Usuwanie użytkowników')): ?>
+              <input id="remove-user-button" type="submit" name="remove-user-button" value="Usuń">
+            <?php endif; ?>
             <input id="edit-user-button" type="submit" name="edit-user-button" value="Edytuj">
           </div>
         </form>
@@ -608,7 +620,9 @@
           </div>
 
           <div id="buttons-div">
-            <input id="remove-role-button" type="submit" name="remove-role-button" value="Usuń">
+            <?php if (Permissions::hasPermission('Usuwanie roli')): ?>
+              <input id="remove-role-button" type="submit" name="remove-role-button" value="Usuń">
+            <?php endif; ?>
             <input id="edit-role-button" type="submit" name="edit-role-button" value="Edytuj">
           </div>
         </form>
@@ -669,7 +683,9 @@
           </div>
 
           <div id="buttons-div">
-            <input id="remove-permission-button" type="submit" name="remove-permission-button" value="Usuń">
+            <?php if (Permissions::hasPermission('Usuwanie permisji')): ?>
+              <input id="remove-permission-button" type="submit" name="remove-permission-button" value="Usuń">
+            <?php endif; ?>
             <input id="edit-permission-button" type="submit" name="edit-permission-button" value="Edytuj">
           </div>
         </form>

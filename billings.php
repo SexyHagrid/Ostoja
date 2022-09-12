@@ -97,9 +97,10 @@
     }
 
     if (!$hasErrors) {
+      $currentDate = date('Y/m/d h:i:s', time());
       $sql = "INSERT INTO reports (reportId, name, userId, creationDate) VALUES (:reportId, :name, :userId, :creationDate)";
       $stmt = $dbConn->dbRequest($sql);
-      $stmt->execute([':reportId'=>null, ':name'=>$add_report_name, ':userId'=>$reportUserId, ':creationDate'=>null]);
+      $stmt->execute([':reportId'=>null, ':name'=>$add_report_name, ':userId'=>$reportUserId, ':creationDate'=>$currentDate]);
 
       $stmt = $dbConn->dbRequest("SELECT reportId FROM reports where name = '$add_report_name'");
       $stmt->execute();

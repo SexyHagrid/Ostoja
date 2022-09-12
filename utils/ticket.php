@@ -21,22 +21,25 @@
         $usersIds = $stmt->fetchAll();
         $userId = $usersIds[0]['userId'];
 
-        $sql = "UPDATE tickets SET assigneeId=$userId WHERE ticketId=$ticketId";
+        $ticketDateUpdate = date('Y/m/d h:i:s', time());
+
+        $sql = "UPDATE tickets SET assigneeId=$userId, ticketDateUpdate='$ticketDateUpdate' WHERE ticketId=$ticketId";
         $stmt = $dbConn->dbRequest($sql);
         $stmt->execute();
 
         $ticketDetails = Ticket::getDetails($ticketId);
 
         return ['status' => true, 'data' => ['ticketDateUpdate' => $ticketDetails['ticketDateUpdate']]];
-      } catch (Exception) {
-        return false;
+      } catch (Exception $ex) {
+        return ['status' => false, 'data' => $ex];
       }
     }
 
     public static function changeType($type, $ticketId) {
       try {
         $dbConn = new DBConnector();
-        $sql = "UPDATE tickets SET ticketType='$type' WHERE ticketId=$ticketId";
+        $ticketDateUpdate = date('Y/m/d h:i:s', time());
+        $sql = "UPDATE tickets SET ticketType='$type', ticketDateUpdate='$ticketDateUpdate' WHERE ticketId=$ticketId";
         $stmt = $dbConn->dbRequest($sql);
         $stmt->execute();
 
@@ -44,14 +47,15 @@
 
         return ['status' => true, 'data' => ['ticketDateUpdate' => $ticketDetails['ticketDateUpdate']]];
       } catch (Exception $ex) {
-        return false;
+        return ['status' => false, 'data' => $ex];
       }
     }
 
     public static function changePriority($priority, $ticketId) {
       try {
         $dbConn = new DBConnector();
-        $sql = "UPDATE tickets SET priority='$priority' WHERE ticketId=$ticketId";
+        $ticketDateUpdate = date('Y/m/d h:i:s', time());
+        $sql = "UPDATE tickets SET priority='$priority', ticketDateUpdate='$ticketDateUpdate' WHERE ticketId=$ticketId";
         $stmt = $dbConn->dbRequest($sql);
         $stmt->execute();
 
@@ -59,17 +63,18 @@
 
         return ['status' => true, 'data' => ['ticketDateUpdate' => $ticketDetails['ticketDateUpdate']]];
       } catch (Exception $ex) {
-        return false;
+        return ['status' => false, 'data' => $ex];
       }
     }
 
     public static function changeStatus($status, $ticketId) {
       try {
         $sql = '';
+        $ticketDateEnd = date('Y/m/d h:i:s', time());
         if ($status === 'ZAKOŃCZONY' || $status === 'ANULOWANY') {
-          $sql = "UPDATE tickets SET ticketStatus='$status', ticketDateEnd=CURRENT_TIMESTAMP WHERE ticketId=$ticketId";
+          $sql = "UPDATE tickets SET ticketStatus='$status', ticketDateUpdate='$ticketDateEnd', ticketDateEnd='$ticketDateEnd' WHERE ticketId=$ticketId";
         } else {
-          $sql = "UPDATE tickets SET ticketStatus='$status' WHERE ticketId=$ticketId";
+          $sql = "UPDATE tickets SET ticketStatus='$status', ticketDateUpdate='$ticketDateEnd' WHERE ticketId=$ticketId";
         }
 
         $dbConn = new DBConnector();
@@ -80,14 +85,15 @@
 
         return ['status' => true, 'data' => ['ticketDateUpdate' => $ticketDetails['ticketDateUpdate'], 'ticketDateEnd' => $ticketDetails['ticketDateEnd']]];
       } catch (Exception $ex) {
-        return ['status' => false];
+        return ['status' => false, 'data' => $ex];
       }
     }
 
     public static function changeDescription($description, $ticketId) {
       try {
         $dbConn = new DBConnector();
-        $sql = "UPDATE tickets SET description='$description' WHERE ticketId=$ticketId";
+        $ticketDateUpdate = date('Y/m/d h:i:s', time());
+        $sql = "UPDATE tickets SET description='$description', ticketDateUpdate='$ticketDateUpdate' WHERE ticketId=$ticketId";
         $stmt = $dbConn->dbRequest($sql);
         $stmt->execute();
 
@@ -95,7 +101,7 @@
 
         return ['status' => true, 'data' => ['ticketDateUpdate' => $ticketDetails['ticketDateUpdate']]];
       } catch (Exception $ex) {
-        return ['status' => false];
+        return ['status' => false, 'data' => $ex];
       }
     }
   }

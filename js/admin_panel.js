@@ -150,20 +150,7 @@ $(document).ready(function () {
       data: { method: 'getRolePermissions', roleId },
       dataType: 'json',
     }).done(function (permissions) {
-      permissions.forEach(permission => {
-        $(".permissions-data-edit-inner").append(
-          `<div class="permission-edit-div">
-            <label class="switch">
-              <input class="edit-input-data" type="checkbox" name="ue_permission[]" value="${permission[0]}">
-              <span class="slider"></span>
-            </label>
-            <div class="permission-description">
-              <p>${permission[1]}</p>
-            </div>
-          </div>`
-        );
-      })
-
+      appendPermissionsEdit(permissions);
       setUserPermissions(userId);
     });
   }

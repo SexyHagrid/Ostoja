@@ -2,7 +2,6 @@
 
   session_start();
 
-  // include_once 'utils/permissions.php';
   include_once 'config/messages.php';
   include_once 'utils/breadcrumbs.php';
 
@@ -33,8 +32,14 @@
         </tr>
         <tr>
           <td style="padding-right: 50px;">
-            <div class="main-col tile-image" id="img-login">
-            </div>
+            <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
+              <div class="main-col tile-image">
+                <a id="tile-image-hub" href="hub"><h1>HUB</h1></a>
+              </div>
+            <?php else: ?>
+              <div class="main-col tile-image" id="img-login">
+              </div>
+            <?php endif; ?>
           </td>
           <td>
             <div class="main-col tile-image" id="img-renting">

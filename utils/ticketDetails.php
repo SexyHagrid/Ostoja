@@ -15,7 +15,9 @@
       $sql = "INSERT INTO ticket_comments (ticketCommentId, ticketId, userId, userName, userSurname, commentText, commentDate)
               VALUES (:ticketCommentId, :ticketId, :userId, :userName, :userSurname, :commentText, :commentDate)";
       $stmt = $dbConn->dbRequest($sql);
-      $stmt->execute([':ticketCommentId'=>null, ':ticketId'=>$ticketId, ':userId'=>$userId, ':userName'=>$userName, ':userSurname'=>$userSurname, ':commentText'=>$commentText, ':commentDate'=>null]);
+
+      $commentDate = date('Y/m/d h:i:s', time());
+      $stmt->execute([':ticketCommentId'=>null, ':ticketId'=>$ticketId, ':userId'=>$userId, ':userName'=>$userName, ':userSurname'=>$userSurname, ':commentText'=>$commentText, ':commentDate'=>$commentDate]);
 
       $sql = "SELECT * FROM ticket_comments";
       $stmt = $dbConn->dbRequest($sql);
@@ -24,7 +26,7 @@
 
       echo json_encode(['success' => true, 'data' => $commentsDetails[count($commentsDetails)-1]]);
     } catch (Exception $ex) {
-      echo json_encode(['success' => false]);
+      echo json_encode(['success' => false, 'data' => $ex]);
     }
   }
 

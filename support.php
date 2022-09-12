@@ -119,7 +119,7 @@
         </div>
       </div>
 
-      <form id="create-ticket-div" action="wsparcie-techniczne-dodaj" method="post">
+      <form id="create-ticket-div" action="support_ticket_add" method="post">
           <div id="close-curtain">&#10006;</div>
           <h2>Dodaj zgłoszenie</h2>
           <hr>

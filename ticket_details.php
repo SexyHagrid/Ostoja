@@ -23,8 +23,8 @@
   $ticketComments = $stmt->fetchAll();
 
 
-  $reporterDetails = $assigneeUsers = $ticketStatusArray = null;
-  if (!Permissions::hasPermission("Panel wsparcia technicznego")) {
+  $reporterDetails = $assigneeUsers = $ticketStatusArray = $assigneeDetails = null;
+  if (Permissions::hasPermission("Panel wsparcia technicznego")) {
     $reporterId = $ticketDetails[0]['userId'];
     $stmt = $dbConn->dbRequest("SELECT * FROM users where userId='$reporterId'");
     $stmt->execute();
@@ -112,7 +112,7 @@
 
                 <div class="ticket-comments-comments">
                   <?php foreach ($ticketComments as $comment): ?>
-                    <div class="ticket-comment-outer">
+                    <div class="ticket-comment-outer <?php echo $comment['userId'] === $_SESSION['userId'] ? "c-user" : "o-user" ?>">
                       <div class="ticket-comment-inner">
                         <div class='tcilu <?php echo $comment['userId'] === $_SESSION['userId'] ? "ticket-comment-inner-label-c-user" : "ticket-comment-inner-label-o-user" ?>'>
                           <p class="ticket-comment-label-name"><?php echo $comment['userName'].' '.$comment['userSurname']; ?></p>

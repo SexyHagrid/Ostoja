@@ -10,8 +10,6 @@
   include_once 'utils/permissions.php';
   include_once 'utils/breadcrumbs.php';
 
-  //$action = intval($_GET['action']);
-
   $conn = new mysqli('remotemysql.com', 'lpqiJahZh5', '6m9cW0YAt2', 'lpqiJahZh5');
 
   if ($conn->connect_error) {
