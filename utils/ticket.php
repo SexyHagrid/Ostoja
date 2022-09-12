@@ -70,7 +70,7 @@
     public static function changeStatus($status, $ticketId) {
       try {
         $sql = '';
-        $ticketDateEnd = date('Y/m/d h:i:s', time());
+        $ticketDateEnd = date('Y/m/d h:i:s', strtotime('+2 hours'));
         if ($status === 'ZAKOŃCZONY' || $status === 'ANULOWANY') {
           $sql = "UPDATE tickets SET ticketStatus='$status', ticketDateUpdate='$ticketDateEnd', ticketDateEnd='$ticketDateEnd' WHERE ticketId=$ticketId";
         } else {

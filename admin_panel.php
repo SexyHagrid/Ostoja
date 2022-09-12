@@ -400,12 +400,12 @@
           <div class="action-inner">
             <p>Permisje</p>
             <div class="subactions permission-list">
-              <?php if (!Permissions::hasPermission('Dodawanie permisji')): ?>
+              <?php if (Permissions::hasPermission('Dodawanie permisji')): ?>
                 <div class="user-list-button-outer">
                   <div class="action-list-button-inner" id="add-permission"><p>Dodaj</p></div>
                 </div>
               <?php endif; ?>
-              <?php if (!Permissions::hasPermission('Edytowanie permisji')): ?>
+              <?php if (Permissions::hasPermission('Edytowanie permisji')): ?>
                 <div class="user-list-button-outer">
                   <div class="action-list-button-inner" id="edit-permission"><p>Edytuj</p></div>
                 </div>
