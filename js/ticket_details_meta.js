@@ -150,11 +150,8 @@ $(document).ready(function () {
     }).done(function(response) {
       if (response.success === true) {
         $('#ticket-details-meta-date-update-value').text(response.data.ticketDateUpdate);
+        $('#ticket-details-meta-date-end').css('display', 'block');
         $('#ticket-details-meta-date-end-value').text(response.data.ticketDateEnd);
-
-        if ($('.ticket-details-meta-date').css('display') === 'none' && response.data.ticketDateEnd) {
-          $('.ticket-details-meta-date').css('display', 'block');
-        }
 
         $('#ticket-details-status-inner-h4').text(ticketStatus);
         let statusColor = 'linear-gradient(45deg, #eeeeee, #f7f5f5, #eeeeee)';

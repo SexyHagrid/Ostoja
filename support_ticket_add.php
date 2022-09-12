@@ -18,16 +18,13 @@
     $ticketName = $_POST['create-ticket-topic'];
     $ticketPriority = $_POST['create-ticket-priority'];
     $ticketDesc = $_POST['create-ticket-description'];
+    $currentDate = date('Y/m/d h:i:s', strtotime('+2 hours'));
 
-    $sql = "INSERT INTO tickets (ticketId, ticketName, description, ticketStatus, priority, ticketDateStart, ticketDateEnd, userId)
-            VALUES (:ticketId, :ticketName, :description, :ticketStatus, :priority, :ticketDateStart, :ticketDateEnd, :userId)";
+    $sql = "INSERT INTO tickets (ticketId, ticketName, description, ticketStatus, priority, ticketDateStart, ticketDateUpdate, ticketDateEnd, userId)
+            VALUES (:ticketId, :ticketName, :description, :ticketStatus, :priority, :ticketDateStart, :ticketDateUpdate, :ticketDateEnd, :userId)";
     $stmt = $dbConn->dbRequest($sql);
-    $stmt->execute([':ticketId'=>null, ':ticketName'=>$ticketName, ':description'=>$ticketDesc, ':ticketStatus'=>'OTWARTY', ':priority'=>$ticketPriority, ':ticketDateStart'=>null, ':ticketDateEnd'=>null, ':userId'=>$_SESSION['userId']]);
+    $stmt->execute([':ticketId'=>null, ':ticketName'=>$ticketName, ':description'=>$ticketDesc, ':ticketStatus'=>'OTWARTY', ':priority'=>$ticketPriority,
+                    ':ticketDateStart'=>$currentDate, ':ticketDateUpdate'=>$currentDate,':ticketDateEnd'=>null, ':userId'=>$_SESSION['userId']]);
   }
-
-  $stmt = $dbConn->dbRequest("SELECT * FROM tickets");
-  $stmt->execute();
-  $tickets = $stmt->fetchAll();
-  $ticketsCount = count($tickets);
 
 ?>

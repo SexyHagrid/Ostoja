@@ -20,7 +20,7 @@
 
   $ua_name = $ua_surname = $ua_email = $ua_password = $ua_role = '';
   $ue_name = $ue_surname = $ue_email = $ue_password = $ue_role = '';
-  $permissionsId = $ua_permissions = $ue_permission = $users_details = $re_permission = $rolesIds = [];
+  $permissionsId = $ua_permissions = $ue_permissions = $users_details = $re_permission = $rolesIds = [];
 
   $ra_role = $re_role_name = $re_name = '';
   $pa_desc = $pe_desc = $pe_permission_desc = '';
@@ -252,8 +252,8 @@
       $ua_role = htmlspecialchars($_POST['ua_role']);
       $ua_permissions = Permissions::getPermissionsByRole($ua_role);
     }
-    if (!empty($_POST['ua_permissions'])) {
-      foreach($_POST['ua_permissions'] as $permission) {
+    if (!empty($_POST['ua_permission'])) {
+      foreach($_POST['ua_permission'] as $permission) {
         array_push($permissionsId, $permission);
       }
     }
@@ -273,7 +273,6 @@
           $stmt = $dbConn->dbRequest($sql);
           $stmt->execute([':userId'=>$userId[0]['userId'], ':permissionId'=>$permissionId]);
         }
-        $conn = null;
 
         $notify_prompt_message =  'Użytkownik został prawidłowo dodany';
         $ua_name = $ua_surname = $ua_email = $ua_password = $ua_role = '';
@@ -486,73 +485,75 @@
 
         <!-- Edit user -->
         <form class="forms" id="edit-user-form" action="panel-administracyjny" method="post" <?php if($ue_show) { echo 'style="display: block;"'; } ?>>
-          <div class="search-user">
-            <input type="text" list="users-emails-list" id="user-emails-list-input" name="user-emails-list-input" placeholder="Wprowadź adres email..."/>
+          <div class="edit-data-main-inputs">
+            <div class="search-user">
+              <input type="text" list="users-emails-list" id="user-emails-list-input" name="user-emails-list-input" placeholder="Wprowadź adres email..."/>
 
-            <datalist id="users-emails-list">
-              <?php foreach($users_details as $user_details): ?>
-                <option><?php echo $user_details['email']; ?></option>
-              <?php endforeach; ?>
-            </datalist>
-          </div>
-
-          <div class="col-12 user-data-outer">
-            <p>Dane użytkownika:</p>
-            <div class="col-12 user-data-inner">
-              <div class="col-5 user-data-divs user-data-name-surname">
-                <div class="ua-input-outer">
-                  <label for="user-name">Imię:</label>
-                  <div class="red-text"><?php echo $errors['ue_name']; ?></div>
-                  <input class="edit-input-data" id="edit-user-name" type="text" name="user-name-edit" value="<?php echo htmlspecialchars($ue_name); ?>">
-                </div>
-                <div class="ua-input-outer">
-                  <label for="user-surname">Nazwisko:</label>
-                  <span class="red-text"><?php echo $errors['ue_surname']; ?></span>
-                  <input class="edit-input-data" id="edit-user-surname" type="text" name="user-surname-edit" value="<?php echo htmlspecialchars($ue_surname); ?>">
-                </div>
-              </div>
-              <div class="col-5 user-data-divs user-data-email-pass">
-                <div class="ua-input-outer">
-                  <label for="user-email">Adres email:</label>
-                  <div class="red-text"><?php echo $errors['ue_email']; ?></div>
-                  <input class="edit-input-data" id="edit-user-email" type="text" name="user-email-edit" value="<?php echo htmlspecialchars($ue_email); ?>">
-                </div>
-                <div class="ua-input-outer">
-                  <label for="user-password">Hasło:</label>
-                  <div class="red-text"><?php echo $errors['ue_password']; ?></div>
-                  <input class="edit-input-data" id="edit-user-password" type="text" name="user-password-edit" value="<?php echo htmlspecialchars($ue_password); ?>">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 role-data-outer">
-            <p>Rola:</p>
-            <div class="red-text"><?php echo $errors['ue_role']; ?></div>
-            <div class="col-12 role-data-inner">
-              <?php foreach($roles as $role) { ?>
-                <div class="role-inner-div">
-                  <input type="radio" name="ue_role" class="role-radio-edit edit-input-data" value="<?php echo $role['roleId'] ?>" <?php if ($role['roleId'] == $ue_role) echo 'checked'; ?>>
-                  <label for="ue_role"><?php echo $role['roleName'] ?></label>
-                </div>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="col-12 permissions-data-edit-outer">
-            <p>Permisje:</p>
-            <div class="col-12 permissions-data-edit-inner">
-              <?php if (!empty($ue_permissions)): ?>
-                <?php foreach($ue_permissions as $permission): ?>
-                  <div class="permission-edit-div">
-                    <label class="switch">
-                      <input class="edit-input-data" type="checkbox" name="ue_permission[]" value="<?php echo $permission['permissionId'] ?>" <?php if(in_array($permission['permissionId'], $permissionsId)) { echo 'checked'; } ?>>
-                      <span class="slider"></span>
-                    </label>
-                    <div class="permission-description">
-                      <p><?php echo $permission['permissionDesc'] ?></p>
-                    </div>
-                  </div>
+              <datalist id="users-emails-list">
+                <?php foreach($users_details as $user_details): ?>
+                  <option><?php echo $user_details['email']; ?></option>
                 <?php endforeach; ?>
-              <?php endif; ?>
+              </datalist>
+            </div>
+
+            <div class="col-12 user-data-outer">
+              <p>Dane użytkownika:</p>
+              <div class="col-12 user-data-inner">
+                <div class="col-5 user-data-divs user-data-name-surname">
+                  <div class="ua-input-outer">
+                    <label for="user-name">Imię:</label>
+                    <div class="red-text"><?php echo $errors['ue_name']; ?></div>
+                    <input class="edit-input-data" id="edit-user-name" type="text" name="user-name-edit" value="<?php echo htmlspecialchars($ue_name); ?>">
+                  </div>
+                  <div class="ua-input-outer">
+                    <label for="user-surname">Nazwisko:</label>
+                    <span class="red-text"><?php echo $errors['ue_surname']; ?></span>
+                    <input class="edit-input-data" id="edit-user-surname" type="text" name="user-surname-edit" value="<?php echo htmlspecialchars($ue_surname); ?>">
+                  </div>
+                </div>
+                <div class="col-5 user-data-divs user-data-email-pass">
+                  <div class="ua-input-outer">
+                    <label for="user-email">Adres email:</label>
+                    <div class="red-text"><?php echo $errors['ue_email']; ?></div>
+                    <input class="edit-input-data" id="edit-user-email" type="text" name="user-email-edit" value="<?php echo htmlspecialchars($ue_email); ?>">
+                  </div>
+                  <div class="ua-input-outer">
+                    <label for="user-password">Hasło:</label>
+                    <div class="red-text"><?php echo $errors['ue_password']; ?></div>
+                    <input class="edit-input-data" id="edit-user-password" type="text" name="user-password-edit" value="<?php echo htmlspecialchars($ue_password); ?>">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 role-data-outer">
+              <p>Rola:</p>
+              <div class="red-text"><?php echo $errors['ue_role']; ?></div>
+              <div class="col-12 role-data-inner">
+                <?php foreach($roles as $role) { ?>
+                  <div class="role-inner-div">
+                    <input type="radio" name="ue_role" class="role-radio-edit edit-input-data" value="<?php echo $role['roleId'] ?>" <?php if ($role['roleId'] == $ue_role) echo 'checked'; ?>>
+                    <label for="ue_role"><?php echo $role['roleName'] ?></label>
+                  </div>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="col-12 permissions-data-edit-outer">
+              <p>Permisje:</p>
+              <div class="col-12 permissions-data-edit-inner">
+                <?php if (!empty($ue_permissions)): ?>
+                  <?php foreach($ue_permissions as $permission): ?>
+                    <div class="permission-edit-div">
+                      <label class="switch">
+                        <input class="edit-input-data" type="checkbox" name="ue_permission[]" value="<?php echo $permission['permissionId'] ?>" <?php if(in_array($permission['permissionId'], $permissionsId)) { echo 'checked'; } ?>>
+                        <span class="slider"></span>
+                      </label>
+                      <div class="permission-description">
+                        <p><?php echo $permission['permissionDesc'] ?></p>
+                      </div>
+                    </div>
+                  <?php endforeach; ?>
+                <?php endif; ?>
+              </div>
             </div>
           </div>
 
@@ -581,41 +582,43 @@
 
        <!-- Edit role -->
         <form class="forms" id="edit-role-form" action="panel-administracyjny" method="post" <?php if($re_show) { echo 'style="display: block;"'; } ?>>
-          <div class="search-role">
-            <input type="text" list="roles-names-list" id="roles-names-list-input" name="roles-names-list-input" placeholder="Wprowadź rolę..."/>
+          <div class="edit-data-main-inputs">
+            <div class="search-role">
+              <input type="text" list="roles-names-list" id="roles-names-list-input" name="roles-names-list-input" placeholder="Wprowadź rolę..."/>
 
-            <datalist id="roles-names-list">
-              <?php foreach($role_names as $role_name): ?>
-                <option><?php echo $role_name['roleName']; ?></option>
-              <?php endforeach; ?>
-            </datalist>
-          </div>
+              <datalist id="roles-names-list">
+                <?php foreach($role_names as $role_name): ?>
+                  <option><?php echo $role_name['roleName']; ?></option>
+                <?php endforeach; ?>
+              </datalist>
+            </div>
 
-          <div class="col-12 user-data-outer">
-            <div class="col-12 user-data-inner">
-              <div class="re-input-outer">
-                <label for="role-name">Nazwa roli:</label>
-                <div class="red-text"><?php echo $errors['re_name']; ?></div>
-                <input class="edit-role-input-data" id="edit-role-name" type="text" name="role-name-edit" value="<?php echo htmlspecialchars($re_role_name); ?>">
+            <div class="col-12 user-data-outer">
+              <div class="col-12 user-data-inner">
+                <div class="re-input-outer">
+                  <label for="role-name">Nazwa roli:</label>
+                  <div class="red-text"><?php echo $errors['re_name']; ?></div>
+                  <input class="edit-role-input-data" id="edit-role-name" type="text" name="role-name-edit" value="<?php echo htmlspecialchars($re_role_name); ?>">
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-12 permissions-data-role-edit-outer">
-            <p>Permisje:</p>
-            <div class="col-12 permissions-data-role-edit-inner">
-              <?php if (!empty($re_permissions)): ?>
-                <?php foreach($re_permissions as $permission): ?>
-                  <div class="permission-role-edit-div">
-                    <label class="switch">
-                      <input class="edit-role-input-data" type="checkbox" name="re_permission[]" value="<?php echo $permission['permissionId'] ?>" <?php if(in_array($permission['permissionId'], $permissionsId)) { echo 'checked'; } ?>>
-                      <span class="slider"></span>
-                    </label>
-                    <div class="permission-description">
-                      <p><?php echo $permission['permissionDesc'] ?></p>
+            <div class="col-12 permissions-data-role-edit-outer">
+              <p>Permisje:</p>
+              <div class="col-12 permissions-data-role-edit-inner">
+                <?php if (!empty($re_permissions)): ?>
+                  <?php foreach($re_permissions as $permission): ?>
+                    <div class="permission-role-edit-div">
+                      <label class="switch">
+                        <input class="edit-role-input-data" type="checkbox" name="re_permission[]" value="<?php echo $permission['permissionId'] ?>" <?php if(in_array($permission['permissionId'], $permissionsId)) { echo 'checked'; } ?>>
+                        <span class="slider"></span>
+                      </label>
+                      <div class="permission-description">
+                        <p><?php echo $permission['permissionDesc'] ?></p>
+                      </div>
                     </div>
-                  </div>
-                <?php endforeach; ?>
-              <?php endif; ?>
+                  <?php endforeach; ?>
+                <?php endif; ?>
+              </div>
             </div>
           </div>
 
@@ -644,41 +647,43 @@
 
         <!-- Edit permission -->
         <form class="forms" id="edit-permission-form" action="panel-administracyjny" method="post" <?php if($pe_show) { echo 'style="display: block;"'; } ?>>
-          <div class="search-role">
-            <input type="text" list="permissions-desc-list" id="permissions-desc-list-input" name="permissions-desc-list-input" placeholder="Wprowadź permisję..."/>
+          <div class="edit-data-main-inputs">
+            <div class="search-role">
+              <input type="text" list="permissions-desc-list" id="permissions-desc-list-input" name="permissions-desc-list-input" placeholder="Wprowadź permisję..."/>
 
-            <datalist id="permissions-desc-list">
-              <?php foreach($permissions_desc as $permission_desc): ?>
-                <option><?php echo $permission_desc['permissionDesc']; ?></option>
-              <?php endforeach; ?>
-            </datalist>
-          </div>
+              <datalist id="permissions-desc-list">
+                <?php foreach($permissions_desc as $permission_desc): ?>
+                  <option><?php echo $permission_desc['permissionDesc']; ?></option>
+                <?php endforeach; ?>
+              </datalist>
+            </div>
 
-          <div class="col-12 user-data-outer">
-            <div class="col-12 user-data-inner">
-              <div class="pe-input-outer">
-                <label for="permission-desc">Opis permisji:</label>
-                <div class="red-text"><?php echo $errors['pe_desc']; ?></div>
-                <input class="edit-permission-input-data" id="edit-permission-desc" type="text" name="permission-desc-edit" value="<?php echo htmlspecialchars($pe_permission_desc); ?>">
+            <div class="col-12 user-data-outer">
+              <div class="col-12 user-data-inner">
+                <div class="pe-input-outer">
+                  <label for="permission-desc">Opis permisji:</label>
+                  <div class="red-text"><?php echo $errors['pe_desc']; ?></div>
+                  <input class="edit-permission-input-data" id="edit-permission-desc" type="text" name="permission-desc-edit" value="<?php echo htmlspecialchars($pe_permission_desc); ?>">
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-12 roles-data-permission-edit-outer">
-            <p>Role:</p>
-            <div class="col-12 roles-data-permission-edit-inner">
-              <?php if (!empty($pe_roles)): ?>
-                <?php foreach($pe_roles as $role): ?>
-                  <div class="role-permission-edit-div">
-                    <label class="switch">
-                      <input class="edit-permission-input-data" type="checkbox" name="pe_role[]" value="<?php echo $role['roleId'] ?>" <?php if(in_array($role['roleId'], $rolesIds)) { echo 'checked'; } ?>>
-                      <span class="slider"></span>
-                    </label>
-                    <div class="role-name">
-                      <p><?php echo $role['roleName'] ?></p>
+            <div class="col-12 roles-data-permission-edit-outer">
+              <p>Role:</p>
+              <div class="col-12 roles-data-permission-edit-inner">
+                <?php if (!empty($pe_roles)): ?>
+                  <?php foreach($pe_roles as $role): ?>
+                    <div class="role-permission-edit-div">
+                      <label class="switch">
+                        <input class="edit-permission-input-data" type="checkbox" name="pe_role[]" value="<?php echo $role['roleId'] ?>" <?php if(in_array($role['roleId'], $rolesIds)) { echo 'checked'; } ?>>
+                        <span class="slider"></span>
+                      </label>
+                      <div class="role-name">
+                        <p><?php echo $role['roleName'] ?></p>
+                      </div>
                     </div>
-                  </div>
-                <?php endforeach; ?>
-              <?php endif; ?>
+                  <?php endforeach; ?>
+                <?php endif; ?>
+              </div>
             </div>
           </div>
 

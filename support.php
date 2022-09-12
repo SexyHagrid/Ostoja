@@ -10,7 +10,12 @@
   include_once 'utils/breadcrumbs.php';
 
   $dbConn = new DBConnector();
-  $stmt = $dbConn->dbRequest("SELECT * FROM tickets");
+  $userId = $_SESSION['userId'];
+  $sql = "SELECT * FROM tickets where userId=$userId";
+  if (Permissions::hasPermission('Panel wsparcia technicznego')) {
+    $sql = "SELECT * FROM tickets";
+  }
+  $stmt = $dbConn->dbRequest($sql);
   $stmt->execute();
   $tickets = $stmt->fetchAll();
   $ticketsCount = count($tickets);
@@ -119,7 +124,7 @@
         </div>
       </div>
 
-      <form id="create-ticket-div" action="support_ticket_add" method="post">
+      <form id="create-ticket-div" action="support_ticket_add.php" method="post">
           <div id="close-curtain">&#10006;</div>
           <h2>Dodaj zgłoszenie</h2>
           <hr>

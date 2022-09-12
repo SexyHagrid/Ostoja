@@ -104,8 +104,12 @@
 
         <form id="add-meeting-form" action="spotkania-dodaj">
           <div id="buttons">
-            <button id="edit-meetings" type="button">Edytuj</button>
-            <input id="add-meeting" type="submit" name="add-meeting-submit" value="Dodaj spotkanie">
+            <?php if (Permissions::hasPermission('Edytowanie spotkań')): ?>
+              <button id="edit-meetings" type="button">Edytuj</button>
+            <?php endif; ?>
+            <?php if (Permissions::hasPermission('Dodawanie spotkań')): ?>
+              <input id="add-meeting" type="submit" name="add-meeting-submit" value="Dodaj spotkanie">
+            <?php endif; ?>
           </div>
         </form>
       </div>

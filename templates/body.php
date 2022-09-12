@@ -24,5 +24,5 @@
     <div class="row upper-row">
       <div class="upper-bar">
         <div class="col-3 brand-logo">
-          <img src="assets/brand-logo.png" alt="Brand logo">
+          <a href="hub"><img id="brand-logo-image" src="assets/brand-logo.png" alt="Brand logo"></a>
         </div>

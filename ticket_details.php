@@ -261,7 +261,7 @@
                     <p id="ticket-details-meta-date-update-value"><?php echo $ticketDetails[0]['ticketDateUpdate'] ?></p>
                   </div>
                 </div>
-                <div class="ticket-details-meta-date" <?php if (!$ticketDetails[0]['ticketDateEnd']) { echo 'style="display: none"'; } ?>>
+                <div class="ticket-details-meta-date" id="ticket-details-meta-date-end" <?php if (!$ticketDetails[0]['ticketDateEnd']) { echo 'style="display: none"'; } ?>>
                   <div>
                     <p>Zakończony:</p>
                   </div>

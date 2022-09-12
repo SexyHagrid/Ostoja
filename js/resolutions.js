@@ -68,7 +68,7 @@ $(document).ready(function () {
   }
 
   function addResolution() {
-    document.location.href = "uchwały-dodaj.php";
+    document.location.href = "uchwały-dodaj";
   }
 
   function editResolution(uchwalaID) {

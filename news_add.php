@@ -63,8 +63,8 @@
         </div>
 
         <div class="row justify-content-start main-content-row">
-            <div class="col">
-                <div class="row row-upper">
+            <div class="col-6">
+                <div class="row row-upper-akt">
                     <h1>Dodaj nową aktualność</h1>
                 </div>
                 <form class="row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
