@@ -45,7 +45,7 @@
   usort($meetings, "sortByDate");
 
   $closestMeeting = $meetings[0]['meetingDate'];
-  $currentDateTime = new DateTime(date('Y-m-d h:i:s'));
+  $currentDateTime = new DateTime(date('Y-m-d h:i:s', strtotime('+2 hours')));
   $firstMeet = new DateTime($closestMeeting);
   $lowestDiff = abs($firstMeet->getTimestamp()-$currentDateTime->getTimestamp());
   for($i = 1; $i < $meetingsCount; $i++) {

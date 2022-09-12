@@ -97,7 +97,7 @@
     }
 
     if (!$hasErrors) {
-      $currentDate = date('Y/m/d h:i:s', time());
+      $currentDate = date('Y/m/d h:i:s', strtotime('+2 hours'));
       $sql = "INSERT INTO reports (reportId, name, userId, creationDate) VALUES (:reportId, :name, :userId, :creationDate)";
       $stmt = $dbConn->dbRequest($sql);
       $stmt->execute([':reportId'=>null, ':name'=>$add_report_name, ':userId'=>$reportUserId, ':creationDate'=>$currentDate]);

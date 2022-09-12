@@ -16,7 +16,7 @@
               VALUES (:ticketCommentId, :ticketId, :userId, :userName, :userSurname, :commentText, :commentDate)";
       $stmt = $dbConn->dbRequest($sql);
 
-      $commentDate = date('Y/m/d h:i:s', time());
+      $commentDate = date('Y/m/d h:i:s', strtotime('+2 hours'));
       $stmt->execute([':ticketCommentId'=>null, ':ticketId'=>$ticketId, ':userId'=>$userId, ':userName'=>$userName, ':userSurname'=>$userSurname, ':commentText'=>$commentText, ':commentDate'=>$commentDate]);
 
       $sql = "SELECT * FROM ticket_comments";

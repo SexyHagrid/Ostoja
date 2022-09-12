@@ -21,7 +21,7 @@
         $usersIds = $stmt->fetchAll();
         $userId = $usersIds[0]['userId'];
 
-        $ticketDateUpdate = date('Y/m/d h:i:s', time());
+        $ticketDateUpdate = date('Y/m/d h:i:s', strtotime('+2 hours'));
 
         $sql = "UPDATE tickets SET assigneeId=$userId, ticketDateUpdate='$ticketDateUpdate' WHERE ticketId=$ticketId";
         $stmt = $dbConn->dbRequest($sql);
@@ -38,7 +38,7 @@
     public static function changeType($type, $ticketId) {
       try {
         $dbConn = new DBConnector();
-        $ticketDateUpdate = date('Y/m/d h:i:s', time());
+        $ticketDateUpdate = date('Y/m/d h:i:s', strtotime('+2 hours'));
         $sql = "UPDATE tickets SET ticketType='$type', ticketDateUpdate='$ticketDateUpdate' WHERE ticketId=$ticketId";
         $stmt = $dbConn->dbRequest($sql);
         $stmt->execute();
@@ -54,7 +54,7 @@
     public static function changePriority($priority, $ticketId) {
       try {
         $dbConn = new DBConnector();
-        $ticketDateUpdate = date('Y/m/d h:i:s', time());
+        $ticketDateUpdate = date('Y/m/d h:i:s', strtotime('+2 hours'));
         $sql = "UPDATE tickets SET priority='$priority', ticketDateUpdate='$ticketDateUpdate' WHERE ticketId=$ticketId";
         $stmt = $dbConn->dbRequest($sql);
         $stmt->execute();
@@ -92,7 +92,7 @@
     public static function changeDescription($description, $ticketId) {
       try {
         $dbConn = new DBConnector();
-        $ticketDateUpdate = date('Y/m/d h:i:s', time());
+        $ticketDateUpdate = date('Y/m/d h:i:s', strtotime('+2 hours'));
         $sql = "UPDATE tickets SET description='$description', ticketDateUpdate='$ticketDateUpdate' WHERE ticketId=$ticketId";
         $stmt = $dbConn->dbRequest($sql);
         $stmt->execute();
