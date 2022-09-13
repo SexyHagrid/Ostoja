@@ -76,7 +76,7 @@
           </label>
           <label>
             <p>Agenda</p>
-            <textarea id="agenda-textarea" name="agenda-textarea" cols="100" rows="20"></textarea>
+            <textarea id="agenda-textarea" name="agenda-textarea"></textarea>
           </label>
           <input id="add-meeting-cancel" type="submit" name="add-meeting-cancel" value="Anuluj">
           <input id="add-meeting-submit" type="submit" name="add-meeting-submit" value="Zatwierdź">
