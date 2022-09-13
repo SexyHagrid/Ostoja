@@ -11,9 +11,7 @@
     include_once 'utils/breadcrumbs.php';
 
     $id = intval($_GET['id']);
-    $text = $_GET['text'];
-    $image = $_GET['image'];
-    $author = $_GET['author'];
+   
 
     $conn = new mysqli('remotemysql.com', 'lpqiJahZh5', '6m9cW0YAt2', 'lpqiJahZh5');
 
@@ -21,7 +19,11 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    if (isset($text)) {
+    if (isset($_GET['text'])) {
+        $text = $_GET['text'];
+        $image = $_GET['image'];
+        $author = $_GET['author'];
+
         $query = "UPDATE aktualnosci SET tresc_aktualnosci='".$text."', link='".$image."' WHERE ID_aktualnosci='".$id."';";
         $result=$conn->query($query);
 
