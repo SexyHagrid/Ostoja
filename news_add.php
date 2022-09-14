@@ -69,7 +69,7 @@
                 </div>
                 <form class="row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
                     <label>Numer aktualnosci:</label> <br>
-                    <input type="number" id="resolutionID"/> <br>
+                    <input type="number" min=1 id="resolutionID"/> <br>
                     <label>Treść aktualnosci:</label> <br>
                     <textarea rows = "10" cols = "100" id="resolutionText"></textarea> <br>
                     <label>Link do zdjęcia (opcjonalne)</label> <br>

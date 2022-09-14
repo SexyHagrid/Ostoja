@@ -111,7 +111,7 @@
                 </div>
                 <form class="row-akt" style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px;">
                     <label>Numer uchwały:</label> <br/>
-                    <input type="number" id="resolutionID"/> <br/> <br/>
+                    <input type="number" min=1 id="resolutionID"/> <br/> <br/>
                     <label>Tytuł uchwały:</label> <br/>
                     <textarea id="resolutionText" rows="1" cols="100"></textarea> <br/> <br/>
                     <label>Pliki (opcjonalne):</label> <br/>
