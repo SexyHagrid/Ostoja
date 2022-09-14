@@ -67,7 +67,7 @@
                 $query = "SELECT id FROM wynajem WHERE adres='".$address."';";
                 $result = $conn->query($query);
                 $row = $result->fetch_assoc();
-                echo $row['id'];
+                echo $row['id']."|";
             } else {
                 echo "Error adding rental offer";
             }
