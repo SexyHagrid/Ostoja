@@ -31,15 +31,15 @@
     $userId = $_SESSION['userId'];
     $questionsArray = [];
 
-    $queryPytania = "SELECT * FROM ankieta_pytania INNER JOIN ankieta ON ankieta.id=ankieta_pytania.ankieta_id WHERE ankieta_id='".$id."';";
+    $queryPytania = "SELECT a.nazwa AS anazwa,p.id AS pid, p.tresc AS ptresc, p.typ AS ptyp  FROM ankieta_pytania p INNER JOIN ankieta a ON a.id=p.ankieta_id WHERE p.ankieta_id='".$id."';";
     $resultPytania = $conn->query($queryPytania);
     while ($rowPytanie = $resultPytania->fetch_assoc()) {
         $obj = new stdClass;
         $obj->id = $id;
-        $obj->name = $rowPytanie['nazwa'];
-        $obj->questionId = $rowPytanie['id'];
-        $obj->questionText = $rowPytanie['tresc'];
-        $obj->questionType = $rowPytanie['typ'];
+        $obj->name = $rowPytanie['anazwa'];
+        $obj->questionId = $rowPytanie['pid'];
+        $obj->questionText = $rowPytanie['ptresc'];
+        $obj->questionType = $rowPytanie['ptyp'];
         array_push($questionsArray, $obj);
     }
 
