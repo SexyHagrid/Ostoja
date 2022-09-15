@@ -26,6 +26,8 @@
     array_push($resultArray, $obj);
   }
 
+  $hasEditDeletePermission = Permissions::hasPermission("Edytowanie i usuwanie faq");
+
   $conn->close();
 
 ?>
@@ -86,8 +88,12 @@
             <td rowspan=2 style="width: 20%">
               <h3></h3>
             </td>
-            <td>
+            <td style="width: 70%">
               <label style="font-weight: italic;"></label>
+            </td>
+            <td>
+              <button style="display: none; right: 90px;">Edytuj</button>
+              <button style="display: none; right: 30px;">Usuń</button>
             </td>
           </tr>
           <tr>
@@ -102,6 +108,7 @@
     <?php include('templates/footer.php'); ?>
     <script>
       var resultArray = <?= json_encode($resultArray) ?>;
+      var hasEditDeletePermission = <?= json_encode($hasEditDeletePermission) ?>;
     </script>
     <script src="js/faq.js"></script>
   </body>

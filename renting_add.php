@@ -145,7 +145,7 @@
                                 <label>Czynsz: *</label>
                             </td>
                             <td>
-                                <input type="number" id="priceElement"/>
+                                <input type="number" min=1 id="priceElement"/>
                             </td>
                         </tr>
                         <tr>
